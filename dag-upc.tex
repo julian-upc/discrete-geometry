@@ -1,4 +1,4 @@
-\documentclass[11pt]{amsbook}
+\documentclass[a4paper,11pt]{amsbook}
 
 \makeatletter
 \def\@thm#1#2#3{%
@@ -39,6 +39,8 @@
 %\usepackage{bbm}
 \usepackage{verbatim}
 \usepackage{url}
+\usepackage[pagebackref]{hyperref}
+\hypersetup{pdftitle={\title}, pdfauthor={\author}}
 
 \newcommand{\ba}{{\boldsymbol{a}}}
 \newcommand{\balpha}{{\boldsymbol{\alpha}}}
@@ -118,6 +120,9 @@
 \newtheorem{remark}[theorem]{Remark}
 
 \newtheorem{defn}{\textbf{Definition}}[section]
+
+\theoremstyle{remark}
+\newtheorem*{demo}{\underline{Proof}\upshape}
 
 %\includeonly{lecture2}
 
