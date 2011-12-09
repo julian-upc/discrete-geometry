@@ -36,7 +36,8 @@
 \usepackage{a4wide}
 \usepackage{graphicx}
 %\usepackage{paralist}
-%\usepackage{bbm}
+\usepackage{bbm}
+\usepackage{color}
 \usepackage[pagebackref]{hyperref} 
 \hypersetup{pdftitle={\title}, pdfauthor={\author}}
 \usepackage{verbatim}
@@ -47,7 +48,7 @@
 \newcommand{\ba}{{\boldsymbol{a}}}
 \newcommand{\balpha}{{\boldsymbol{\alpha}}}
 \newcommand{\bb}{{\boldsymbol{b}}}
-\newcommand{\bc}{{\boldsymbol{c}}}
+%\newcommand{\bc}{{\boldsymbol{c}}}
 \newcommand{\be}{{\boldsymbol{e}}}
 \newcommand{\bff}{{\boldsymbol{f}}}
 \newcommand{\bnu}{{\boldsymbol{\nu}}}
@@ -87,6 +88,17 @@
 \newcommand{\rcone}[1]{{{}_\Rgeo\!\left\langle #1\right\rangle}}
 \newcommand{\zcone}[1]{{{}_\Zgeo\!\left\langle #1\right\rangle}}
 
+\newcommand{\bn}{{\color{blue}\texttt{\bfseries n}}}
+\newcommand{\bc}{{\color{blue}$\boldsymbol{\circ}$}}
+\newcommand{\rn}{{\color{red}\texttt{\bfseries n}}}
+\newcommand{\rs}{{\color{red}\texttt{\bfseries *}}}
+\newcommand{\rt}{{\color{red}$\boldsymbol{\times}$}}
+\newcommand{\bB}{{\color{blue}\texttt{\bfseries B}}}
+\newcommand{\rR}{{\color{red}\texttt{\bfseries R}}}
+
+\newcommand{\crb}[1]{{\color{red}\texttt{\bfseries{#1}}}}
+\newcommand{\cbb}[1]{{\color{blue}\texttt{\bfseries{#1}}}}
+
 \DeclareMathOperator{\interior}{int}
 \DeclareMathOperator{\relint}{relint}
 \DeclareMathOperator{\conv}{conv}
@@ -112,19 +124,23 @@
 
 \graphicspath{{graphics/}}
 
-\numberwithin{equation}{section}
+\numberwithin{equation}{chapter}
 
-\newtheorem{theorem}{\textbf{Theorem}}[section]
+\newtheorem{theorem}{\textbf{Theorem}}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{conj}[theorem]{Conjecture}
-\newtheorem{obs}[theorem]{Observation}
 \newtheorem{exercise}[theorem]{Exercise}
 \newtheorem{example}[theorem]{Example}
-\newtheorem{remark}[theorem]{Remark}
+\newtheorem{claim}[theorem]{Claim}
 
-\newtheorem{defn}{\textbf{Definition}}[section]
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{obs}[theorem]{Observation}
 
 %\includeonly{lecture3}
 
