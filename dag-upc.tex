@@ -28,6 +28,7 @@
 
 \renewcommand{\chaptername}{Lecture}
 
+
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage{times}
@@ -44,6 +45,11 @@
 \usepackage{url}
 \usepackage[pagebackref]{hyperref}
 \hypersetup{pdftitle={\title}, pdfauthor={\author}}
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows,decorations.pathmorphing}
 
 \newcommand{\ba}{{\boldsymbol{a}}}
 \newcommand{\balpha}{{\boldsymbol{\alpha}}}
@@ -81,6 +87,10 @@
 \newcommand{\cL}{{\mathcal{L}}}
 \newcommand{\cO}{{\mathcal{O}}}
 \newcommand{\cP}{{\mathcal{P}}}
+
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\tU}{\tilde{\mathcal{U}}}
+\newcommand{\tV}{\tilde{\mathcal{V}}}
 
 \newcommand{\scp}[2]{\langle #1,#2\rangle}
 \newcommand{\fl}[1]{\left\lfloor #1\right\rfloor}
@@ -154,6 +164,7 @@
 %\include{lecture3}
 \include{lecture4}
 \include{lecture8}
+\include{lecture9}
 
 \bibliographystyle{amsalpha}
 \bibliography{dag}
