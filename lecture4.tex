@@ -55,7 +55,7 @@ Firstly, we study $A_{2,\RR^{3}}$:
 
 We want to find a hyperplane that contains $A_{2,\RR^{3}}$. We are in $\RR^{3}$, so this
 hyperplane is of the form $\left\{x\in\RR^{3}:\left\langle
-    a,x\right\rangle=a_0\right\}$. But we know $0$ is in $A_{2,\RR^{3}}$ so
+    a,x\right\rangle=a_0\right\}$. But we know $0$ is in $A_{2,\RR^{3}}$ so $a_0=0$ and
 \[
   H \ = \ 
   \left\{x\in\RR^{3}:\left\langle a,x\right\rangle=0\right\} 
@@ -157,16 +157,20 @@ Note that negative $\alpha$ correspond to reflections.
 
 To calculate the packing density of $A_{2,\RR^{2}}$ and $A_{2,\RR^{3}}$, note that in
 $A_{2,\RR^{2}}$ the radius of the sphere is~$\frac{1}{2}$ so the volume is
-$\left(\frac{1}{2}\right)^{2}\pi$. We obtain the same density, as is natural for
-isomorphic lattices:
+$\left(\frac{1}{2}\right)^{2}\pi$. We obtain the same density, which is as it should be
+for isomorphic lattices:
 \begin{eqnarray*}
   \Delta_{A_{2,\RR^{2}}}
  &=&
-  \frac{\left(\frac{1}{2}\right)^{2}\pi}{\sqrt{3/4}}=\frac{\pi}{2\sqrt{3}},
+  \frac{\left(\frac{1}{2}\right)^{2}\pi}{\sqrt{3/4}}
+  \ = \
+  \frac{\pi}{2\sqrt{3}},
  \\
   \Delta_{A_{2,\RR^{3}}}
  &=&
-  \frac{\left(\frac{1}{2}\sqrt{2}\right)^{2}\pi}{\sqrt{3}}=\frac{\pi}{2\sqrt{3}}.
+  \frac{\left(\frac{1}{2}\sqrt{2}\right)^{2}\pi}{\sqrt{3}}
+  \ = \
+  \frac{\pi}{2\sqrt{3}}.
 \end{eqnarray*}
 
 The connection between these two representations is via the map
@@ -196,24 +200,26 @@ Any permutation of the coordinate axes in $\RR^{3}$ is a symmetry of $A_{2,\RR^{
 
 
 \begin{proof}
-  Let $P:\RR^{2}\longmapsto\RR^{3}$ be a symmetry, so that $P(L)=L$. This means that for
-  all $x\in L$, we have $P(x)\in L$, which is in turn equivalent to the condition that for
-  all $\lambda\in\ZZ^{2}$, there must exist $\beta\in\ZZ^{2}$ such that
+  Let $P:\RR^{2}\longrightarrow\RR^{3}$ be a symmetry of $L=A_{2,\RR^{3}}$, so that
+  $P(L)=L$. This means that for all $x\in L$, we should have $P(x)\in L$, which is in turn
+  equivalent to the condition that for all $\lambda\in\ZZ^{2}$, there must exist
+  $\beta\in\ZZ^{2}$ such that
   \begin{equation}\label{eq:beta}
     M\beta
     \ = \
     PM\lambda.
   \end{equation}
-  (In particular, note that $x=M\lambda$).
+  (In particular, this coordinatizes $x\in L$ as $x=M\lambda$).
 
-  We want to prove that, if $P$ is a permutation then for any $\lambda\in\ZZ^{2}$ we can
+  We want to prove that if $P$ is a permutation, then for any $\lambda\in\ZZ^{2}$ we can
   always find a~$\beta\in\ZZ^2$ that makes equation~\eqref{eq:beta} true.  We know $P$,
-  $M$ and $\lambda$, so we have to find $\beta$. This is a linear equation for $\beta$.
+  $M$ and $\lambda$, so we have to find $\beta$. This is a linear equation for~$\beta$.
   We must show that the linear equation $M\beta=b$ has a unique solution for any
-  $b_\lambda =PM\lambda$.  The solution is unique if $\rank M$ is maximal, i.e. $\rank
+  $b=b_\lambda =PM\lambda$.  The solution is unique if $\rank M$ is maximal, i.e. $\rank
   M=2$. By inspection, $M$~really has rank 2, so we only have to see if it always has a
-  solution.  For the fundamental theorem of linear algebra part 2, the system~\eqref{eq:beta} has a
-  solution if and only if
+  solution.  From the Fundamental Theorem of Linear Algebra (part 2)
+  \cite{strang-linear-algebra},~\cite{strang-ftla}, the
+  system~\eqref{eq:beta} has a solution if and only if
 \begin{eqnarray*}
   && b\in \colspan M=\im M 
   \\ &\Longleftrightarrow&
