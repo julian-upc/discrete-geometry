@@ -1,0 +1,57 @@
+\chapter{Pick's Theorem; Lattice packings of spheres}
+
+\scribe{Miquel Ra\"{i}ch}
+
+\section{Pick's Theorem}
+\begin{theorem}[Pick]
+Let $P$ be a lattice polygon in the plane ($P$ is closed, convex, simple and its vertices lie in $\ZZ^{2}$).
+The area of $P$ is $$A(P)=\vol_{2}P=I+\frac{1}{2}B-1$$where:\\
+$\mbox{    }\mbox{    } I=$ number of interior lattice points of $P$ $=\#\left\{(\mbox{int }P)\cap\ZZ^{2}\right\}$,\\
+$\mbox{    }\mbox{    } B=$ number of boundary lattice points of $P$ $=\#\left\{\partial{}P\cap\ZZ^{2}\right\}$
+\end{theorem}
+\begin{proof}\mbox{[part]}\\
+\begin{enumerate}
+\item Show that Pick's formula is additive: if $P=P_1\cup{}P_2$, then $$I+\frac{1}{2}B-1=\left(I_1+\frac{1}{2}b_1-1\right)+\left(I_2+\frac{1}{2}B_2-1\right)$$
+\begin{align*}A(P)=&A(P_1)+A(P_2)\\
+I=I(P)=&I_1+I_2+L-2\\
+B=B(P)=&B_1+B_2-2L+2\end{align*}
+{\center (Principle of Inclusion-Exlusion $\rightarrow$ M\"obius function)\quad\quad\\[0.3cm]
+
+\begin{minipage}{0.6\textwidth}$\lceil$ This proves:\begin{enumerate}\item Pick$(P_1\cup{}P_2)\Leftarrow$ Pick$(P_1)$, Pick$(P_2)$\\
+\item Pick$(P_1)\Leftarrow$ Pick$(P_1\cup{}P_2)$, Pick$(P_2)$ $\rfloor$\end{enumerate}\end{minipage}}\\[0.5cm]
+
+\item Prove it for lattice triangles.\end{enumerate}
+\end{proof}
+
+\section{Lattice packings of spheres}
+
+A {\textbf{lattice-packing}} of congruent spheres ($\equiv$ same radius) in $\RR^{d}$ is a packing such that the set $Z=\{\mbox{centers of the spheres}\}$ is a lattice $L$ (free abelian group).
+
+Let $\{v_1, \ldots, v_n\}\in\RR^{d}$ be a generating set for $$M=\left[\begin{array}{ccc}v_1 & \cdots & v_n\end{array}\right]\!\mbox{, then }L=\{M\lambda\colon\lambda\in\ZZ^{n}\}$$
+$$M=\overbrace{\left.\left[\begin{array}{cc}1 & \frac{1}{2} \\ 0 & \frac{1}{2}\sqrt{3} \end{array}\!\right]\right\}}^{n}\!d\quad\quad\quad\quad\quad{}M\lambda=\left[\begin{array}{ccc}v_1 & \cdots & v_n\end{array}\right]\!\left[\begin{array}{c}\lambda_1 \\ \vdots \\ \lambda_n \end{array}\right]=\lambda_1{}v_1+\cdots+\lambda_n{}v_n$$\\[0.2cm]
+
+Sphere packing $B_0+L=\{B_0+v\colon{}v\in{}L\}=\{B_0+M\lambda\colon\lambda\in\ZZ^{n}\}$
+$$\forall{}p,q\in{}P,\mbox{ }\exists{}D_p, D_q\colon{}D_p\cap{}Dq=\emptyset\quad\quad\quad\quad{}p\in{}P\subset\RR^{d}\mbox{ discrete set of points}$$\\[0.1cm]
+Voroni cell of $p$ w.r.t. $P$ is$$\mbox{Vor}(P)=\{y\in\RR^{d}\colon\lVert{}y-p\rVert\leq\lVert{}y-q\rVert\mbox{ }\forall{}q\in{}P\}$$
+$\lceil$ Georges Voronoi (s. XIX) $\rfloor$\\[0.3cm]
+Voronoi cells are intersections of half spaces$$\mbox{Vor}(P)=\bigcap_{q\in{}P}H_q\quad\quad\mbox{ where }H_q=\{y\in\RR^{d}\colon\lVert{}y-p\rVert\leq\lVert{}y-q\rVert\}$$
+
+\begin{defn}\mbox{ }\\
+$\mbox{    }\mbox{    } $polyhedron $\equiv^{def}$ intersection of half-spaces\\
+$\mbox{    }\mbox{    } $polytope $\equiv^{def}$ convex hull of a finite point set $\overset{\text{FTPT}}{\equiv}$ bounded polyhedron\\[0.1cm]
+{\small \upshape (FTPT: Fundamental theorem of polytope theory)}
+\end{defn}\mbox{ }
+
+\begin{enumerate}\item any convex hull of a finite point set is an intersection of half-spaces [easy by calculating convex hull].\\
+\item any \underline{bounded} intersection of half-spaces is the convex hull of a finite set of points, unless the intersection is empty.\end{enumerate}\mbox{ }
+
+Any lattice is isomorphic to some $\ZZ^n$, as abelian groups, by the map $v\in{}L\leftrightarrow\lambda\in\ZZ^n\colon{}v=M\lambda$
+
+\mbox{ }\\[1.1cm]
+[I will put images another day :P]
+
+% Local Variables: 
+% mode: latex
+% TeX-master: "dag-upc"
+% End: 
+ 
