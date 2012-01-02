@@ -1,5 +1,5 @@
 \setcounter{chapter}{5}
-\chapter{Introduction to Packings}
+\chapter{Some basic concepts in geometry and software; Introduction to Packings}
 
 \scribe{Ferran Dachs Cadefau}
 
@@ -26,7 +26,7 @@ $\CC$, $\HH$		&pairs or quadruples of reals				&\texttt{\#include <complex>}			\
 \end{tabular}
 
 
-But how to represent a very big numbers? For example using 4 symbols what is the biggest number that you can represent?
+But how to represent very big numbers? For example using 4 symbols what is the biggest number that you can represent?
 
 $$10^{99} < 9^{999} < 9^{9^{9^9}} = 9 \uparrow 4 < 9 \uparrow 9 \uparrow 9 \uparrow 9 = 9 \uparrow \uparrow 4 < 9 \Uparrow 9 \Uparrow 9 \Uparrow 9$$
 
@@ -83,7 +83,7 @@ Computationally, we can intersect lines and join points, in homogeneous coordina
 
 \texttt{\{}
 
-\texttt{cross\_product(l1, l2, p);}
+\quad\texttt{cross\_product(l1, l2, p);}
 
 \texttt{\}}
 
@@ -91,7 +91,7 @@ Computationally, we can intersect lines and join points, in homogeneous coordina
 
 \texttt{\{}
 
-\texttt{cross\_product(p1, p2, l);}
+\quad\texttt{cross\_product(p1, p2, l);}
 
 \texttt{\}}
 
@@ -99,11 +99,11 @@ Computationally, we can intersect lines and join points, in homogeneous coordina
 
 \texttt{\{}
 
-\texttt{p[0] = l1[1]*l2[2] - l1[2]*l2[1];}
+\quad\texttt{p[0] = l1[1]*l2[2] - l1[2]*l2[1];}
 
-\texttt{p[1] = -l1[0]*l2[2] + l1[2]*l2[0];}
+\quad\texttt{p[1] = -l1[0]*l2[2] + l1[2]*l2[0];}
 
-\texttt{p[2] = l1[0]*l2[1] - l1[1]*l2[0];}
+\quad\texttt{p[2] = l1[0]*l2[1] - l1[1]*l2[0];}
 
 \texttt{\}}
 
@@ -146,12 +146,11 @@ $$\begin{array}{rcl}
     p			&\longmapsto				&p^{\star}
   \end{array}$$
 
-A duality is an involutory order-antiisomorphism(Involution: $d^2=\id$, isomorphism: bijection collineation, order-anti: $p\in l$ implies $p\supset l$).
+A duality is an involutory order-anti-isomorphism (Involution: $d^2=\id$, isomorphism: bijection collineation, order-anti: $p\in l$ implies $p\supset l$).
 
 The polarity is the same except by convexs.
 
 Polarity send: points to half-spaces. Given $a\in \RR^n$:
-
 $$a\mapsto H_a=\{x\in\RR^d:\langle a,x\rangle\leqslant 1\}\leftrightarrow x\supset (\RR^d)^{\star}$$
 
 Equivalently, they identify points with hyperplanes via homogeneous coordinates.
@@ -162,11 +161,11 @@ $P\in l\Leftrightarrow p\perp l\Leftrightarrow p^{\star}\perp l^{\star}\Leftrigh
 
 \section{Polymake}
 
-Polymake is a free program in pearl. For example we can define a cube in dimension 3 as:
+Polymake is a free program in perl. For example we can define a cube in dimension 3 as:
 
 \texttt{polytope > \$p=cube(3);}
 
-Another thing is know proprieties about a polytope. For example the coordinates of the vertices:
+Another thing is to know properties about a polytope. For example the coordinates of the vertices:
 
 \texttt{polytope > print \$p->VERTICES;}
 
@@ -419,5 +418,9 @@ where in the inequality we have used (\ref{l6:eq4}), and is in $v+2L$, not $0$, 
 
 \end{proof}
 
+% Local Variables: 
+% mode: latex
+% TeX-master: "dag-upc"
+% End: 
 
 
