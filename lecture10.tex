@@ -1,61 +1,6 @@
-\documentclass[12pt,a4paper,oneside]{article}
-\usepackage{amsfonts, amsmath, amssymb,latexsym,amsthm}
-\usepackage[catalan]{babel}
-\usepackage{epsfig}
-\usepackage{graphicx}
-\usepackage{color}
+\chapter{The Magic Theorem}
 
-\parskip=5pt
-\parindent=15pt
-
-\usepackage[margin=1.2in]{geometry}
-
-\usepackage[latin1]{inputenc}
-
-\setcounter{page}{1}
-
-\definecolor{red}{rgb}{1,0,0}
-\definecolor{blue}{rgb}{0,0,1}
-
-\numberwithin{equation}{section}
-\newtheorem{proposicio}{Proposition}
-\newtheorem{corollari}{Corollary}
-\newtheorem*{claim}{Claim}
-\newtheorem*{construction}{Construction}
-
-
-\theoremstyle{definition}
-\newtheorem{problem}{Problem}
-\newtheorem*{solution}{Solution}
-\newtheorem{example}{Example}
-\newtheorem{remark}{Remark}
-\newtheorem{obs}{Observation}
-\newtheorem{observacions}{Observations}
-\newtheorem*{lema}{Lemma}
-\newtheorem*{theorem}{Theorem}
-\newtheorem*{prof}{Proof}
-
-\def\qed{\hfill $\square$}
-
-% --------------------------------------------------
-
-\usepackage{fancyhdr}
-
-\pagestyle{fancy}
-
-\lhead{DAG - MAMME}
-
-\chead{Part 2. Session 10. December 2nd.}
-
-\rhead{Year 2011-2012 Q1}
-
-\cfoot{\thepage}
-
-
-\begin{document}
-
-\bibstyle{plain}
-\date{\today}
+\scribe{Victor Bravo}
 
 Today, we want to prove the Magic Theorem. To do this, we will introduce the language of the CW-Complexes: \newline
 
@@ -96,10 +41,10 @@ Now, what we really wants is apply this to coverings, so, remember: \newline
 In a $k$-fold, covering $\tilde{Q} \rightarrow Q$ of orbifolds, every point in $\vert Q \vert$ has $k$ pre-images. \newline
 \begin{theorem} If $\tilde{Q} \rightarrow Q$ is a $k$-fold covering of orbifolds, then $\chi(\tilde{Q}) = k \chi (Q)$.
 \end{theorem}
-\begin{prof} Remembering session 9, let $y \in U$ be a non-singular point in an orbifold chart, $U$, which corresponds to a some number of points in $V$. \newline
+\begin{proof} Remembering session 9, let $y \in U$ be a non-singular point in an orbifold chart, $U$, which corresponds to a some number of points in $V$. \newline
 The number of pre-images of $y$ in each neighborhood of $\tilde{x}_{i}$ is $\dfrac{\vert G_{x} \vert}{\vert G_{\tilde{x}} \vert}$. \newline
 So, the total number of preimages of $y$ is $$k = \sum_{\tilde{x} \in \Pi ^{-1}(x)} \frac{\vert G_{x} \vert}{\vert G_{\tilde{x}} \vert},$$ which implies that $$\frac{k}{\vert G_{x} \vert} = \sum _{\tilde{x} \in \Pi ^{-1}(x)} \frac{1}{\vert G_{\tilde{x}} \vert}.$$ Now, using that the cells are invariant and $x \mapsto G_{x}$, we have that $$\frac{k}{G_{x}} = \frac{k}{G_{C}}.$$ So, we have that $$k \chi (Q) = \sum_{C \in \mathcal{C}} \frac{k (-1)^{\dim (C)}}{\vert G_{C} \vert} = \sum _{\tilde{C} \in Pi^{-1}(C)} \frac{(-1)^{\dim (C)}}{\vert G_{\tilde{C}} \vert} = \chi (\tilde{Q}),$$ where the last equality holds because $\tilde{C} \in Pi^{-1}(C), \forall C \in \mathcal{C}$, and this sums over all $\tilde{C} \in \vert \tilde{Q} \vert$.
-\end{prof}
+\end{proof}
 \qed
 
 \begin{example} Let's take $\vert Q \vert = \mathbb{D}^{2}$ with $k$ mirrors and $k$ corner reflectors  labeled $m_{1}, \ldots, m_{k}$. \newline
@@ -115,21 +60,9 @@ So, $$\tilde{\chi} = \frac{1}{12} + \frac{1}{4} + \frac{1}{6} - \frac{1}{2} - \f
 What we have to observe here is that seems that we extract something from $2$. In the last example seems that happens the same thing, but there we had a \textcolor{red}{$*$} and all was natural. What happens here is that using $\chi({\mathbb{S}^{2}}) = (-1)^{0} + (-1)^{2} = 2$, we have that if we do a hole over the sphere, we are substracting $1$, because $\chi(\mathbb{S}^{2} \text{ with a hole}) = 1$, and we have the possible \textcolor{red}{$*$}'s covered. So, finally we have that $\tilde{\chi}(Q) = 2 - (\text{cost of the signature})$.
 \end{example}
 
-\end{document}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% Local Variables: 
+% mode: latex
+% TeX-master: "dag-upc"
+% End: 
