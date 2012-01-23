@@ -1,0 +1,135 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{amsfonts, amsmath, amssymb,latexsym,amsthm}
+\usepackage[catalan]{babel}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{color}
+
+\parskip=5pt
+\parindent=15pt
+
+\usepackage[margin=1.2in]{geometry}
+
+\usepackage[latin1]{inputenc}
+
+\setcounter{page}{1}
+
+\definecolor{red}{rgb}{1,0,0}
+\definecolor{blue}{rgb}{0,0,1}
+
+\numberwithin{equation}{section}
+\newtheorem{proposicio}{Proposition}
+\newtheorem{corollari}{Corollary}
+\newtheorem*{claim}{Claim}
+\newtheorem*{construction}{Construction}
+
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{solution}{Solution}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\newtheorem{obs}{Observation}
+\newtheorem{observacions}{Observations}
+\newtheorem*{lema}{Lemma}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{prof}{Proof}
+
+\def\qed{\hfill $\square$}
+
+% --------------------------------------------------
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\lhead{DAG - MAMME}
+
+\chead{Part 2. Session 10. December 2nd.}
+
+\rhead{Year 2011-2012 Q1}
+
+\cfoot{\thepage}
+
+
+\begin{document}
+
+\bibstyle{plain}
+\date{\today}
+
+Today, we want to prove the Magic Theorem. To do this, we will introduce the language of the CW-Complexes: \newline
+
+\underline{CW-COMPLEXES:}
+\begin{obs} The theory of CW-Complexes was developed around 1910 by J.H.\underline{C}. \underline{W}hitehead. Also, the 'C' do refence to 'closed' and the 'W' do reference to 'weak' in the sentence 'closed in the weak topology'. \newline
+We will use CW-Complexes to generalize triangulations of the space.
+\end{obs}
+
+Let $X$ be a topological space. \newline
+We define $X^{0} := 0$-skeleton of $X = \lbrace \text{points in } X \rbrace$. \newline
+Inductively, given the $(n-1)$-skeleton of $X$, take a bunch of $n$-dimensional closed disks ($\equiv$ balls) $e_{1}^{n}, \ldots, e_{r}^{n}$, and we can do the next attaching map $\varphi _{i} : \mathbb{S}^{n - 1} = \partial e_{i}^{n} \longrightarrow X^{n - 1}$. \newline
+$X^{n} := X^{n-1} \stackrel{\bullet}{\bigcup}_{i} e_{i}^{n} / \sim$, where $x \sim \varphi_{i}(x)$. \newline
+Since a $1$-dimensional disk is an interval, taking a set of points in a plane, a $1$-dimensional CW-Complex is a multigraph with loops. \newline
+In dimension $2$, a good example can be to take only the point $p$ as the $0$-skeleton, an empty number of $1$-dimensional balls, and a $2$-dimensional ball (which is a disk). So, we have that the attaching map goes from the boundary of this disk (which is $\partial e^{2} = \mathbb{S}^{1}$) to the lower dimensional skeleton (which is the point $p$). Doing the $\sim$, we get the $2$-dimensional sphere. \newline
+The same example works for any dimension $n$ using stereographic projection. So, we can calculate the number of cells that we need to decomposing $\mathbb{S}^{n}$ as a regular triangulation (regular in the sense of not having identifications on the boundary of the cell and in the sense of the intersection of two faces is empty or a face of both). \newline
+For dimension $0$, we have two points. So, the $f$-vector of $\mathbb{S}^{0}$ is $(2)$ (which means: two $0$-dimensional faces), and we need $(2)$ cells in the CW-complex. \newline
+For dimension $1$, we have $\mathbb{S}^{1}$ and, to do a regular triangulation, we need three different distinguished points. So, the $f$-vector of $\mathbb{S}^{1}$ is $(3, 3)$ (which means: three $0$-dimensional faces and three $1$-dimensional faces), and we need $(1, 1)$ cells in the CW-complex. \newline
+For dimension $2$, we have $\mathbb{S}^{2}$ and, to do a regular triangulation, we need a tetrahedron over the $\mathbb{S}^{2}$ surface. So, the $f$-vector of $\mathbb{S}^{2}$ is formed by $4$ vertices, $\binom{4}{2}$ edges, and $\binom{4}{3}$ faces (triangles). This is $(4, 6, 4)$, and we need $(1, 0, 1)$ cells in the CW-complex. \newline
+For dimension $n$, we have the $n$-dimensional simplex. So, whose $f$-vector is equal to $(n + 1, \binom{n+1}{2}, \binom{n+1}{3}, \ldots, \binom{n+1}{n})$ (that has $2^{n+1}-2$ elements), and we need $(1, 0, \ldots, 0, 1)$ cells in the CW-complex. \newline
+
+To go towards the Magic Theorem, we need to remember the definition of the covering of an orbifold to explain: \newline
+
+\underline{THE ORBIFOLD EULER CHARACTERISTIC:} \newline \newline
+Let be $G$ a group that acts over an orbifold $Q$, $G \circlearrowleft Q$. \newline
+So, taking $x \in Q$, we have that $G_{x} \leq G$ is that we call the stabilizer of $x$. \newline
+What we want to do is to decompose $Q$ as a CW-complex into invariant cells, i.e., into a collection, $\mathcal{C}$, of cells such that the function $x \mapsto G_{x}$ is constant on each cell, $C \in \mathcal{C}$ (observe that $C^{0} \subset C$). \newline
+An example of this is to take $\vert Q \vert = \mathbb{D}^{2}$ and $G$ as the abstract group $G = \lbrace e = id, g, g^{2} \rbrace = \mathbb{Z}_{3}$, where $g$ represents a rotation of $\frac{2 \pi}{3}$ (this is the same that to think in $G$ as the spherical group formed by two rotation points of order three). Now, we want to decompose this as a CW-manifold into cells such that the stabilizing subgroup is constant. We have two differents types of points that we resume as points $y$, which are rotation points, and points $x$ which are not rotation points. Now, the stabilizing group of the points $x$ is $G_{x} = \lbrace e \rbrace$, and the stabilizing group of the points $y$ is $G_{y} = G$. So now, we will have to decompose this disk as a CW-complex made-up of invariant cells. To do this, we have to leave one of the rotation points in the interior of the disk, the other rotation point over the boundary of the disk, and add two new points over the boundary of the disk. \newline
+Now, we define the \textsl{Euler Characteristic of an orbifold} as $$\chi (Q) = \sum_{C \in \mathcal{C}} \frac{(-1) \dim C}{\# G_{C}}.$$
+To see that this definition works, we have to check two things. \newline
+The first thing is that this defition is an application of the original Euler Characte-ristic that works over orbifolds in the same sense of the original works over simplicial complexes, where the original Euler Characteristic is defined as the alternating sum of the $f$-vector of the simplicial complex.
+\begin{example} Taking the simplicial complex formed by the three vertices, the three edges and the face of a triangle (i.e., a $2$-dimensional ball), we have to sum $1(-1)^{2}$ for the face, $3(-1)^{1}$ for the edges, $3(-1)^{0}$ for the vertices and $1(-1)^{-1}$ for the $\emptyset$, which gives us $\chi = 0$. \newline
+In the same way, if we take the simplicial complex formed by the three vertices, the three edges of a triangle, this gives us $\chi = -1$. \newline
+\end{example}
+
+This works for any regular triangulation, so, if works for orbifolds. \newline
+The second thing to check is that this formula works for the group, but in the case of having a simplicial complex there is no group, or in other words, we have only the identity. So, it works for the group. \newline
+Now, what we really wants is apply this to coverings, so, remember: \newline
+In a $k$-fold, covering $\tilde{Q} \rightarrow Q$ of orbifolds, every point in $\vert Q \vert$ has $k$ pre-images. \newline
+\begin{theorem} If $\tilde{Q} \rightarrow Q$ is a $k$-fold covering of orbifolds, then $\chi(\tilde{Q}) = k \chi (Q)$.
+\end{theorem}
+\begin{prof} Remembering session 9, let $y \in U$ be a non-singular point in an orbifold chart, $U$, which corresponds to a some number of points in $V$. \newline
+The number of pre-images of $y$ in each neighborhood of $\tilde{x}_{i}$ is $\dfrac{\vert G_{x} \vert}{\vert G_{\tilde{x}} \vert}$. \newline
+So, the total number of preimages of $y$ is $$k = \sum_{\tilde{x} \in \Pi ^{-1}(x)} \frac{\vert G_{x} \vert}{\vert G_{\tilde{x}} \vert},$$ which implies that $$\frac{k}{\vert G_{x} \vert} = \sum _{\tilde{x} \in \Pi ^{-1}(x)} \frac{1}{\vert G_{\tilde{x}} \vert}.$$ Now, using that the cells are invariant and $x \mapsto G_{x}$, we have that $$\frac{k}{G_{x}} = \frac{k}{G_{C}}.$$ So, we have that $$k \chi (Q) = \sum_{C \in \mathcal{C}} \frac{k (-1)^{\dim (C)}}{\vert G_{C} \vert} = \sum _{\tilde{C} \in Pi^{-1}(C)} \frac{(-1)^{\dim (C)}}{\vert G_{\tilde{C}} \vert} = \chi (\tilde{Q}),$$ where the last equality holds because $\tilde{C} \in Pi^{-1}(C), \forall C \in \mathcal{C}$, and this sums over all $\tilde{C} \in \vert \tilde{Q} \vert$.
+\end{prof}
+\qed
+
+\begin{example} Let's take $\vert Q \vert = \mathbb{D}^{2}$ with $k$ mirrors and $k$ corner reflectors  labeled $m_{1}, \ldots, m_{k}$. \newline
+If we compute de signature of this, we have no blue part because there are not rotation points. Then, we have a \textcolor{red}{$*$}, and we can take, for example, the signature \textcolor{red}{$*632$}. So, we have one point, $A$, with $6$ mirrors through it, another point, $C$, with $3$ mirrors through it, and another point, $B$, with $2$ mirrors through it. Now, if we go down to the orbifold (taking one copy of every mirror), we have $3$ mirrors in the orbifold. So, $k = 3$. Now, we want to cellulate this CW-complex such that every cell in the CW-complex has the same stabilizer. Since, $A$ is stabilized by the subgroup $D_{6}$, $B$ is stabilized by the subgroup $D_{2}$, and $C$ is stabilized by the subgroup $D_{3}$, we can compute the Orbifold Euler Characteristic. \newline
+We have, for dimension $0$, $$\frac{(-1)^{0}}{\vert D_{6} \vert} + \frac{(-1)^{0}}{\vert D_{2} \vert} + \frac{(-1)^{0}}{\vert D_{3} \vert},$$ for dimension $1$, $$\frac{(-1)^{1}}{\vert \mathbb{Z}_{2} \vert} + \frac{(-1)^{1}}{\vert \mathbb{Z}_{2} \vert} + \frac{(-1)^{1}}{\vert \mathbb{Z}_{2} \vert},$$ and for dimension $2$, $$\frac{(-1)^{2}}{\vert \lbrace e \rbrace \vert}.$$ \newline
+So, $$\tilde{\chi} = \frac{1}{12} + \frac{1}{4} + \frac{1}{6} - \frac{1}{2} - \frac{1}{2} - \frac{1}{2} + \frac{1}{1} = 0.$$
+\end{example}
+
+\begin{example} Doing the same example with any $k$ corner reflectors using the notation $m_{i}$ to note the number of mirrors through the corner $i$, we will have $$\tilde{\chi} = \sum_{i = 1}^{k} \frac{1}{2 m_{i}} - \frac{k}{2} + 1 = \frac{1}{2} \sum_{i = 1}^{k} \left(\frac{1}{m_{i}}\right) + 1 = 1 - \sum_{i=1}^{k} \frac{m_{i} - 1}{2 m_{i}}.$$ So, if we get a disk, it has this Euler Characteristic.
+\end{example}
+
+\begin{example} Now, an example with true-blue signature (which means that we have only rotation points). Let's take $\vert Q \vert = \mathbb{S}^{2}$, and $l$ cone points labeled $n_{1}, \ldots, n_{l}$. Let's take, for example, \textcolor{blue}{$532$} over $\mathbb{S}^{2}$. So, we have a sphere and three cone points. The first thing we've got to do is to cellulate the sphere as a CW-complex such that each cell has constant stabilizer. So, it seems very clear that we are going to use $0$-dimensional vertices at the cone points. So, the stabilizing subgroup is $C_{5}$ for one point, $C_{3}$ for another point, and $C_{2}$ for another point. In the same way, the stabilizing subgroup of the edges that goes from one point to another is $\lbrace e \rbrace$, and also for the face, the subgroup is $\lbrace e \rbrace$. So, we have that $$\tilde{\chi} = \frac{(-1)^{0}}{5} + \frac{(-1)^{0}}{3} + \frac{(-1)^{0}}{2} - 1 - 1 - 1 + 1 + 1 = \sum_{i = 1}^{l} \frac{1}{n_{i}} - l + 2 = 2 - \sum_{i = 1}^{l} \frac{n_{i} - 1}{n_{i}}.$$
+What we have to observe here is that seems that we extract something from $2$. In the last example seems that happens the same thing, but there we had a \textcolor{red}{$*$} and all was natural. What happens here is that using $\chi({\mathbb{S}^{2}}) = (-1)^{0} + (-1)^{2} = 2$, we have that if we do a hole over the sphere, we are substracting $1$, because $\chi(\mathbb{S}^{2} \text{ with a hole}) = 1$, and we have the possible \textcolor{red}{$*$}'s covered. So, finally we have that $\tilde{\chi}(Q) = 2 - (\text{cost of the signature})$.
+\end{example}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
