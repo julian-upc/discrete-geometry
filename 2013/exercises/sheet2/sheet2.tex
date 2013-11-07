@@ -4,6 +4,8 @@
 \usepackage{paralist}
 \usepackage{url}
 \usepackage{nopageno}
+\usepackage{graphicx}
+\usepackage{bbm}
 
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cS}{\mathcal{S}}
@@ -48,13 +50,21 @@
 \section*{Writing}
 
 \begin{enumerate}
-\item Show that all induced cycles of length $3$, $4$ and $5$ in the graph of a simple
-$d$-polytope~$P$ are graphs of $2$-faces of $P$. Conclude that the
-Petersen graph is not the graph of any polytope (of any dimension).
+\item Show that all induced cycles of length $3$, $4$ and $5$ in the graph of a simple $d$-polytope~$P$ are graphs of $2$-faces of $P$.
+Conclude that the Petersen graph is not the graph of any polytope (of any dimension).
 
 (\emph{Hint for $5$-cycles:} First show this for $d=3$, then prove
 that any $5$-cycle in a simple polytope is contained in some $3$-face,
 and use that a face of a simple polytope is simple.)
+
+\item Let $n\in\mathbbm{N}$ be an integer and $S$ denote a subset of
+  $\{1,2,\dots,\lfloor\frac{n}{2}\rfloor\}$.  
+  The \emph{circulant graph} $\Gamma_n(S)$ is the graph whose vertex set is $\mathbbm{Z}_n$, and whose edge set is the set of pairs of vertices whose difference lies in $S\cup (-S)$. 
+
+The following figure collects all connected circulant graphs on up to $8$~vertices. Determine the \emph{polytopality range} of each of these graphs, i.e., the set of integers~$d$ such that the graph in question is the graph of a $d$-dimensional polytope.
+
+\bigskip
+\includegraphics[width=\linewidth]{circulant}
 \end{enumerate}
 
 \bigskip
