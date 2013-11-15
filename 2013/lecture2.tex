@@ -2,6 +2,7 @@
 
 \scribe{Cecilia Gir\'on}
 
+\section{The Unimodality Conjecture}
 In this section we are going to study the \textit{unimodality conjecture} which says that there exists an $l = P(L)\in\mathbb{N}$ such that $f_0\leq f_1 \leq \cdots\leq f_l \leq f_{l+1}\leq \cdots \leq f_{d-1}\leq f_d$. We woould like to know if it is true. 
 
 First, we define the \textbf{$f$-vector} as the vector of the form $(f_0,f_{1},\cdots,f_{d-1})$ where $f_i$ is as defined before in (\ref{eq1}). We will say that it is a \textbf{flag $f$-vector} $(f_s)_s = [d]$ such that $f_s$ count the number of flags $F_{i_1} \subset F_{i_2} \subset \cdots \subset F_{i_k}$ where $s = \{i_1,i_2,\cdots, i_k \}$ and $\dim F_{i_k} = i_k$ \footnote{You can also read about $cd$-index}.
@@ -19,8 +20,10 @@ Intuitively we are sure that there is no way this conjecture could be false, but
 
 \bigskip
 
-\textbf{Exercises done during the lecture 11/11/2013. Each one includes one}
-\textbf{Exercise 2b} (Borja and Cecilia). \textit{Using the simple form $n!\approx \left(\frac{n}{e}\right)^n$ of Stirling's formula, show that $\psi_d(x) : = d(1-x)+ \log  \binom {d} {xd}$ is asymptotically proportional to $1-x-x\log x - (1-x)\log(1-x)$, where  $\log = \log_2$ denotes the binary logarithm. Find an approximation to the maximum of this function on $(0,1)$}.
+\subsection{Exercises worked on during the lecture 11/11/2013. Each team includes one}
+
+\begin{description}
+\item[Exercise 2b (Borja and Cecilia)] \textit{Using the simple form $n!\approx \left(\frac{n}{e}\right)^n$ of Stirling's formula, show that $\psi_d(x) : = d(1-x)+ \log  \binom {d} {xd}$ is asymptotically proportional to $1-x-x\log x - (1-x)\log(1-x)$, where  $\log = \log_2$ denotes the binary logarithm. Find an approximation to the maximum of this function on $(0,1)$}.
 
 \bigskip
 For the first part of the exercise, by applying the Stirling's formula, in the binomial for of the given function:
@@ -49,7 +52,7 @@ Now the points that make $f'(x)=0$ are the ones that make $\log(\frac{1-x}{x})=1
 x_{\max}=\frac{1}{e+1}
 \end{equation*}
 The shape of this function is a growing function from $x=0$ starting at $f(0)=1$ to $x=x_{\max}$, where it gets it's maximum, that is approximated by $f(x_max)\approx1.0414$  and then decreases to $0$ at $x=1$.
-
+\end{description}
 
 \section{Operations on polytopes}
 \begin{itemize}
