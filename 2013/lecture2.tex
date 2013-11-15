@@ -20,6 +20,35 @@ Intuitively we are sure that there is no way this conjecture could be false, but
 \bigskip
 
 \textbf{Exercises done during the lecture 11/11/2013. Each one includes one}
+\textbf{Exercise 2b} (Borja and Cecilia). \textit{Using the simple form $n!\approx \left(\frac{n}{e}\right)^n$ of Stirling's formula, show that $\psi_d(x) : = d(1-x)+ \log  \binom {d} {xd}$ is asymptotically proportional to $1-x-x\log x - (1-x)\log(1-x)$, where  $\log = \log_2$ denotes the binary logarithm. Find an approximation to the maximum of this function on $(0,1)$}.
+
+\bigskip
+For the first part of the exercise, by applying the Stirling's formula, in the binomial for of the given function:
+\[\binom{d}{xd} = \left(\frac{d}{xd^x (d(1-x))^{1-x}}\right)^d\]
+
+Then, substituting in $\psi_d(x)$:
+
+\begin{eqnarray*}
+\psi_d(x) &=& d(1-x) + \log \left(\frac{d}{xd^x (d(1-x))^{1-x}}\right)^d \\
+&=& d(1-x) + d\left(\log{d} - x\log{x} - x\log{d} - (1-x)\log{d} - (1-x) \log{(1-x)}\right)\\
+&=& d (1-x-x\log x - (1-x)\log(1-x))
+\end{eqnarray*}
+Hence, $\psi_d(x)$ is asymptotically proportional to $1-x-x\log x - (1-x)\log(1-x)$
+\bigskip
+
+For the second part of the exercise, in order to find the maximum of the function
+\begin{equation*}
+f(x)=1-x-x\log(x)-(1-x)\log(1-x)
+\end{equation*}
+in (0,1) we will the points that have first derivative equal to 0, that is $x$ such that $f'(x)=0$, and computing $f'(x)$ we get:
+\begin{equation*}
+f'(x)=-1-(\log x+1)-(-\log(1-x)-1)=\log\left(\frac{1-x}{x}\right)-1
+\end{equation*}
+Now the points that make $f'(x)=0$ are the ones that make $\log(\frac{1-x}{x})=1$, which is the same as $x$ such that $\frac{1-x}{x}=e$, which translates into:
+\begin{equation*}
+x_{\max}=\frac{1}{e+1}
+\end{equation*}
+The shape of this function is a growing function from $x=0$ starting at $f(0)=1$ to $x=x_{\max}$, where it gets it's maximum, that is approximated by $f(x_max)\approx1.0414$  and then decreases to $0$ at $x=1$.
 
 
 \section{Operations on polytopes}
