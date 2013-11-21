@@ -1,0 +1,25 @@
+Write code to output the directed graph of a polytope such that a
+given face is the initial set.
+
+input: 
+  polytope P
+  face F     
+
+output: directed graph such that F is the initial set of the
+orientation
+
+the orientation of the graph is to be given by an objective function
+that selects F
+
+implementation:
+
+  - given P and G, calculate a linear objective function that selects
+    G
+
+to do this, enumerate all facets F that contain G, 
+and calculate their normal vectors n_F, 
+and calculate a positive linear combination of all n_F,
+for example, their sum.
+
+    in a different function,
+  - orient the graph of P with respect to this objective function.
