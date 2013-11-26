@@ -23,30 +23,28 @@ namespace polymake { namespace polytope {
 
 Vector<Rational> face_selector(perl::Object P, const Set<int>& G)
 {
-    const IncidenceMatrix<> VIF = P.give("VERTICES_IN_FACETS");
-    
-    // which facets contain G?
-    Set<int> star_of_G;
+    const IncidenceMatrix<> VIF   = P.give("VERTICES_IN_FACETS");
+    const Matrix<Rational> facets = P.give("FACETS");
+    const int ambient_dim = facets.cols();
+
+    // sum the normal vectors corresponding to the facets containing G
+    Vector<Rational> selector(ambient_dim);
     int i(0);
     for (Entire<Rows<IncidenceMatrix<> > >::const_iterator rit = entire(rows(VIF)); !rit.at_end(); ++rit, ++i) {
 	const Set<int> F(*rit);
 	if (incl(G,F) == -1)
-	    star_of_G += i;
+	    selector += facets[i];
     }
-    
-    // now sum the normal vectors corresponding to the facets containing G
-    const Matrix<Rational> facets = P.give("FACETS");
-    Vector<Rational> selector(facets.cols());
-    for (Entire<Set<int> >::const_iterator sit = entire(star_of_G); !sit.at_end(); ++sit) 
-	selector += facets[*sit];
 
-    return selector;
+    return (selector == zero_vector<Rational>(ambient_dim)) 
+	? unit_vector<Rational>(ambient_dim, 0)
+	: selector;
 }
 
 UserFunction4perl("# @category Producing from scratch"
-                  "# Produce a linear objective function that selects a given face F."
+                  "# Produce a linear objective function that selects the smallest face containing G."
                   "# @param Polytope P "
-                  "# @param Set G indices of the face"
+                  "# @param Set G index set"
                   "# @return Vector",
                   &face_selector, "face_selector(Polytope, Set)");
 
