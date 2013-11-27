@@ -108,21 +108,18 @@ An other property that can be studied about the faces of convex polytopes is whe
 (1 : 0 : 0 : 1 : 1 : 0)
 (1 : 0 : 0 : 1 : 0 : 1)
 \end{verbatim}
-If we look at the first four vertices, they form a square in $\mathbb{R}^3$ and together with the next vertex, a pyramid. The other two points have non-zero coordinates in dimension 4 and 5.
-
-If we put these points in Polymake:
+And this can be obtained as the join of a 2-cube with a 2-simplex. If construct that in Polymake:
 \begin{verbatim}
-polytope > $p = new Polytope<Rational>;
+polytope > $p = join_polytopes(cube(2), simplex(2));
 
-polytope > $p->POINTS = <<".";
-polytope (2)> 1 -1 -1 -1 0 0
-polytope (3)> 1 1 -1 -1 0 0
-polytope (4)> 1 -1 1 -1 0 0
-polytope (5)> 1 1 1 -1 0 0
-polytope (6)> 1 0 0 1 0 0
-polytope (7)> 1 0 0 1 1 0
-polytope (8)> 1 0 0 1 0 1
-polytope (9)> .
+polytope > print($p->VERTICES);
+1 -1 -1 -1 0 0
+1 1 -1 -1 0 0
+1 -1 1 -1 0 0
+1 1 1 -1 0 0
+1 0 0 1 0 0
+1 0 0 1 1 0
+1 0 0 1 0 1
 \end{verbatim}
 
 Thus, we can use the program to see the number of facets and the vertices in each facet:
