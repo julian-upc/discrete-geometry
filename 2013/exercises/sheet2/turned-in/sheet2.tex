@@ -1,0 +1,123 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+%opening
+\title{Exercise}
+\author{Daniel Torres Moral}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm,epsfig,epstopdf,fontenc,graphicx,natbib,url,array}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{obs}[theorem]{Observation}
+
+\newcommand{\st}{ \; \left| \right. \;}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\begin{document}
+
+  \maketitle
+  
+  \section{Exercices}
+  
+  \renewcommand{\theenumi}{(\arabic{enumi})}
+  \begin{enumerate}
+    \item Show that a face $F$ of a polytope $P$ is exactly the convex hull of all vertices of $P$ contained in $F$. In particular, $p$ jas only finitely many faces.
+    
+    \paragraph{Solution}
+    
+    \begin{obs}
+      The convex hull of a point set laying in a affine space lays in this affine space.
+    \end{obs}
+    
+    \begin{obs}
+      Let  $F = \{ x \st a x = b \} \cap P$ be a face. Then the convex hull of its vertices lays in $F$.
+    \end{obs}
+
+    \begin{prop}
+      Let $F = \{ x \st a x = b \} \cap P$ be a face. Then $F$ lays in the convex hull of their vertices.
+    \end{prop}
+    
+    \begin{proof}
+      If $F = \emptyset$ it is clear.
+      
+      Let be $p \in F$. Then, $p\in P$, so $p$ can be written as $ p_{i_1}\lambda_{i_1} + \dots + p_{i_k} \lambda_{i_k}$ for some $k>0$, where $p_{i_j}$ are vertices of $P$, $\lambda_{i_j} > 0$ and $\sum_j \lambda_{i_j} = 1$.
+      
+      By definition of face, we have all vertices of $P$ in $F$ $p_i$ satisfy $a p_i = b$, and all vertices of $P$ not in $F$ satisfy $a p_i < b$. Then, by linearity we have that:
+      
+      \begin{displaymath}
+        a p = a ( p_{i_1}\lambda_{i_1} + \dots + p_{i_k} \lambda_{i_k} ) \leq ( \sum_j \lambda_{i_j}) b = b 
+      \end{displaymath}
+
+      with equality if and only if all $p_{i_j}$ are vertices of $P$ in $F$. As $p\in F$, the equality is required. Thus, $p$ is in the convex hull of vertices of $P$ in the face $F$.
+      
+    \end{proof}
+
+    \item Let $P\subset\R^d$, $Q\subset\R^e$ be two non-empty polytopes. Prove that the set of faces of the cartesian product polytope $P\times Q=\{(p,q)\in\R^{d+e}:p\in P,\; q\in Q\}$ exactly equals $\{F\times G: F\text{ is face of }P, \;G\text{ is face of }Q\}$. Conclude that
+\[
+    f_k(P\times Q)
+    \ = \
+    \sum_{%\substack{
+      i+j=k,\;i,j\ge0}f_i(P) f_j(Q)
+    \qquad
+    \text{for } k\ge0.
+\]
+
+
+    \paragraph{Solution}
+    
+    Let $F = \{ x \st a_F x = b_F \} \cap P$ and $ G = \{ x \st a_G x = b_G\} \cap Q$ be faces of $P$ and $Q$ respectively.
+    
+    Then, by linearity, we have:
+    
+    \begin{displaymath}
+      \begin{array}{ccc}
+        F \times G &  = & \left(\{ x \st a_F x = b_F \} \cap P\right) \times \left( \{ x \st a_G x = b_G\} \cap Q \right) \\
+         & = &  \left( \{ x \st a_F x = b_F \} \times \{ x \st a_G x = b_G\}\right) \cap \left(P\times Q\right)\\
+         & = &  \{ x \st a_F\oplus a_G x = b_F + b_G\} \cap P \times Q
+      \end{array}
+    \end{displaymath}
+    
+%     \begin{align*}
+%              F \times G &  =  \left(\{ x \st a_F x = b_F \} \cap P\right) \times \left( \{ x \st a_G x = b_G\} \cap Q \right) \\
+%          & =   \left( \{ x \st a_F x = b_F \} \cap \{ x \st a_G x = b_G\}\right) \cap \left(P\times Q\right)\\
+%          & =   \{ x \st a_F\oplus a_G x = b_F + b_G\} \cap P \times Q
+%     \end{align*}
+
+
+    Using the same arguments for the inequalities we obtain:
+    \begin{displaymath}
+       \{ x \st a_F\oplus a_G x \leq b_F + b_G\} \supset P\times Q
+    \end{displaymath}
+    
+    thus $F\times Q$ is a face of $P\times Q$.
+
+    Conversely, if we have a face $H = \{ x \st a x = b\} \cap P\times Q$, let us define $a_F \in (\R^d)^*$ and $a_G\in (\R^e)^*$ as the only ones such that $a = a_F \oplus a_G$. Let us note in the same way the covectors $a_F \oplus 0$ and $ 0 \oplus a_G$.
+    
+    If the face is empty (or total), we have it is the cartesian product of empty (total) faces of $P$ and $Q$. Otherwise:
+    
+    Then or $a_F$ or $a_G$ is different from zero. Let us suppose without losing of generality that $a_F\neq0$.
+    
+    As $P$ is compact, it is bounded. Then, exists $b_F\in\R$ such that $F := \{x \st a_Fx = b_F\}\cap P$ is a non-empty face of $P$. Then let us call $b_G := b - b_F$.
+    
+    Then, for all $x_F\oplus x_G\in H$, $x_F \in F$. Let us prove it:
+    
+    If $x_F \notin F$, as $x_F\in P$, then $a_F x_F \neq b_F$. If $a_F x_F < b_F$, take a point $x_F'\in F$. Then $a (x_F' \oplus x_G) > b$, so $H$ is not a face. Otherwise, if $a_F x_F > b_F$, then $a (x_F' \oplus x_G) < b$, but $x_F'$ maximizes $a_F$ in $P$, so $H$ still being not a not-empty face. So $x_F \in F$. Visually, we are saying that a ``tangent plane'' must be ``tangent in every dimension''.
+    
+    Finally, note that for all $x_F\oplus x_G\in H$, as $a_F x_F = b_F$, $a_G x_G = b_G$. The same fact is used to show that the set $G:=\{x \st a_G x_G = b_G\}\cap Q$ is a face of $Q$ and the projection of all points of $H$ in $Q$ is in $G$. Observe that in this case no matters if $a_G = 0$ or not; if $a_G = 0$ then $G = Q$ since $H\neq \emptyset$.
+    
+    Then we have seen that faces of the product are product of faces. By exercise one, it follows that dimension is sum of dimensions.
+    
+    
+    
+  \end{enumerate}
+
+\end{document}
