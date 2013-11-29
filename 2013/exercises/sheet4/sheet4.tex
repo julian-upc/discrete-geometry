@@ -54,17 +54,41 @@
 \section*{Writing}
 
 \begin{enumerate}
-\setlength{\itemsep}{2ex}
-\item
+\setlength{\itemsep}{1ex}
+\item 
+    \begin{itemize}
+    \item The $(d,k)$-\emph{hypersimplex} is the polytope $\Delta(d,k)=\Box_0^d\cap H_k$, where $\Box_0^d$ is the cube $\Box_0^d = \{x\in\R^d: 0\le x_i\le 1\text{ for all }i\in[d]\}$, and
+$H_k=\{x\in\R^d:\sum_{i=1}^d x_i = k\}$.
+\item $\Delta'(d,k)=\Box_0^d\cap S_k$, where $S_k$ is the slab $\{x\in\R^d : k-1\le\sum_{i=1}^d x_i \le k\}$.
+\item Analogously, define $\Sigma(d,k)=\Delta^d\cap H_k$, where $\Delta^d=\conv\{0,e_1,\dots,e_1+\dots+e_d\}$, and $\Sigma'(d,k) = \Delta^d\cap S_k$.
+\item A polytope $P$ is \emph{$\ell$-simplicial} if all $\ell$-dimensional faces of~$P$ are simplices.
+\item $P$ is \emph{$\ell$-simple} if all $\ell$-dimensional faces of the polar polytope~$P^\Delta$ are simplices.
+    \end{itemize}
 
-  \begin{quote}\small
-    The $(k,d)$-\emph{hypersimplex} is the polytope
-    $\Box_0^d\cap\{x\in\R^d:\sum_{i=1}^d x_i = k\}$, where $\Box_0^d$
-    is the $0/1$-cube $\Box_0^d = \{x\in\R^d: 0\le x_i\le 1\text{ for
-      all }i\in[d]\}$. 
-    A $d$-polytope $P$ is \emph{$k$-simplicial} if all $k$-dimensional faces of~$P$ are simplices. 
-$P$ is \emph{$k$-simple} if all $k$-dimensional faces of the polar polytope~$P^\Delta$ are simplices. 
-  \end{quote}
+
+\bigskip
+\begin{enumerate}
+\setlength{\itemsep}{1ex}
+\item \emph{``All faces of hypersimplices are hypersimplices''.} True or false? 
+
+\item \emph{``All faces of a $\Sigma(d,k)$ are of the form $\Sigma(d',k')$''.} True or false? 
+
+\item Calculate $f_0$ and $f_{d-1}$ for $\Delta(d,k)$, $\Delta'(d,k)$, $\Sigma(d,k)$ and $\Sigma'(d,k)$.
+
+\item Is there any relationship between $\Delta(d,k)$ and $\Delta'(d',k')$?
+
+\item Is there any relationship between $\Sigma(d,k)$ and $\Sigma'(d',k')$?
+
+\item For each triple $(k,\ell,d)$ with $0\le k,\ell\le d$, decide the truth of the following statements, where $P$ is, in turn, $\Delta(d,k)$, $\Delta'(d,k)$, $\Sigma(d,k)$ and $\Sigma'(d,k)$:
+
+  \begin{inparaenum}
+  \item $P$ is $\ell$-simplicial;
+  \item $P$ is $\ell$-simple; 
+  \item $P$ is $\ell$-neighborly.
+  \end{inparaenum}
+\end{enumerate}
+
+\item Let $R$ be an integral rectangle whose edges are parallel to the coordinate axes in $\R^2$, and let $T$ be a rectangular triangle two of whose edges are parallel to the coordinate axes. Show that Pick's Theorem holds for $R$ and $T$.
 \end{enumerate}
 
 % \bigskip
