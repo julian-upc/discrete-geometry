@@ -98,6 +98,69 @@ An other property that can be studied about the faces of convex polytopes is whe
 \subsection{Exercises done during the lecture 8/11/2013. Each one includes one}
 
 \begin{description}
+\item [Alex Alvarez.] The set of vertices is the following:
+\begin{verbatim}
+(1 : -1 : -1 : -1 : 0 : 0)
+(1 : 1 : -1 : -1 : 0 : 0)
+(1 : -1 : 1 : -1 : 0 : 0)
+(1 : 1 : 1 : -1 : 0 : 0)
+(1 : 0 : 0 : 1 : 0 : 0)
+(1 : 0 : 0 : 1 : 1 : 0)
+(1 : 0 : 0 : 1 : 0 : 1)
+\end{verbatim}
+And this can be obtained as the join of a 2-cube with a 2-simplex. If we construct that in Polymake:
+\begin{verbatim}
+polytope > $p = join_polytopes(cube(2), simplex(2));
+
+polytope > print($p->VERTICES);
+1 -1 -1 -1 0 0
+1 1 -1 -1 0 0
+1 -1 1 -1 0 0
+1 1 1 -1 0 0
+1 0 0 1 0 0
+1 0 0 1 1 0
+1 0 0 1 0 1
+\end{verbatim}
+
+Thus, we can use the program to see the number of facets and the vertices in each facet:
+
+\begin{verbatim}
+polytope > print $p->N_FACETS;
+polymake: used package cddlib
+  Implementation of the double description method of Motzkin et al.
+  Copyright by Komei Fukuda.
+  http://www.ifor.math.ethz.ch/~fukuda/cdd_home/cdd.html
+
+polymake: used package lrslib
+  Implementation of the reverse search algorithm of Avis and Fukuda.
+  Copyright by David Avis.
+  http://cgm.cs.mcgill.ca/~avis/lrs.html
+
+7
+polytope > print $p->POINTS_IN_FACETS;
+{0 2 4 5 6}
+{0 1 4 5 6}
+{1 3 4 5 6}
+{2 3 4 5 6}
+{0 1 2 3 5 6}
+{0 1 2 3 4 6}
+{0 1 2 3 4 5}
+\end{verbatim}
+
+If we focus now in the graph of the polytope, we can check the number of edges and we can also see it:
+\begin{verbatim}
+polytope > print $p->GRAPH->N_NODES;
+7
+polytope > print $p->GRAPH->N_EDGES;
+19
+polytope > print $p->GRAPH->VISUAL;
+\end{verbatim}
+
+\begin{figure}[!h]
+\centering \includegraphics[width=\textwidth]{alex-alvarez-exercise-graph}
+\caption{The graph of the polytope}
+\end{figure}
+Therefore, we can see that the last two vertices are not connected, but they are connected to all the other vertices.
 \item[Exercise ?? (team members)] 
 \end{description}
 

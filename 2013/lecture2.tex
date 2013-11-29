@@ -23,6 +23,39 @@ Intuitively we are sure that there is no way this conjecture could be false, but
 \subsection{Exercises worked on during the lecture 11/11/2013. Each team includes one}
 
 \begin{description}
+\item[Exercise 1b (Alex Alvarez and Ivan Geffner)] \textit{Using the simple form $n! \approx \left(\frac{n}{e}\right)^n$ of Stirling's formula, show that $\phi_d(x) := \log\left(\frac{d}{xd}\right)$ is asymptotically proportional to $-x\log x - (1 - x)\log(1 - x)$, for $x\in (0,1)$ and $d \rightarrow \infty$. Discuss the real function $\phi_d$ on $[0,1]$.}
+
+\bigskip
+Using the simple form of Stirling's formula, we obtain the following form:
+
+\begin{equation*}
+{d \choose xd} \approx \frac{d^d}{xd^{xd}(d - xd)^{d - xd}}
+\end{equation*}
+
+So applying the logarithm, we get
+
+\begin{eqnarray*}
+\phi_d(x) &=& d\log d - xd\log xd - (d - xd)\log (d - xd) \\
+&=& d\log d - xd\log x - xd\log d - (d - xd)(\log d + \log (1 - x)) \\
+&=& d(-x\log x - (1 - x)\log (1 - x))
+\end{eqnarray*}
+
+Thus, the first part of the exercise is proven. Let us study now the shape of the function. 
+
+The function clearly vanishes when $x$ tends to 0 and 1 and in this interval is non-negative. The first derivative of the function is
+
+\begin{equation*}
+\frac{d}{dx}(-(1-x) \log(1-x)-x \log(x)) = \log(1-x)-\log(x)
+\end{equation*}
+
+and therefore, there is only one point in which derivative vanishes, that is $x = \frac{1}{2}$. Now, the second derivative is 
+
+\begin{equation*}
+\frac{d^2}{dx^2}\log(1-x)-\log(x) = \frac{1}{x(x - 1)}
+\end{equation*}
+
+We can conclude then that the point is a maximum, so we have characterized the shape of the function.
+
 \item[Exercise 2b (Borja and Cecilia)] \textit{Using the simple form $n!\approx \left(\frac{n}{e}\right)^n$ of Stirling's formula, show that $\psi_d(x) : = d(1-x)+ \log  \binom {d} {xd}$ is asymptotically proportional to $1-x-x\log x - (1-x)\log(1-x)$, where  $\log = \log_2$ denotes the binary logarithm. Find an approximation to the maximum of this function on $(0,1)$}.
 
 \bigskip
