@@ -15,6 +15,8 @@
 \newcommand{\Z}{\mathbbm{Z}}
 
 \DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\LL}{\mathsf{L}}
+\DeclareMathOperator{\Ehr}{\mathsf{Ehr}}
 
 \begin{document}
 \begin{center}
@@ -51,7 +53,7 @@
 
 %\bigskip
 %\bigskip
-\section*{Writing}
+%\section*{Writing}
 
 \begin{enumerate}
 \setlength{\itemsep}{1ex}
@@ -79,16 +81,36 @@ $H_k=\{x\in\R^d:\sum_{i=1}^d x_i = k\}$.
 
 \item Is there any relationship between $\Sigma(d,k)$ and $\Sigma'(d',k')$?
 
-\item For each triple $(k,\ell,d)$ with $0\le k,\ell\le d$, decide the truth of the following statements, where $P$ is, in turn, $\Delta(d,k)$, $\Delta'(d,k)$, $\Sigma(d,k)$ and $\Sigma'(d,k)$:
+\item For each triple $(k,\ell,d)\in\N^3$ with $0\le k,\ell\le d$, decide the truth of the following statements, where $P$ is, in turn, $\Delta(d,k)$, $\Delta'(d,k)$, $\Sigma(d,k)$ and $\Sigma'(d,k)$:
 
   \begin{inparaenum}
   \item $P$ is $\ell$-simplicial;
   \item $P$ is $\ell$-simple; 
   \item $P$ is $\ell$-neighborly.
   \end{inparaenum}
+
+\emph{Hint:} Use \texttt{polymake} for some small cases, and extrapolate using (a), (b).
 \end{enumerate}
 
 \item Let $R$ be an integral rectangle whose edges are parallel to the coordinate axes in $\R^2$, and let $T$ be a rectangular triangle two of whose edges are parallel to the coordinate axes. Show that Pick's Theorem holds for $R$ and $T$.
+
+\item
+  \begin{enumerate}
+  \item For any $a,b,c,d\in\N$, consider the line segment $S=\conv\{(a,b),(c,d)\}$. Prove that the number of integer points on $S$ is $\gcd(a-c, b-d) + 1$.
+  \item For any two fixed positive integers $a,b$, let $T$ be the lattice triangle with vertices $(0,0)$, $(a,0)$, $(0,b)$. 
+
+\begin{enumerate}
+\item\label{ex2:i} Compute $\LL_T(t)$ and $\Ehr_T(z)$.
+\item Use (i) to derive the following formula for the greatest common divisor of $a$ and $b$:
+\[
+   \gcd(a,b) 
+   \ = \
+   2\sum_{k=1}^{b-1}\left\lfloor\frac{ka}{b}\right\rfloor 
+   + a + b - ab.
+\]
+\end{enumerate}
+  \end{enumerate}
+
 \end{enumerate}
 
 % \bigskip
