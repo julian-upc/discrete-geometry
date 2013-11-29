@@ -28,7 +28,7 @@ Vector<Rational> face_selector(perl::Object P, const Set<int>& G)
     const int ambient_dim = facets.cols();
 
     // sum the normal vectors corresponding to the facets containing G
-    Vector<Rational> selector(ambient_dim);
+    Vector<Rational> selector(unit_vector<Rational>(ambient_dim, 0));
     int i(0);
     for (Entire<Rows<IncidenceMatrix<> > >::const_iterator rit = entire(rows(VIF)); !rit.at_end(); ++rit, ++i) {
 	const Set<int> F(*rit);
@@ -36,9 +36,7 @@ Vector<Rational> face_selector(perl::Object P, const Set<int>& G)
 	    selector += facets[i];
     }
 
-    return (selector == zero_vector<Rational>(ambient_dim)) 
-	? unit_vector<Rational>(ambient_dim, 0)
-	: selector;
+    return selector;
 }
 
 UserFunction4perl("# @category Producing from scratch"
