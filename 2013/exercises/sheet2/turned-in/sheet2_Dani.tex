@@ -5,7 +5,7 @@
 \title{Exercise}
 \author{Daniel Torres Moral}
 
-\usepackage{amsmath,amsfonts,amssymb,amsthm,epsfig,epstopdf,fontenc,graphicx,natbib,url,array}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,bbm,epsfig,epstopdf,fontenc,graphicx,natbib,url,array}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -17,10 +17,10 @@
 
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cS}{\mathcal{S}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\R}{\mathbbm{R}}
+\newcommand{\Z}{\mathbbm{Z}}
 
 \begin{document}
 
@@ -35,15 +35,15 @@
     \paragraph{Solution}
     
     \begin{obs}
-      The convex hull of a point set laying in a affine space lays in this affine space.
+      The convex hull of a point set lying in a affine space lies in this affine space.
     \end{obs}
     
     \begin{obs}
-      Let  $F = \{ x \st a x = b \} \cap P$ be a face. Then the convex hull of its vertices lays in $F$.
+      Let  $F = \{ x \st a x = b \} \cap P$ be a face. Then the convex hull of its vertices lies in $F$.
     \end{obs}
 
     \begin{prop}
-      Let $F = \{ x \st a x = b \} \cap P$ be a face. Then $F$ lays in the convex hull of their vertices.
+      Let $F = \{ x \st a x = b \} \cap P$ be a face. Then $F$ lies in the convex hull of their vertices.
     \end{prop}
     
     \begin{proof}
@@ -104,7 +104,7 @@
     
     If the face is empty (or total), we have it is the cartesian product of empty (total) faces of $P$ and $Q$. Otherwise:
     
-    Then or $a_F$ or $a_G$ is different from zero. Let us suppose without losing of generality that $a_F\neq0$.
+    Then or $a_F$ or $a_G$ is different from zero. Let us suppose without loss of generality that $a_F\neq0$.
     
     As $P$ is compact, it is bounded. Then, exists $b_F\in\R$ such that $F := \{x \st a_Fx = b_F\}\cap P$ is a non-empty face of $P$. Then let us call $b_G := b - b_F$.
     
