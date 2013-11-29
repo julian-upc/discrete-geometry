@@ -34,8 +34,8 @@
   \textbf{\sffamily Sheet 4}
 
 \bigskip
-\textbf{\sffamily UNDER CONSTRUCTION}
-% due on Monday, December 9, 2013
+%\textbf{\sffamily UNDER CONSTRUCTION}
+ due on Monday, December 9, 2013
 
 \end{center}
 
@@ -81,6 +81,8 @@ $H_k=\{x\in\R^d:\sum_{i=1}^d x_i = k\}$.
 
 \item Is there any relationship between $\Sigma(d,k)$ and $\Sigma'(d',k')$?
 
+\item \emph{``The polytope $\Sigma(d,k)$ is the closure of the quotient of $\Delta(d,k)$ under an action of the symmetric group~$\mathsf{S}_d$''.} Discuss.
+
 \item For each triple $(k,\ell,d)\in\N^3$ with $0\le k,\ell\le d$, decide the truth of the following statements, where $P$ is, in turn, $\Delta(d,k)$, $\Delta'(d,k)$, $\Sigma(d,k)$ and $\Sigma'(d,k)$:
 
   \begin{inparaenum}
@@ -89,7 +91,7 @@ $H_k=\{x\in\R^d:\sum_{i=1}^d x_i = k\}$.
   \item $P$ is $\ell$-neighborly.
   \end{inparaenum}
 
-\emph{Hint:} Use \texttt{polymake} for some small cases, and extrapolate using (a), (b).
+\emph{Hint:} Use \texttt{polymake} for some small cases, and extrapolate using (a), (b), if true.
 \end{enumerate}
 
 \item Let $R$ be an integral rectangle whose edges are parallel to the coordinate axes in $\R^2$, and let $T$ be a rectangular triangle two of whose edges are parallel to the coordinate axes. Show that Pick's Theorem holds for $R$ and $T$.
@@ -99,16 +101,16 @@ $H_k=\{x\in\R^d:\sum_{i=1}^d x_i = k\}$.
   \item For any $a,b,c,d\in\N$, consider the line segment $S=\conv\{(a,b),(c,d)\}$. Prove that the number of integer points on $S$ is $\gcd(a-c, b-d) + 1$.
   \item For any two fixed positive integers $a,b$, let $T$ be the lattice triangle with vertices $(0,0)$, $(a,0)$, $(0,b)$. 
 
-\begin{enumerate}
+\begin{inparaenum}
 \item\label{ex2:i} Compute $\LL_T(t)$ and $\Ehr_T(z)$.
-\item Use (i) to derive the following formula for the greatest common divisor of $a$ and $b$:
+\item Use (i) to derive the following formula:
 \[
    \gcd(a,b) 
    \ = \
    2\sum_{k=1}^{b-1}\left\lfloor\frac{ka}{b}\right\rfloor 
    + a + b - ab.
 \]
-\end{enumerate}
+\end{inparaenum}
   \end{enumerate}
 
 \end{enumerate}
