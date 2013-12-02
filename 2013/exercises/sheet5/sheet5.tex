@@ -15,6 +15,7 @@
 \newcommand{\Z}{\mathbbm{Z}}
 
 \DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\stack}{stk}
 \DeclareMathOperator{\LL}{\mathsf{L}}
 \DeclareMathOperator{\Ehr}{\mathsf{Ehr}}
 
@@ -57,7 +58,13 @@
 
 \begin{enumerate}
 \setlength{\itemsep}{1ex}
-\item 
+\item Let $P\subset\R^d$ be a convex polytope and $v\in\R^d$. Then $\stack P=\conv(P\cup\{v\})$ is obtained from~$P$ by \emph{stacking} on the facet~$F$ if $v$ is \emph{beyond} exactly~$F$ and \emph{beneath} all other facets: If $P=\{x\in\R^d: Ax\le b\}$ where the rows of~$A$ are $a_1,\dots, a_m$, it should happen that $\langle a_i,v\rangle > b_i$ for exactly one~$i$, while $\langle a_j,v\rangle \le b_j$ for  $j\ne i$.
+\begin{enumerate}
+\item For simplicial $d$-polytopes~$P$, derive a formula for $f_k(\stack P)$, $0\le k<d-1$,  in terms of $f_k(P)$ and $f_{k-1}(\Delta^{d-1})$, where $\Delta^{d-1}$ is the $(d-1)$-dimensional simplex.
+\item Do the same for $\stack^{N}(P)$, the polytope obtained from $P$ by $N$~stackings.
+\item Prove Danzer's result from 1964 that for large enough $d$ and suitable~$N$, the Unimodality Conjecture for $f$-vectors fails for $N$-fold stacked cross-polytopes.
+\item Do better, for example by using cyclic polytopes. What is the lowest dimension for which you can make the Unimodality Conjecture fail? Can you beat 20?
+\end{enumerate}
 
 \end{enumerate}
 
