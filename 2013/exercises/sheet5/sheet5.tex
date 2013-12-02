@@ -67,7 +67,7 @@
 
  \begin{enumerate}
    \setlength{\itemsep}{2ex}
- \item To test the code in \texttt{face\_selector.cc} we wrote in class, complete the skeleton file \texttt{selected\_face.cc} to a \texttt{polymake} client that outputs the minimal face selected by a linear objective function on a given polytope. 
+ \item To test the code in \texttt{face\_selector.cc} we wrote in class, complete the skeleton file \texttt{selected\_face.cc} to a \texttt{polymake} client that outputs the (indices of the vertices on the) minimal face selected by a linear objective function on a given polytope. 
 \begin{enumerate}
 \item Test your two programs. For example, using \verb|$p=cube(3);|,
   the command 
@@ -78,9 +78,9 @@ should return $\{0,1\}$; while
 \begin{verbatim}
 print selected_face($p, face_selector($p, new Set([0,7])));
 \end{verbatim}
-should return the entire vertex set $\{0,1,2,3,4,5,6,7\}$. Can you think of more, meaningful tests?
+should return  $\{0,1,2,3,4,5,6,7\}$. Can you think of more, meaningful tests?
 
-\item Use your new client to calculate \verb|selected_face($p,$a)|, where \verb|$p=cube($n)|, \verb|$a=face_selector($p,new Set([0,1]))|, and \verb|$n|$\ge3$ varies. How large can you make \verb|$n| and still get an answer in 10~minutes of computation?
+\item Use your new client to calculate \verb|selected_face($p,$a)|, where \verb|$p=cube($d)|, \verb|$a=face_selector($p,new Set([0,1]))|, and \verb|$d|${}\ge3$ varies. How large can you make \verb|$d| and still get an answer in 10~minutes of computation? What (if anything) changes if instead you use \verb|$p=polarize(center(cyclic($d,2*$d)))|? 
 \end{enumerate}
  \end{enumerate}
 
