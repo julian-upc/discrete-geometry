@@ -1,0 +1,92 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{a4wide}
+\usepackage{paralist}
+\usepackage{url}
+\usepackage{nopageno}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\R}{\mathbbm{R}}
+\newcommand{\Z}{\mathbbm{Z}}
+
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\LL}{\mathsf{L}}
+\DeclareMathOperator{\Ehr}{\mathsf{Ehr}}
+
+\begin{document}
+\begin{center}
+\textbf{\sffamily
+   Discrete and Algorithmic Geometry }
+
+\medskip
+   Julian Pfeifle,
+   UPC, 2013 \mbox{}
+\end{center}
+
+\bigskip
+
+\begin{center}
+  \textbf{\sffamily Sheet 5}
+
+\bigskip
+\textbf{\sffamily UNDER CONSTRUCTION}
+% due on Monday, December 16, 2013
+
+\end{center}
+
+\bigskip
+%\enlargethispage{2cm}
+%\section*{Reading}
+
+%\begin{enumerate}
+%\setlength{\itemsep}{2ex}
+%\item Read Lectures 3, 4 from Ziegler's \emph{Lectures on Polytopes}.
+
+%\item Read Sections 5.1, 5.2, 5.3 from Matou\v sek's \emph{Lectures on
+%    Discrete Geometry}.
+%\end{enumerate}
+
+%\bigskip
+%\bigskip
+%\section*{Writing}
+
+\begin{enumerate}
+\setlength{\itemsep}{1ex}
+\item 
+
+\end{enumerate}
+
+ \bigskip
+ % \bigskip
+ \section*{Software}
+
+ \begin{enumerate}
+   \setlength{\itemsep}{2ex}
+ \item To test the code in \texttt{face\_selector.cc} we wrote in class, complete the skeleton file \texttt{selected\_face.cc} to a \texttt{polymake} client that outputs the minimal face selected by a linear objective function on a given polytope. 
+\begin{enumerate}
+\item Test your two programs. For example, using \verb|$p=cube(3);|,
+  the command 
+\begin{verbatim}
+print selected_face($p, face_selector($p, new Set([0,1])));
+\end{verbatim}
+should return $\{0,1\}$; while 
+\begin{verbatim}
+print selected_face($p, face_selector($p, new Set([0,7])));
+\end{verbatim}
+should return the entire vertex set $\{0,1,2,3,4,5,6,7\}$. Can you think of more, meaningful tests?
+
+\item Use your new client to calculate \verb|selected_face($p,$a)|, where \verb|$p=cube($n)|, \verb|$a=face_selector($p,new Set([0,1]))|, and \verb|$n|$\ge3$ varies. How large can you make \verb|$n| and still get an answer in 10~minutes of computation?
+\end{enumerate}
+ \end{enumerate}
+
+
+\bigskip
+\section*{Turning in your work}
+
+Put your answers into a .pdf file. To turn it in, use \texttt{gpg} and the public key \texttt{julian.gpg.pub} in the \texttt{github} repository to create an encrypted copy that is only readable by me. Then commit and push this encrypted file to the repository.
+\end{document}
