@@ -1,0 +1,77 @@
+\chapter{Kalai's simple way of telling a simple polytope from its graph}
+
+\scribe{Alex Alvarez}
+
+\begin{conj}[Micha Perles, $\sim$1970]
+Any $d$-polytope is determined by its graph, i.e., $sk^1(P)$ determines $\mathcal{F}(P)$.
+\end{conj}
+
+The conjecture is false, e.g. for simplicial polytopes. On the other hand, $K_n$ is dimensionally ambiguous, e.g. $sk^1(C_d(n)) = sk^1(C_e(n))$ for $d , e < n$. Besides there are neighborly graphs that are not combinatorially isomorphic to cyclic ones. However, the result is true for simple polytopes:
+
+\begin{theorem}[Roswitha Blind, Peter Mani, 1987]
+Any simple $d$-polytope is  determined by its graph.
+\end{theorem}
+
+Their proof is not constructive, but in 1988 Kalai found an algorithmic approach. Let us see the details of that approach.
+
+\begin{definition}[Acyclic orientation]
+An acyclic orientation of a graph $G$ is an orientation of $E(G)$ without directed cycles.
+\end{definition}
+
+\begin{definition}[Abstract Objective Function, AOF]
+An AOF of $G = sk^1(P)$ is an acyclic orientation that has a unique sink on each face of $P$.
+\end{definition}
+
+\begin{definition}[Unique Sink Orientation]
+A Unique Sink Orientation is an orientation such that every face has a unique sink. The orientation is not necessarily acyclic.
+\end{definition}
+
+Notice that AOFs exist because of the existence of generic linear objective functions. Consider the set of all AOFs and define the following function:
+
+\begin{equation}
+f(O) = h_0(O) + 2h_1(O) + \ldots + 2^kh_k(O) + \ldots + 2^dh_d(O)
+\end{equation}
+where $O$ is an AOF and $h_k(O)\in\mathbb{N}$ counts the vertices of in-degree $k$ in $O$.
+
+\begin{figure}[!h]
+\centering 
+\centerline{\input{aof.tex}}
+
+\caption{An example of AOF. For this orientation, $h_0 = 1$, $h_1 = 3$, $h_2 = 3$ and $h_3 = 1$. Therefore, $f(O) = 1 + 6 + 12 + 8 = 27 = 3^3$.}
+\end{figure}
+
+Let $f$ denote the number of non-empty faces of $P$. Given an acyclic orientation $O$, then
+
+\begin{enumerate}
+\item $f(O) \geq f$, because as $O$ is acyclic each face has at least one sink.
+\item $f(O) = f$ if $O$ is an AOF.
+\end{enumerate}
+
+To determine all AOFs of $P$ just from its graph $G = sk^1(P)$ do the following steps:
+\begin{enumerate}
+\item Enumerate all acyclic orientations $O$ of $G$.
+\item Calculate $f(O)$ for each such orientation $O$.
+\item Keep the orientations $O$ with minimal $f(O)$.
+\end{enumerate}
+
+The only remaining step to complete Kalai's method is showing a way to identify the faces of $P$ from the knowledge of all the AOFs. Notice that the subgraphs of $G$ that are graphs of faces are connected, $k$-regular and induced. With that, the following proposition is enough to characterize the faces:
+
+\begin{proposition}
+An induced connected $k$-regular subgraph $H$ is the graph of a face of $P$ $\Leftrightarrow$ $H$ is an initial set for some AOF $O$.
+\end{proposition}
+\begin{proof}
+
+$\Rightarrow$: Perturb a face-defining inequality to obtain a linear function with respect to which the vertices of $F$ lie below all other vertices.
+
+$\Leftarrow$: Let $H$ be a connected $k$-regular subgraph of $sk^1(P)$ and let $O$ be an AOF such that $H$ is an initial set of $O$. As $H$ has a unique sink $v$ and is $k$-regular, the sink $v$ has $k$ incoming edges and as the polytope is simple, those $k$ edges determine a $k$-face $F$ and $v$ is a sink in that face.
+
+As $v$ is the unique sink of $O$ in $F$, all vertices of $F$ are $\leq v$ with respect to $O$. But the initial set of $v$ in $G$ is $H$, so vert$(F) \subseteq $ vert$(H)$. As both $H$ and $F$ are connected and $k$-regular, we have that vert$(F) = $ vert$(H)$.
+\end{proof}
+
+Notice that this algorithm is exponential, but in 1995 Friedman gave a polynomial algorithm to reconstruct the 2-faces, which had been proven before to be enough to reconstruct the whole polytope.
+ 
+
+% Local Variables: 
+% mode: latex
+% TeX-master: "dag-upc"
+% End: 
