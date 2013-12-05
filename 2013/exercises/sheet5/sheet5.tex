@@ -1,0 +1,121 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{a4wide}
+\usepackage{amssymb}
+\usepackage{paralist}
+\usepackage{url}
+\usepackage{nopageno}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\R}{\mathbbm{R}}
+\newcommand{\SSS}{\mathbbm{S}}
+\newcommand{\Z}{\mathbbm{Z}}
+\newcommand{\sT}{\mathsf{T}}
+
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\stack}{stk}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\LL}{\mathsf{L}}
+\DeclareMathOperator{\Ehr}{\mathsf{Ehr}}
+\DeclareMathOperator{\Sl}{Sl}
+
+\begin{document}
+\begin{center}
+\textbf{\sffamily
+   Discrete and Algorithmic Geometry }
+
+\medskip
+   Julian Pfeifle,
+   UPC, 2013 \mbox{}
+\end{center}
+
+\bigskip
+
+\begin{center}
+  \textbf{\sffamily Sheet 5}
+
+\bigskip
+%\textbf{\sffamily UNDER CONSTRUCTION}
+ due on Monday, December 16, 2013
+
+\end{center}
+
+\bigskip
+%\enlargethispage{2cm}
+%\section*{Reading}
+
+%\begin{enumerate}
+%\setlength{\itemsep}{2ex}
+%\item Read Lectures 3, 4 from Ziegler's \emph{Lectures on Polytopes}.
+
+%\item Read Sections 5.1, 5.2, 5.3 from Matou\v sek's \emph{Lectures on
+%    Discrete Geometry}.
+%\end{enumerate}
+
+%\bigskip
+%\bigskip
+%\section*{Writing}
+
+\begin{enumerate}
+\setlength{\itemsep}{1ex}
+\item Let $P\subset\R^d$ be a convex polytope and $v\in\R^d$. Then $\stack P=\conv(P\cup\{v\})$ is obtained from~$P$ by \emph{stacking} on the facet~$F$ if $v$ is \emph{beyond} exactly~$F$ and \emph{beneath} all other facets: If $P=\{x\in\R^d: Ax\le b\}$ where the rows of~$A$ are $a_1,\dots, a_m$, it should happen that $\langle a_i,v\rangle > b_i$ for exactly one~$i$, while $\langle a_j,v\rangle \le b_j$ for  $j\ne i$.
+\begin{enumerate}
+\item For simplicial $d$-polytopes~$P$, derive a formula for $f_k(\stack P)$, $0\le k<d-1$,  in terms of $f_k(P)$ and $f_{k-1}(\Delta^{d-1})$, where $\Delta^{d-1}$ is the $(d-1)$-dimensional simplex.
+\item Do the same for $\stack^{N}(P)$, the polytope obtained from $P$ by $N$~stackings.
+\item Prove Danzer's result from 1964 that for large enough $d$ and suitable~$N$, the Unimodality Conjecture for $f$-vectors fails for $N$-fold stacked cross-polytopes.
+\item Do better, for example by using cyclic polytopes, or connected sums of cyclic polytopes and their polars. What is the lowest dimension for which you can make the Unimodality Conjecture fail? Can you beat 8?
+\item If you stack ``too often'' onto $C_{20}(200)$, then unimodality is restored. How often?
+\end{enumerate}
+
+\item Recall that the lattice volume of a full-dimensional lattice simplex $\Delta=\Delta^d\subset\R^d$ is $\vol_\Z\Delta = \det\Delta$, where we confuse the simplex with the matrix of the coordinates of its vertices in homogeneous coordinates (with the first entry normalized to~$1$).
+Recall moreover that two $k$-dimensional lattice polytopes $P^k,Q^k\subset\R^d$ are lattice equivalent iff they are related by a map in $\Sl_d(\Z)\rtimes \sT(\Z^d)$, where $\rtimes$~denotes the semi-direct product of groups and $\sT(\Z^d)$ is the integer translation group acting on $\R^d$. 
+
+Prove or improve, and in any case discuss, the following formula for the lattice volume of a $k$-dimensional lattice simplex $\Delta=\Delta^k$ in~$\R^d$:
+\[
+    \vol_\Z\Delta
+    \ \stackrel{?}{=} \
+    \sqrt{\det \Delta\!^\top\Delta}.
+\]
+Some food for thought:
+\begin{enumerate}
+\item $\Delta^1 = \conv\{0,t\mathbbm{1}\}\subset\R^d$, with $\mathbbm{1} = (1,1,\dots,1)^\top$ and $t\in\N_{>0}$
+\item $\Delta^2 = \conv\{e_1, e_2, te_3\}\subset\R^3$, with $t\in\Z$
+\item $\Delta^2 = \conv\{3e_1,3e_2,3e_3\}\subset\R^3$
+\end{enumerate}
+\emph{Hint:} To be sure of the correct lattice volume, transform each simplex into a ``nice'' standard form by finding an appropriate element of $\Sl_d(\Z)\rtimes \sT(\Z^d)$.
+\end{enumerate}
+
+ \bigskip
+ % \bigskip
+ \section*{Software}
+
+ \begin{enumerate}
+   \setlength{\itemsep}{2ex}
+ \item To test the code in \texttt{face\_selector.cc} we wrote in class, complete the skeleton file \texttt{selected\_face.cc} to a \texttt{polymake} client that outputs the (indices of the vertices on the) minimal face selected by a linear function on a given polytope. 
+\begin{enumerate}
+\item Test your two programs. For example, using \verb|$p=cube(3);|,
+  the command 
+\begin{verbatim}
+print selected_face($p, face_selector($p, new Set([0,1])));
+\end{verbatim}
+should return $\{0,1\}$; while 
+\begin{verbatim}
+print selected_face($p, face_selector($p, new Set([0,7])));
+\end{verbatim}
+should return  $\{0,1,2,3,4,5,6,7\}$. Can you think of more, meaningful tests?
+
+\item Use your new client to calculate \verb|selected_face($p,$a)|, where \verb|$p=cube($d)|, \verb|$a=face_selector($p,new Set([0,1]))|, and \verb|$d|${}\ge3$ varies. How large can you make \verb|$d| and still get an answer in 10~minutes of computation? What (if anything) changes if instead you use \verb|$p=polarize(center(cyclic($d,2*$d)))|? 
+\end{enumerate}
+ \end{enumerate}
+
+
+\bigskip
+\section*{Turning in your work}
+
+Put your answers into a \ .tar.bz2 file. To turn it in, use \texttt{gpg} and the public key \texttt{julian.gpg.pub} in the \texttt{github} repository to create an encrypted copy that is only readable by me, in the directory \texttt{2013/exercises/sheet5/turned-in}. Then commit and push this encrypted file to the repository.
+\end{document}
