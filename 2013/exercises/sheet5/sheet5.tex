@@ -1,6 +1,7 @@
 \documentclass[11pt]{amsart}
 
 \usepackage{a4wide}
+\usepackage{amssymb}
 \usepackage{paralist}
 \usepackage{url}
 \usepackage{nopageno}
@@ -12,12 +13,16 @@
 \newcommand{\N}{\mathbbm{N}}
 \newcommand{\Q}{\mathbbm{Q}}
 \newcommand{\R}{\mathbbm{R}}
+\newcommand{\SSS}{\mathbbm{S}}
 \newcommand{\Z}{\mathbbm{Z}}
+\newcommand{\sT}{\mathsf{T}}
 
 \DeclareMathOperator{\conv}{conv}
 \DeclareMathOperator{\stack}{stk}
+\DeclareMathOperator{\vol}{vol}
 \DeclareMathOperator{\LL}{\mathsf{L}}
 \DeclareMathOperator{\Ehr}{\mathsf{Ehr}}
+\DeclareMathOperator{\Sl}{Sl}
 
 \begin{document}
 \begin{center}
@@ -63,9 +68,25 @@
 \item For simplicial $d$-polytopes~$P$, derive a formula for $f_k(\stack P)$, $0\le k<d-1$,  in terms of $f_k(P)$ and $f_{k-1}(\Delta^{d-1})$, where $\Delta^{d-1}$ is the $(d-1)$-dimensional simplex.
 \item Do the same for $\stack^{N}(P)$, the polytope obtained from $P$ by $N$~stackings.
 \item Prove Danzer's result from 1964 that for large enough $d$ and suitable~$N$, the Unimodality Conjecture for $f$-vectors fails for $N$-fold stacked cross-polytopes.
-\item Do better, for example by using cyclic polytopes. What is the lowest dimension for which you can make the Unimodality Conjecture fail? Can you beat 20?
+\item Do better, for example by using cyclic polytopes, or connected sums of cyclic polytopes and their polars. What is the lowest dimension for which you can make the Unimodality Conjecture fail? Can you beat 8?
+\item If you stack ``too often'' onto $C_{20}(200)$, then unimodality is restored. How often?
 \end{enumerate}
 
+\item Recall that the lattice volume of a full-dimensional lattice simplex $\Delta=\Delta^d\subset\R^d$ is $\vol_\Z\Delta = \det\Delta$, where we confuse the simplex with the matrix of the coordinates of its vertices in homogeneous coordinates (with the first entry normalized to~$1$).
+Recall moreover that two $k$-dimensional lattice polytopes $P^k,Q^k\subset\R^d$ are lattice equivalent iff they are related by a map in $\Sl_d(\Z)\rtimes \sT(\Z^d)$, where $\rtimes$~denotes the semi-direct product of groups and $\sT(\Z^d)$ is the integer translation group acting on $\R^d$. 
+
+Prove or improve the following formula for the lattice volume of a $k$-dimensional lattice simplex $\Delta=\Delta^k$ in~$\R^d$:
+\[
+    \vol\Delta
+    \ = \
+    \sqrt{\det \Delta\!^\top\Delta}.
+\]
+Some food for thought:
+\begin{enumerate}
+\item $\Delta^1 = \conv\{0,\mathbbm{1}\}\subset\R^d$, with $\mathbbm{1} = (1,1,\dots,1)^\top$
+\item $\Delta^2 = \conv\{e_1, e_2, te_3\}\subset\R^3$, with $t\in\Z$
+\end{enumerate}
+\emph{Hint:} To be sure of the correct lattice volume, transform each simplex into a ``nice'' standard form by finding an appropriate element of $\Sl_d(\Z)\rtimes \sT(\Z^d)$.
 \end{enumerate}
 
  \bigskip
@@ -95,5 +116,5 @@ should return  $\{0,1,2,3,4,5,6,7\}$. Can you think of more, meaningful tests?
 \bigskip
 \section*{Turning in your work}
 
-Put your answers into a .pdf file. To turn it in, use \texttt{gpg} and the public key \texttt{julian.gpg.pub} in the \texttt{github} repository to create an encrypted copy that is only readable by me. Then commit and push this encrypted file to the repository.
+Put your answers into a \ .tar.bz2 file. To turn it in, use \texttt{gpg} and the public key \texttt{julian.gpg.pub} in the \texttt{github} repository to create an encrypted copy that is only readable by me. Then commit and push this encrypted file to the repository.
 \end{document}
