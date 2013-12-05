@@ -40,8 +40,8 @@
   \textbf{\sffamily Sheet 5}
 
 \bigskip
-\textbf{\sffamily UNDER CONSTRUCTION}
-% due on Monday, December 16, 2013
+%\textbf{\sffamily UNDER CONSTRUCTION}
+ due on Monday, December 16, 2013
 
 \end{center}
 
@@ -75,16 +75,17 @@
 \item Recall that the lattice volume of a full-dimensional lattice simplex $\Delta=\Delta^d\subset\R^d$ is $\vol_\Z\Delta = \det\Delta$, where we confuse the simplex with the matrix of the coordinates of its vertices in homogeneous coordinates (with the first entry normalized to~$1$).
 Recall moreover that two $k$-dimensional lattice polytopes $P^k,Q^k\subset\R^d$ are lattice equivalent iff they are related by a map in $\Sl_d(\Z)\rtimes \sT(\Z^d)$, where $\rtimes$~denotes the semi-direct product of groups and $\sT(\Z^d)$ is the integer translation group acting on $\R^d$. 
 
-Prove or improve the following formula for the lattice volume of a $k$-dimensional lattice simplex $\Delta=\Delta^k$ in~$\R^d$:
+Prove or improve, and in any case discuss, the following formula for the lattice volume of a $k$-dimensional lattice simplex $\Delta=\Delta^k$ in~$\R^d$:
 \[
-    \vol\Delta
-    \ = \
+    \vol_\Z\Delta
+    \ \stackrel{?}{=} \
     \sqrt{\det \Delta\!^\top\Delta}.
 \]
 Some food for thought:
 \begin{enumerate}
-\item $\Delta^1 = \conv\{0,\mathbbm{1}\}\subset\R^d$, with $\mathbbm{1} = (1,1,\dots,1)^\top$
+\item $\Delta^1 = \conv\{0,t\mathbbm{1}\}\subset\R^d$, with $\mathbbm{1} = (1,1,\dots,1)^\top$ and $t\in\N_{>0}$
 \item $\Delta^2 = \conv\{e_1, e_2, te_3\}\subset\R^3$, with $t\in\Z$
+\item $\Delta^2 = \conv\{3e_1,3e_2,3e_3\}\subset\R^3$
 \end{enumerate}
 \emph{Hint:} To be sure of the correct lattice volume, transform each simplex into a ``nice'' standard form by finding an appropriate element of $\Sl_d(\Z)\rtimes \sT(\Z^d)$.
 \end{enumerate}
@@ -116,5 +117,5 @@ should return  $\{0,1,2,3,4,5,6,7\}$. Can you think of more, meaningful tests?
 \bigskip
 \section*{Turning in your work}
 
-Put your answers into a \ .tar.bz2 file. To turn it in, use \texttt{gpg} and the public key \texttt{julian.gpg.pub} in the \texttt{github} repository to create an encrypted copy that is only readable by me. Then commit and push this encrypted file to the repository.
+Put your answers into a \ .tar.bz2 file. To turn it in, use \texttt{gpg} and the public key \texttt{julian.gpg.pub} in the \texttt{github} repository to create an encrypted copy that is only readable by me, in the directory \texttt{2013/exercises/sheet5/turned-in}. Then commit and push this encrypted file to the repository.
 \end{document}
