@@ -27,7 +27,7 @@ void operator/=(vector<T>& v, const T& x) {
   for (int i = v.size() - 1; i >= 0; --i) v[i] /= x;
 }
 
-T gauss(vector<vector<T> >& mat) {
+T compute_determinant(vector<vector<T> >& mat) {
   int r = mat.size(), c = mat[0].size();
   T det(1, 1);
 
@@ -51,17 +51,18 @@ T gauss(vector<vector<T> >& mat) {
 }
 
 int main(int argc, char** argv) {
-  srand(time(NULL));
   
-  if (argc < 3) {
-    cout << "usage: program limit max_dim" << endl;
+  if (argc < 4) {
+    cout << "usage: program limit max_dim seed" << endl;
     cout << "\t\tlimit: number of random matrices to test for each dimension" << endl;
     cout << "\t\tmax_dim: maximum dimension to perform the test" << endl;
+    cout << "\t\tseed: a seed for the randon number generator" << endl;
     return 1;
   }
   
   const int LIMIT = atoi(argv[1]);
   const int MAX_DIM = atoi(argv[2]);
+  srand(atoi(argv[3]));
   
   for (int d = 3; d <= MAX_DIM; ++d) {
     
@@ -73,16 +74,12 @@ int main(int argc, char** argv) {
       for (int i = 0; i < d + 1; ++i) {
         
         mat[i][0] = 1;
-        for (int j = 0; j < d; ++j){
-          if (rand() & 1) mat[i][j + 1] = 1;
-          else mat[i][j + 1] = -1;
+        for (int j = 0; j < d; ++j) {
+          mat[i][j + 1] = (rand() & 1 ? 1 : -1);
         }
-
       }
       
-      T aux = gauss(mat);
-      if (aux < 0) aux = -aux;
-      ++hist[aux];
+      ++hist[abs(compute_determinant(mat))];
     }
     
     cout << "Results for dimension " << d << ":" << endl;
