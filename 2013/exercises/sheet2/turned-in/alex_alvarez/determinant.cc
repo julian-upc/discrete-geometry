@@ -10,12 +10,6 @@ using namespace std;
 typedef long long ll;
 typedef mpq_class T;
 
-T inverse(const T& x) {
-  T res(x.get_den(), x.get_num());
-  res.canonicalize();
-  return res;
-}
-
 vector<T> operator*(const T& x, const vector<T>& v) {
   vector<T> res(v.size());
   for (int i = 0; i < v.size(); ++i) res[i] = x*v[i];
@@ -26,6 +20,11 @@ vector<T> operator-(const vector<T>& x, const vector<T>& y) {
   vector<T> res(x.size());
   for (int i = 0; i < x.size(); ++i) res[i] = x[i] - y[i];
   return res;
+}
+
+void operator/=(vector<T>& v, const T& x) {
+  //Done in that order to be able to pass the x by reference
+  for (int i = v.size() - 1; i >= 0; --i) v[i] /= x;
 }
 
 T gauss(vector<vector<T> >& mat) {
@@ -42,8 +41,8 @@ T gauss(vector<vector<T> >& mat) {
     if (nz == r) return T(0);
     if (nz != i) det = -det;
     swap(mat[i], mat[nz]);
-    det /= inverse(mat[i][j]);
-    mat[i] = inverse(mat[i][j])*mat[i];
+    det *= mat[i][j];
+    mat[i] /= mat[i][j];
     for (int k = i + 1; k < r; ++k)
       mat[k] = mat[k] - mat[k][j]*mat[i];
     ++i;
@@ -51,38 +50,36 @@ T gauss(vector<vector<T> >& mat) {
   return det;
 }
 
-ll random_int(int d) {
-  ll x = 0;
-  for (int i = 0; i < d; ++i) if (rand()&1) x |= (1 << i);
-  return x;
-}
-
-int main() {
+int main(int argc, char** argv) {
   srand(time(NULL));
-  const int LIMIT = 1000000;
-  const int MAX_DIM = 10;
+  
+  if (argc < 3) {
+    cout << "usage: program limit max_dim" << endl;
+    cout << "\t\tlimit: number of random matrices to test for each dimension" << endl;
+    cout << "\t\tmax_dim: maximum dimension to perform the test" << endl;
+    return 1;
+  }
+  
+  const int LIMIT = atoi(argv[1]);
+  const int MAX_DIM = atoi(argv[2]);
   
   for (int d = 3; d <= MAX_DIM; ++d) {
     
     map<T, int> hist;
+    vector<vector<T> > mat(d + 1, vector<T>(d + 1, 1));
         
-    for (int step = 0; step < LIMIT; ++step) {
-      set<ll> points;
-      while (points.size() < d + 1) points.insert(random_int(d));
+    for (int step = 0; step < LIMIT; ++step) {      
       
-      vector<vector<T> > mat(d + 1, vector<T>(d + 1, 1));
-      
-      set<ll>::iterator it = points.begin();
       for (int i = 0; i < d + 1; ++i) {
-        ll x = *it;
         
+        mat[i][0] = 1;
         for (int j = 0; j < d; ++j){
-          if ((x >> j)&1) mat[i][j + 1] = 1;
+          if (rand() & 1) mat[i][j + 1] = 1;
           else mat[i][j + 1] = -1;
         }
-        
-        ++it;
+
       }
+      
       T aux = gauss(mat);
       if (aux < 0) aux = -aux;
       ++hist[aux];
