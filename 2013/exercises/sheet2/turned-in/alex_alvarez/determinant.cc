@@ -27,7 +27,8 @@ void operator/=(vector<T>& v, const T& x) {
   for (int i = v.size() - 1; i >= 0; --i) v[i] /= x;
 }
 
-T compute_determinant(vector<vector<T> >& mat) {
+template <class Matrix>
+T det(Matrix& mat) {
   int r = mat.size(), c = mat[0].size();
   T det(1, 1);
 
@@ -52,8 +53,8 @@ T compute_determinant(vector<vector<T> >& mat) {
 
 int main(int argc, char** argv) {
   
-  if (argc < 4) {
-    cout << "usage: program limit max_dim seed" << endl;
+  if (argc < 3) {
+    cout << "usage: program limit max_dim (seed)" << endl;
     cout << "\t\tlimit: number of random matrices to test for each dimension" << endl;
     cout << "\t\tmax_dim: maximum dimension to perform the test" << endl;
     cout << "\t\tseed: a seed for the randon number generator" << endl;
@@ -62,7 +63,7 @@ int main(int argc, char** argv) {
   
   const int LIMIT = atoi(argv[1]);
   const int MAX_DIM = atoi(argv[2]);
-  srand(atoi(argv[3]));
+  srand(argc >= 4 ? atoi(argv[3]) : time(NULL));
   
   for (int d = 3; d <= MAX_DIM; ++d) {
     
@@ -79,7 +80,7 @@ int main(int argc, char** argv) {
         }
       }
       
-      ++hist[abs(compute_determinant(mat))];
+      ++hist[abs(det(mat))];
     }
     
     cout << "Results for dimension " << d << ":" << endl;
