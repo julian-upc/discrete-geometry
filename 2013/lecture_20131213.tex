@@ -1,0 +1,174 @@
+\chapter{Ehrhart-Macdonald Reciprocity}
+
+\scribe{Albert Santiago}
+
+\section{Statement of the theorem}
+
+Let $P$ be a lattice polytope. Let $L_P:\NN\longrightarrow\NN$ be the lattice point counting function,
+\[\begin{array}{cccl}
+  L_P: &\NN &\longrightarrow &\NN \\
+  &t &\longmapsto &L_P(t)=\#\left\{tP\cap\ZZ^d\right\}
+\end{array}\]
+
+and let $L_{P^0}:\NN\longrightarrow\NN$ be the lattice point counting function in the interior of $P$.
+
+By Ehrhart's Theorem seen in the previous lecture, it is known that $L_P, L_{P^0}\in\QQ[t]$.
+
+\begin{theorem}[Ehrhart-Macdonald Reciprocity]
+\[
+  L_P(-t) = (-1)^d L_{P^0}(t)
+\]
+\end{theorem}
+
+Note that in previous lecture we have already seen an example for this EM reciprocity for the cube. Indeed,
+\begin{align*}
+  L_{\Box^d}(t) &= (1+t)^d\\
+  L_{(\Box^d)^0}(t) &= (-1)^d(1-t)^d
+\end{align*}
+
+\bigskip
+\section{Auxiliary results}
+
+\begin{proposition}
+  Let $w_1,\ldots,w_d\in\ZZ^d$ be linearly independent. Let $C=\cone{w_1,\ldots,w_d}$ be cone over a simplex. Let $v\in\RR^d$ such that $\partial(v+C)\cap \ZZ^d=\varnothing$. Then,
+  \[
+    \sigma_{v+C}\left(\frac{1}{z_1},\cdots,\frac{1}{z_d}\right) = (-1)^d \sigma_{-v+C}(z_1,\ldots,z_d)
+  \]
+\end{proposition}
+
+\emph{Notes}:
+\begin{itemize}
+ \item For the existence of such $v\in\RR^d$, see exercise sheet \#6.
+ \item $\sigma_{v+C}\left(\frac{1}{z_1},\cdots,\frac{1}{z_d}\right)$ is not a power series, so the theorem is meaningless at this level. At most, we can say it is an element from $\QQ[z_1,\ldots,z_d]$, where the theorem holds.
+ \item Try to see $\frac{1}{z_i}$ as the variables corresponding to $-P$.
+\end{itemize}
+
+\begin{proof}
+  To be done. %TODO
+\end{proof}
+
+\begin{proposition}[Stanley Reciprocity]
+  Let $C$ be a rational pointed cone (i. e. $C=\cone{w_1,\ldots,w_d}, w_i\in\QQ^d$) with apex at the origin. Then,
+  \[
+    \sigma_C\left(\frac{1}{z}\right)=(-1)^d\sigma_{C^0}(z)
+  \]
+\end{proposition}
+
+\begin{proof}
+  To be done. %TODO
+\end{proof}
+
+\begin{definition}
+  We define the Ehrhart function for the interior lattice points of a polytope naturally as
+  \[
+    \Ehr_{P^0}(z):=\sum_{t\geq 1} L_{P^0}(t)z^t
+  \]
+\end{definition}
+
+\emph{Note}: We can start the sum at $t=1$ rather than at $t=0$ because the origin is not an interior point of $P$.
+
+\begin{observation}
+  As it happened with the original Ehrhart function, the following equality holds:
+  \[
+    \Ehr_{P^0}(z)=\sigma_{\cone(P^0)}(1,\ldots,1,z)
+  \]
+\end{observation}
+
+\begin{proposition}
+  Let $P$ be a lattice polytope. Then,
+  \[
+    \Ehr_(P^0)(z)=(-1)^{\dim{P}+1} \Ehr_P\left(\frac{1}{z}\right)
+  \]
+\end{proposition}
+
+\emph{Notes}:
+\begin{itemize}
+ \item The proposition is also valid for $P$ any \emph{rational} polytope, not only for lattice polytopes.
+ \item Not every polytope can be perturbed into a rational one. There exist irrational polytopes.
+\end{itemize}
+
+\begin{proof}
+  To be done. %TODO
+\end{proof}
+
+\bigskip
+\section{Proof of Ehrhart-Macdonald Reciprocity}
+To be done. %TODO
+
+\bigskip
+\section{Degree of a lattice polytope}
+
+\begin{observation}
+  Let $p\in\QQ[t]$ be a polynomial of degree $d$. If the following equality holds:
+  \[
+    \sum_{t\geq 0}p(t)z^t = \frac{h_dz^d+\cdots h_1z+h_0}{(1-z)^d}
+  \]
+  then
+  \[
+    \left.\begin{array}{r}
+	     h_d=\cdots=h_{k+1}=0\\
+	     h_k\neq0
+          \end{array}\right\}
+    \Longleftrightarrow
+    \left\{\begin{array}{l}
+             p(-1)=p(-2)=\cdots=p(-(d-k))=0\\
+             p(-(d-k+1))\neq0
+           \end{array}\right.
+  \]
+\end{observation}
+
+\begin{proof}
+  See Theorem 3.18 at Beck-Robins' \emph{Computing the continuous discretely}.
+\end{proof}
+
+\begin{proposition}
+  Let $P\subset\RR^d$ be a lattice polytope with Ehrhart function:
+  \[
+    \Ehr_P(z) = \frac{h_dz^d+\cdots h_1z+h_0}{(1-z)^d}
+  \]
+  Then,
+  \[
+    \left.\begin{array}{r}
+	     h_d=\cdots=h_{k+1}=0\\
+	     h_k\neq0
+          \end{array}\right\}
+    \Longleftrightarrow
+    \left\{\begin{array}{l}
+             L_P(-1)=L_P(-2)=\cdots=L_P(-(d-k))=0\\
+             L_P(-(d-k+1))\neq0
+           \end{array}\right.
+  \]
+\end{proposition}
+
+\begin{definition}
+  We call $k$ the \emph{degree of the lattice polytope $P$}.
+\end{definition}
+
+\begin{observation}
+  If $P$ is a $d$-polytope of degree $k$, then $L_P(-(d-k))=(-1)^d L_{P^0}(-(d-k))=0$, so the $(d-k)$-th dilate of $P$ does not contain any interior lattice point, and $(d-k+1)P$ is the smallest integer dilate that contains an interior lattice point.
+\end{observation}
+
+%TODO examples?
+
+
+\bigskip 
+\section{Reflexive polytopes}
+\begin{definition}
+  A lattice polytope $P$ with $0\in P$ is \emph{reflexive} if $P$ can be expressed as:
+  \[
+    P=\{x\in\RR^d:Ax\leq\mathbbm{1}\}
+  \]
+  where $A\in\ZZ^{n\times d}$ is an integer matrix.
+\end{definition}
+
+\begin{observation}
+  To be done. %TODO
+\end{observation}
+
+To be ended. %TODO
+
+
+
+
+
+
