@@ -1,0 +1,6 @@
+Put your completed exercises into a .pdf into this directory.
+
+Encrypt the .pdf with gpg or similar, 
+and address the file to me using the public key ../../../../julian.gpg.pub .
+
+Be sure to only commit and push the encrypted copy! You may want to change the filename to avoid leaking your name to the Internet.

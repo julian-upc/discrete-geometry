@@ -1,0 +1,13 @@
+\chapter{Cyclic Polytopes}
+
+\scribe{Daniel Torres}
+
+\newcommand{\R}{\mathbb{R}}
+
+Let $x\colon \R \rightarrow \R^d$ an algebraic curve. Then we can choose $n>d$ points of the curve, for example, for $t_1<\dots<t_n$ choosing $x(t_1),\dots,x(t_n)$, in order to construct a polytope resulting convex hull of these points. An example of this could be the degree $d$ \emph{moment curve} $\mu_d(t) = (t,t^2,\dots,t^d)$.
+
+At first, one can think that this way to construct a polytope it's just silly example, since choosing random points in a algebraic curve seems to be the same that choosing random points in $\R^d$. However, an algebraic curve of degree $d$ relating vertices let us obtain an interesting result.
+
+\begin{theorem}
+  Let $\mu$ be a degree $d$ algebraic curve in $\R^d$. Then, the combinatorial type of the polytope $\conv\{\mu(t_1),\dots,\mu(t_n)\}$ is independent of the choice of $t_1,\dots,t_n$.
+\end{theorem}
