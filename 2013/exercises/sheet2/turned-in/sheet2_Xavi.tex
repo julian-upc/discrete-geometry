@@ -1,0 +1,98 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{a4wide}
+\usepackage{paralist}
+\usepackage{url}
+\usepackage{nopageno}
+\usepackage{graphicx}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+
+\begin{document}
+\begin{center}
+\textbf{\sffamily
+   Discrete and Algorithmic Geometry }
+
+\medskip
+   Xavier Tapia,
+   UPC, 2013 \mbox{}
+\end{center}
+
+\bigskip
+
+\begin{center}
+  \textbf{\sffamily Sheet 2}
+
+\end{center}
+
+%\bigskip
+%\bigskip
+\bigskip
+
+
+\begin{enumerate}
+
+\item \textbf{Show that a face $F$ of a polytope $P$ is exactly the convex hull of all vertices of $P$ contained in~$F$. 
+In particular, $P$~has only finitely many faces.}
+
+By the paper, $F$ is also a polytope and $F \cap Vert(P)=Vert(F)$, now $F=conv(vert(F))=conv(vert(P)\cap F)$, so $F$ is the convex hull of all vertices of $P$ contained in $F$.
+
+Now, the polytope $P$ can be seen as the convex hull of a finite number of points, suppose that $P=<v_1,v_2,...,v_n>$, exists $v_{i_1},...,v_{i_m}$ such that $Vert(P)=\{v_{i_1},...,v_{i_m}\}$ and how every subset of $v_{i_1},...,v_{i_m}$ could be a face or not, the number of faces is less or equal than $2^{|Vert(P)|}=2^{d}$.
+
+\item \textbf{Let $P\subset\R^d$, $Q\subset\R^e$ be two non-empty polytopes. Prove that the set of faces of the cartesian product polytope $P\times Q=\{(p,q)\in\R^{d+e}:p\in P,\; q\in Q\}$ exactly equals $\{F\times G: F\text{ is face of }P, \;G\text{ is face of }Q\}$. Conclude that
+\[
+    f_k(P\times Q)
+    \ = \
+    \sum_{%\substack{
+      i+j=k,\;i,j\ge0}f_i(P) f_j(Q)
+    \qquad
+    \text{for } k\ge0.
+\]}
+
+A face $F$ of a polytope $P$ can be defined by an hyperplane as follows: if $F$ is a face of $P$, then exist a hyperplane $H=\{x \in \R^{d} : vx=b\}$ such that $P \subseteq \{x \in \R^{d} : vx \leq b\}$ and $F=P \cap H$. In what follows, lets say that a face $F$ of a polytope is defined by an hyperplane $H_F$.
+
+We want to prove that $P\times Q = \{F\times G: F\text{ is face of }P, \;G\text{ is face of }Q\}$, lets proof first that $P\times Q \supseteq \{F\times G: F\text{ is face of }P, \;G\text{ is face of }Q\}$:
+
+Take $H_P=\{x \in \R ^{d} : v_P x=b_P\}$ a hyperplane which defines a face $F$ of $P$ and $H_Q=\{x \in \R ^{e} : v_Q x=b_Q\}$ a hyperplane which defines a face $G$ of $Q$. 
+Now define $H_{(P,Q)}=\{x \in \R^{d+e} : (v_P,v_Q)x=b_P+b_Q\}$, then the inequality $(v_P,v_Q)x \leq b_P+b_Q$ holds for $P \times Q$ and $H \cap (P \times Q)= F \times G$.
+
+Now, lets proof that $P\times Q \subseteq \{F\times G: F\text{ is face of }P, \;G\text{ is face of }Q\}$, suppose $K$ is a face of $P \times Q$ defined by a hyperplane $H=\{x \in \R^{d+e} : vx=b\}$ where $v \in \R ^{d+e} \setminus \{0\}$ and $b \in \R \setminus \{0\}$,  $K=H \cap (P \times Q)$ and $P \times Q \subseteq \{x \in \R^{d+e} : vx \leq b \}$.
+Now, take $v=(v_P,v_Q)$ where, $v_P \in \R^{d} \setminus \{0\}$ and $v_Q \in \R^{e} \setminus \{0\}$,m now we are going to build to faces of $P$ and $Q$ respectively such that $K$ be the direct product of these two faces.
+To do that, let's take $b_P \in \R \setminus \{0 \}$ such that $P \subseteq \{x \in \R^{d} : v_Px \leq b_P\}$ and take $F=P \cap \{x \in \R^{d} : v_Px = b_P\}$, $G=Q \cap \{x \in \R^{e} : v_Qx = b-b_P\}$, $F$ is a face of $P$ by it's definition, let's see that $G$ is a face of $Q$.
+We have that, $(v_P,v_Q)x \leq b$ for $x \in \R^{d+e}$ and $v_P x \leq b_P$ for $x \in \R^{d}$, so, we take $x=x_d+x_e$ where, $x_d \in \R^{d}$ and $x_e \in \R^{d}$, so, $v_Px_d+v_Qx_e \leq b=b_P+b-b_P$, how $v_P x \leq b_P$ for $x \in \R^{d}$ that implies $v_Qx_e \leq b-b_P$ so $G$ is a face of $Q$ and $K=F \times G$.
+
+Finally, we have seen that every face of dimension $k$ of $P \times Q$ is the cartesian product of a face of $P$ and a face of $Q$ and $k$ is the sum of the dimension of these two faces so the formula it's true.
+
+\item \textbf{Show that all induced cycles of length $3$, $4$ and $5$ in the graph of a simple $d$-polytope~$P$ are graphs of $2$-faces of $P$.
+Conclude that the Petersen graph is not the graph of any polytope of any dimension. (\emph{Hint for $5$-cycles:} First show this for $d=3$. Then prove
+that any $5$-cycle in a simple polytope is contained in some $3$-face,
+and use that faces of  simple polytopes are simple.)}
+
+\item \textbf{Let $n\in\N$ be an integer and $S$ denote a subset of
+  $\{1,2,\dots,\lfloor\frac{n}{2}\rfloor\}$.  
+  The \emph{circulant graph} $\Gamma_n(S)$ is the graph whose vertex set is $\Z_n$, and whose edge set is the set of pairs of vertices whose difference lies in $S\cup (-S)$}. 
+
+\textbf{The following figure collects all connected circulant graphs on up to $8$~vertices. Determine the \emph{polytopality range} for as many of these graphs as you can, i.e., the set of integers~$d$ such that the graph in question is the graph of a $d$-dimensional polytope}.
+
+\bigskip
+
+
+\item \textbf{Let $\Box^d$ be the $d$-dimensional $\pm1$-cube. How large can the volume of a simplex in $\Box^d$ become? (\emph{Hint:} \url{en.wikipedia.org/wiki/Hadamard_inequality}. Write a  C++ program to attain explicit bounds for $d\ge2$ as large as you can}.)
+\end{enumerate}
+
+% \bigskip
+% \bigskip
+% \section*{Software}
+
+% \begin{enumerate}
+% \setlength{\itemsep}{2ex}
+% \item
+% \end{enumerate}
+
+\end{document}
