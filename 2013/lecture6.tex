@@ -1,0 +1,81 @@
+\chapter{Lattice points in multiples of politopes}
+
+\scribe{Xavier Tapia}
+
+Let's define $L_P(t)= \sharp \{tP^{d} \cap \ZZ ^{d} \}$, this number is equal to $\sharp\{P^{d} \cap \frac{1}{t} \ZZ ^{d}\}$ where $P$ is a polytope.
+Take now $P^{o}=int P$ as a topological space, and consider $L_{P^{o}}(t)= \sharp \{t(P^{o})^{d} \cap \ZZ ^{d} \}$.
+
+Let's considerer first some examples of this:
+
+If we take $d=2$ and $t=2$ we will have $9$ points
+% DIBUJO DE 2 CUADRADO%
+
+Considerer some tables.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|c|c|c|c|c|c|c}
+ & 0 & 1 & 2 & 3 & 4 & ... & t \\
+ \hline
+$L_{\Box^2}(t)$ & 1 & 4 & 9 & 16 & 25 & ... & $(t+1)^{2}$\\
+\hline
+$L_{(\Box^2)^0}(t)$  & 0 & 0 & 1 & 4 & 9 & ... & $(t-1)^{2}$\\
+\hline
+$L_{\Box^1}(t)$ & 1 & 2 & 3 & 4 & 5 & ... & $t+1$ \\
+\hline
+$L_{(\Box^1)^0}(t)$ & 0 & 0 & 1 & 2 & 3 & ... & $t-1$ \\
+\end{tabular}
+\end{table}
+
+It's possible to see that, in general:
+
+\begin{theorem}
+$L_{\Box^d}(t) = (t+1)^{d}$, $L_{(\Box^d)^0}(t)=(t-1)^{d}=(-1)^{d}L_{\Box^d}(-t)$
+\end{theorem}
+
+In fact, this result is true for every polytope $P$ not only for $\Box^d$, this theorem is known as the Ehrart-Macdonald Reciprocity and it's the principal result we want to prove.
+
+\begin{theorem}[Ehrhart-Macdonald Reciprocity]
+\[
+  L_P(-t) = (-1)^d L_{P^0}(t)
+\]
+\end{theorem}
+
+To proof this theorem we need some previous results,
+
+\section{Generating functions for rational cones}
+
+Take $S$ a rational cone or polytope (i.e. the generators of $1$-$d$ rays with rational vertices coordinates). We define:
+
+$$G_S(z)=G_S(z_1,z_2,...,z_d)= \sum _{m \in S \cap \ZZ ^{d}} z^{m}=\sum _{m \in S \cap \ZZ ^{d}} z_1^{m_1}...z_d^{m_d}$$
+
+$G(z)=1+x+y+xy=(1+x)(1+y)$
+
+Goal: Find $G_c(z)$ where $ C=\{v_1,...,v_d\} \subset \\R ^{d}$
+
+Assume that $C$ is simplicial (that0s mean $C$ is a cone over a simplex), so the paralelopiped $\Pi_C=\{\lambda_1v_1+...+\lambda_dv_d : 0 \leq \lambda_i \leq 1\}$ till $C$ disjointlly.
+
+In particullar, $G_C(z)= \sum_{s_i \in \NN} tr_{\sum s_iv_i}G_{\Pi}(z)=\sum_{s_i \in \NN} z^{\sum s_iv_i}G_{\Pi}(z)=\frac{G_{\Pi}(z)}{(1-z^{v_1})...(1-z^{v_d})} \in \QQ[[z_1,...,z_d]]$ 
+
+\begin{theorem}[Beck-Robins theorem 3.5]
+Suppose $C=cone\{v_1,...,v_d\}$ cone over a simplex, then for all $v \in \RR^{d}$ the generating function satisfies:
+
+$$G_{v+C}=\frac{G_{v+\Pi_C(z)}}{(1-z^{v_1})...(1-z^{v_d})}$$
+\end{theorem}
+
+\begin{proof}
+In $G_{v+C}(z)=\sum_{m \in (v+C) \cap \ZZ ^{d}} z^{m}$ write $m=w+\lambda_1v_1+...+\lambda_dv_d$ for $\lambda_i \geq 0$, and take $\lambda_k= \lfloor \lambda_k \rfloor+\lbrace \lambda_k \rbrace$ so for that, we can write:
+$$m=w+\lfloor \lambda_1 \rfloor v_1+...+\lfloor \lambda_d \rfloor v_d+\lbrace\lambda_1 \rbrace v_1+...+\lbrace\lambda_d \rbrace v_d$$
+
+The vector $P=w+\lbrace\lambda_1 \rbrace v_1+...+\lbrace\lambda_d \rbrace v_d \in \ZZ^{d}$ is unique and any $u \in v+C\cap \ZZ^{d}$ can be written uniquely as $P+\sum n_i v_i$ with $P\in \Pi_C$ and $n_i \in \ZZ$.
+
+We have:
+
+$$\frac{\sigma_{w+\Pi_C}(z)}{(1-z^{v_1})...(1-z^{v_d})}=\left(\sum_{m \in (v+C) \cap \ZZ ^{d}+w} z^{m}\right)\left(\sum_{k_i \in \NN} z^{k_1 v_1}\right)...\left(\sum_{k_d \in \NN} z^{k_d v_d}\right)$$
+
+Note that if $\Delta C \cap \ZZ^{d}=\phi$ it suffices to take $\Pi_C^{0}=\{\sum_{i=1}^{d} \lambda_i v_i, 0<\lambda_i<1\}$ the open fundamental paralelopiped.
+\end{proof}
+
+\begin{theorem}
+For any pointed cone (it's maximum linear subspace contained in $C$ is $\{ 0 \}$) $C=\{w+\sum \lambda_i v_i, \lambda_i \geq 0 \}$ with $w \in \RR^{d}$ and $v_i \in \ZZ^{d}$, the generating function $\sigma_C (z)$ is a rational function in the $z_i$.
+\end{theorem}
