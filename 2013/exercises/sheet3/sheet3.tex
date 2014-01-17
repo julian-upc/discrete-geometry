@@ -1,0 +1,96 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{a4wide}
+\usepackage{paralist}
+\usepackage{url}
+\usepackage{nopageno}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\R}{\mathbbm{R}}
+\newcommand{\Z}{\mathbbm{Z}}
+
+\DeclareMathOperator{\conv}{conv}
+
+\begin{document}
+\begin{center}
+\textbf{\sffamily
+   Discrete and Algorithmic Geometry }
+
+\medskip
+   Julian Pfeifle,
+   UPC, 2013 \mbox{}
+\end{center}
+
+\bigskip
+
+\begin{center}
+  \textbf{\sffamily Sheet 3}
+
+\bigskip
+%\textbf{\sffamily UNDER CONSTRUCTION}
+ due on Monday, December 2, 2013
+
+\end{center}
+
+\bigskip
+%\enlargethispage{2cm}
+%\section*{Reading}
+
+%\begin{enumerate}
+%\setlength{\itemsep}{2ex}
+%\item Read Lectures 3, 4 from Ziegler's \emph{Lectures on Polytopes}.
+
+%\item Read Sections 5.1, 5.2, 5.3 from Matou\v sek's \emph{Lectures on
+%    Discrete Geometry}.
+%\end{enumerate}
+
+%\bigskip
+%\bigskip
+\section*{Writing}
+
+\begin{enumerate}
+\setlength{\itemsep}{2ex}
+
+\item Compute the polytopality range of the complete bipartite graph $K_{m,n}$ for $m,n\ge3$.
+
+\item Prove or disprove: Any graph on $n$~vertices (connected or not) arises as a subgraph of the $1$-skeleton of a $4$-dimensional polytope.
+\end{enumerate}
+
+% \bigskip
+ \bigskip
+ \section*{Software}
+
+ \begin{enumerate}
+ \setlength{\itemsep}{2ex}
+ \item Inside your local copy of the \texttt{github} repository of this class, create a \texttt{polymake} extension named \texttt{dag2013-your-name} and copy the original \texttt{polymake} client 
+
+\texttt{apps/polytope/src/join\_polytopes.cc} 
+
+\noindent to the repository:
+
+\texttt{2013/coding/dag2013-your-name/apps/polytope/src/direct\_sum.cc} . 
+
+\noindent Commit only this source file to the repository, and push it to \texttt{github}.
+
+\item Adapt this client to produce the direct sum of two polytopes:
+\[
+   P\oplus Q
+   \ = \
+   \conv\big(P\times\{0\}\cup\{0\}\times Q\big),
+\]
+where $0\in P$, $0\in Q$. Make sure your code is more legible and better formatted than the original, and test your client before pushing the final version! 
+
+\item Use your new client to calculate the $f$-vector of $Q:=\Pi_3\oplus \Pi_3$, where $\Pi_3$ is the $3$-dimensional permutahedron (with $24$~vertices). Write down a single line of \texttt{polymake} code that achieves this calculation. How many facets does $Q$ have? Does your answer agree with the formula for the number of facets we discussed in class?
+ \end{enumerate}
+
+
+\bigskip
+\section*{Turning in your work}
+
+Put your answers into a .pdf file. To turn it in, use \texttt{gpg} and the public key \texttt{julian.gpg.pub} in the \texttt{github} repository to create an encrypted copy that is only readable by me. Then commit and push this encrypted file to the repository.
+\end{document}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?pm chk="527ce055"?>
+
+<object name="p" type="polytope::Polytope&lt;Rational&gt;" version="2.12.5" xmlns="http://www.math.tu-berlin.de/polymake/#3">
+  <property name="INEQUALITIES" type="SparseMatrix&lt;Rational, NonSymmetric&gt;">
+    <m cols="5">
+      <v> <e i="0">2</e> <e i="1">1</e> <e i="2">1</e> <e i="3">1</e> <e i="4">1</e> </v>
+      <v> <e i="0">1</e> <e i="1">1</e> </v>
+      <v> <e i="0">1</e> <e i="1">-1</e> </v>
+      <v> <e i="0">1</e> <e i="2">1</e> </v>
+      <v> <e i="0">1</e> <e i="2">-1</e> </v>
+      <v> <e i="0">1</e> <e i="3">1</e> </v>
+      <v> <e i="0">1</e> <e i="3">-1</e> </v>
+      <v> <e i="0">1</e> <e i="4">1</e> </v>
+      <v> <e i="0">1</e> <e i="4">-1</e> </v>
+      <v> <e i="0">1</e> </v>
+    </m>
+  </property>
+  <property name="FEASIBLE" value="true" />
+</object>

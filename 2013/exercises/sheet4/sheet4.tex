@@ -1,0 +1,132 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{a4wide}
+\usepackage{paralist}
+\usepackage{url}
+\usepackage{nopageno}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\R}{\mathbbm{R}}
+\newcommand{\Z}{\mathbbm{Z}}
+
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\LL}{\mathsf{L}}
+\DeclareMathOperator{\Ehr}{\mathsf{Ehr}}
+
+\begin{document}
+\begin{center}
+\textbf{\sffamily
+   Discrete and Algorithmic Geometry }
+
+\medskip
+   Julian Pfeifle,
+   UPC, 2013 \mbox{}
+\end{center}
+
+\bigskip
+
+\begin{center}
+  \textbf{\sffamily Sheet 4}
+
+\bigskip
+%\textbf{\sffamily UNDER CONSTRUCTION}
+ due on Monday, December 9, 2013
+
+\end{center}
+
+\bigskip
+%\enlargethispage{2cm}
+%\section*{Reading}
+
+%\begin{enumerate}
+%\setlength{\itemsep}{2ex}
+%\item Read Lectures 3, 4 from Ziegler's \emph{Lectures on Polytopes}.
+
+%\item Read Sections 5.1, 5.2, 5.3 from Matou\v sek's \emph{Lectures on
+%    Discrete Geometry}.
+%\end{enumerate}
+
+%\bigskip
+%\bigskip
+%\section*{Writing}
+
+\begin{enumerate}
+\setlength{\itemsep}{1ex}
+\item 
+    \begin{itemize}
+    \item The $(d,k)$-\emph{hypersimplex} is the polytope $\Delta(d,k)=\Box_0^d\cap H_k$, where $\Box_0^d$ is the cube $\Box_0^d = \{x\in\R^d: 0\le x_i\le 1\text{ for all }i\in[d]\}$, and
+$H_k=\{x\in\R^d:\sum_{i=1}^d x_i = k\}$.
+\item $\Delta'(d,k)=\Box_0^d\cap S_k$, where $S_k$ is the slab $\{x\in\R^d : k-1\le\sum_{i=1}^d x_i \le k\}$.
+\item Analogously, define $\Sigma(d,k)=\Delta^d\cap H_k$, where $\Delta^d=\conv\{0,e_1,\dots,e_1+\dots+e_d\}$, and $\Sigma'(d,k) = \Delta^d\cap S_k$.
+\item A polytope $P$ is \emph{$\ell$-simplicial} if all $\ell$-dimensional faces of~$P$ are simplices.
+\item $P$ is \emph{$\ell$-simple} if all $\ell$-dimensional faces of the polar polytope~$P^\Delta$ are simplices.
+    \end{itemize}
+
+
+\bigskip
+\begin{enumerate}
+\setlength{\itemsep}{1ex}
+\item \emph{``All faces of hypersimplices are hypersimplices''.} True or false? 
+
+\item \emph{``All faces of a $\Sigma(d,k)$ are of the form $\Sigma(d',k')$''.} True or false? 
+
+\item Calculate $f_0$ and $f_{d-1}$ for $\Delta(d,k)$, $\Delta'(d,k)$, $\Sigma(d,k)$ and $\Sigma'(d,k)$.
+
+\item Is there any relationship between $\Delta(d,k)$ and $\Delta'(d',k')$?
+
+\item Is there any relationship between $\Sigma(d,k)$ and $\Sigma'(d',k')$?
+
+\item \emph{``The polytope $\Sigma(d,k)$ is the closure of the quotient of $\Delta(d,k)$ under an action of the symmetric group~$\mathsf{S}_d$''.} Discuss.
+
+\item For each triple $(k,\ell,d)\in\N^3$ with $0\le k,\ell\le d$, decide the truth of the following statements, where $P$ is, in turn, $\Delta(d,k)$, $\Delta'(d,k)$, $\Sigma(d,k)$ and $\Sigma'(d,k)$:
+
+  \begin{inparaenum}
+  \item $P$ is $\ell$-simplicial;
+  \item $P$ is $\ell$-simple; 
+  \item $P$ is $\ell$-neighborly.
+  \end{inparaenum}
+
+\emph{Hint:} Use \texttt{polymake} for some small cases, and extrapolate using (a), (b), if true.
+\end{enumerate}
+
+\item Let $R$ be an integral rectangle whose edges are parallel to the coordinate axes in $\R^2$, and let $T$ be a rectangular triangle two of whose edges are parallel to the coordinate axes. Show that Pick's Theorem holds for $R$ and $T$.
+
+\item
+  \begin{enumerate}
+  \item For any $a,b,c,d\in\N$, consider the line segment $S=\conv\{(a,b),(c,d)\}$. Prove that the number of integer points on $S$ is $\gcd(a-c, b-d) + 1$.
+  \item For any two fixed positive integers $a,b$, let $T$ be the lattice triangle with vertices $(0,0)$, $(a,0)$, $(0,b)$. 
+
+\begin{inparaenum}
+\item\label{ex2:i} Compute $\LL_T(t)$ and $\Ehr_T(z)$.
+\item Use (i) to derive the following formula:
+\[
+   \gcd(a,b) 
+   \ = \
+   2\sum_{k=1}^{b-1}\left\lfloor\frac{ka}{b}\right\rfloor 
+   + a + b - ab.
+\]
+\end{inparaenum}
+  \end{enumerate}
+
+\end{enumerate}
+
+% \bigskip
+ % \bigskip
+ % \section*{Software}
+
+ % \begin{enumerate}
+ % \setlength{\itemsep}{2ex}
+ % \item 
+ % \end{enumerate}
+
+
+\bigskip
+\section*{Turning in your work}
+
+Put your answers into a .pdf file. To turn it in, use \texttt{gpg} and the public key \texttt{julian.gpg.pub} in the \texttt{github} repository to create an encrypted copy that is only readable by me. Then commit and push this encrypted file to the repository.
+\end{document}

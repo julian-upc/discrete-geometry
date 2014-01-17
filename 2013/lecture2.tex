@@ -1,0 +1,118 @@
+\chapter{Asymptotic f-vectors of families of polytopes}
+
+\scribe{Cecilia Gir\'on}
+
+\section{The Unimodality Conjecture}
+In this section we are going to study the \textit{unimodality conjecture} which says that there exists an $l = P(L)\in\mathbb{N}$ such that $f_0\leq f_1 \leq \cdots\leq f_l \leq f_{l+1}\leq \cdots \leq f_{d-1}\leq f_d$. We woould like to know if it is true. 
+
+First, we define the \textbf{$f$-vector} as the vector of the form $(f_0,f_{1},\cdots,f_{d-1})$ where $f_i$ is as defined before in (\ref{eq1}). We will say that it is a \textbf{flag $f$-vector} $(f_s)_s = [d]$ such that $f_s$ count the number of flags $F_{i_1} \subset F_{i_2} \subset \cdots \subset F_{i_k}$ where $s = \{i_1,i_2,\cdots, i_k \}$ and $\dim F_{i_k} = i_k$ \footnote{You can also read about $cd$-index}.
+
+\bigskip
+The unimodal conjecture described before is known to be false for simplical polytopes of dimension $d\geq 19$ and for non-simplicial polytopes of dimension $d \geq 8$. The following conjecture is not known to be false. 
+
+\textbf{Restricted unimodal conjecture (Anders Bjorner)}: 
+\begin{eqnarray*}
+ f_0\leq f_1\leq \cdots \leq f_{\lfloor \frac{d-1}{4}}\rfloor\\
+ f_{\lfloor \frac{3(d-1)}{4}\rfloor}\geq \cdots \geq f_{d-1}
+\end{eqnarray*} 
+
+Intuitively we are sure that there is no way this conjecture could be false, but there is not proof of this. We don't even know if $f_k\geq \frac{1}{10000}\min\{f_0,f_{d-1}\}$ is true.
+
+\bigskip
+
+\subsection{Exercises worked on during the lecture 11/11/2013. Each team includes one}
+
+\begin{description}
+\item[Exercise 1b (Alex Alvarez and Ivan Geffner)] \textit{Using the simple form $n! \approx \left(\frac{n}{e}\right)^n$ of Stirling's formula, show that $\phi_d(x) := \log\left(\frac{d}{xd}\right)$ is asymptotically proportional to $-x\log x - (1 - x)\log(1 - x)$, for $x\in (0,1)$ and $d \rightarrow \infty$. Discuss the real function $\phi_d$ on $[0,1]$.}
+
+\bigskip
+Using the simple form of Stirling's formula, we obtain the following form:
+
+\begin{equation*}
+{d \choose xd} \approx \frac{d^d}{xd^{xd}(d - xd)^{d - xd}}
+\end{equation*}
+
+So applying the logarithm, we get
+
+\begin{eqnarray*}
+\phi_d(x) &=& d\log d - xd\log xd - (d - xd)\log (d - xd) \\
+&=& d\log d - xd\log x - xd\log d - (d - xd)(\log d + \log (1 - x)) \\
+&=& d(-x\log x - (1 - x)\log (1 - x))
+\end{eqnarray*}
+
+Thus, the first part of the exercise is proven. Let us study now the shape of the function. 
+
+The function clearly vanishes when $x$ tends to 0 and 1 and in this interval is non-negative. The first derivative of the function is
+
+\begin{equation*}
+\frac{d}{dx}(-(1-x) \log(1-x)-x \log(x)) = \log(1-x)-\log(x)
+\end{equation*}
+
+and therefore, there is only one point in which derivative vanishes, that is $x = \frac{1}{2}$. Now, the second derivative is 
+
+\begin{equation*}
+\frac{d^2}{dx^2}\log(1-x)-\log(x) = \frac{1}{x(x - 1)}
+\end{equation*}
+
+We can conclude then that the point is a maximum, so we have characterized the shape of the function.
+
+\item[Exercise 2b (Borja and Cecilia)] \textit{Using the simple form $n!\approx \left(\frac{n}{e}\right)^n$ of Stirling's formula, show that $\psi_d(x) : = d(1-x)+ \log  \binom {d} {xd}$ is asymptotically proportional to $1-x-x\log x - (1-x)\log(1-x)$, where  $\log = \log_2$ denotes the binary logarithm. Find an approximation to the maximum of this function on $(0,1)$}.
+
+\bigskip
+For the first part of the exercise, by applying the Stirling's formula, in the binomial for of the given function:
+\[\binom{d}{xd} = \left(\frac{d}{xd^x (d(1-x))^{1-x}}\right)^d\]
+
+Then, substituting in $\psi_d(x)$:
+
+\begin{eqnarray*}
+\psi_d(x) &=& d(1-x) + \log \left(\frac{d}{xd^x (d(1-x))^{1-x}}\right)^d \\
+&=& d(1-x) + d\left(\log{d} - x\log{x} - x\log{d} - (1-x)\log{d} - (1-x) \log{(1-x)}\right)\\
+&=& d (1-x-x\log x - (1-x)\log(1-x))
+\end{eqnarray*}
+Hence, $\psi_d(x)$ is asymptotically proportional to $1-x-x\log x - (1-x)\log(1-x)$
+\bigskip
+
+For the second part of the exercise, in order to find the maximum of the function
+\begin{equation*}
+f(x)=1-x-x\log(x)-(1-x)\log(1-x)
+\end{equation*}
+in (0,1) we will the points that have first derivative equal to 0, that is $x$ such that $f'(x)=0$, and computing $f'(x)$ we get:
+\begin{equation*}
+f'(x)=-1-(\log x+1)-(-\log(1-x)-1)=\log\left(\frac{1-x}{x}\right)-1
+\end{equation*}
+Now the points that make $f'(x)=0$ are the ones that make $\log(\frac{1-x}{x})=1$, which is the same as $x$ such that $\frac{1-x}{x}=e$, which translates into:
+\begin{equation*}
+x_{\max}=\frac{1}{e+1}
+\end{equation*}
+The shape of this function is a growing function from $x=0$ starting at $f(0)=1$ to $x=x_{\max}$, where it gets it's maximum, that is approximated by $f(x_max)\approx1.0414$  and then decreases to $0$ at $x=1$.
+\end{description}
+
+\section{Operations on polytopes}
+\begin{itemize}
+\item \textbf{Cartesian (direct) product} $P\times Q$.
+\item \textbf{Direct sum} $P^d \oplus q^e \subset \mathbb{R}^{d+e}$.
+\item $P*Q\subset \mathbb{R}^{d+e+1}$. It is like $\oplus$ but the subspaces are skew (i.e. affine and they have no point on common). For example $\square^1 *\square^1 = Pyr(P)$.
+\end{itemize}
+
+\bigskip
+\noindent\textsc{Example}: Given $f_k(P)$, calculate the $k$-th entry of $Pyr(P)$:
+\begin{eqnarray*}
+f(P)&=&(f_0,f_1,\cdots, f_{d-1}\\
+f_k(Pyr(P)) &=& (f_0 +1, f_1 + f_0, f_2+f_1, \cdots, f_{d-2}+ f_{d-3}, f_{d-1}+ f_{d-2}, 1+ f_{d-1})
+\end{eqnarray*}
+\begin{flushright}
+$\clubsuit$
+\end{flushright}
+
+\bigskip
+\begin{itemize}
+\item  \textbf{Connected sum} $P^d\#Q^d$ where $P$ has as simplicial face $f$ and $Q$ has a simplicial face $G$. 
+\end{itemize}
+
+This last operation is used to join the asymptotic function $f(\square^d)$ and its dual $f(\diamondsuit ^d)$. To make it work, since $\square^d$ has no triangulations in its faces, it is enough to cut away one vertex and, this way, get a simplex. Merging both functions using the connected sum gives place to a new function which is a non-unimodal function.
+
+
+% Local Variables: 
+% mode: latex
+% TeX-master: "dag-upc"
+% End: 

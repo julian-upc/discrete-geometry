@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?pm chk="527c0525"?>
+
+<object type="polytope::Polytope&lt;Rational&gt;" version="2.12.5" xmlns="http://www.math.tu-berlin.de/polymake/#3">
+  <property name="CONE_AMBIENT_DIM" value="6" />
+  <property name="CONE_DIM" value="5" />
+  <property name="N_VERTICES" value="10" />
+  <property name="VERTICES">
+    <m>
+      <v>1 1 1 0 0 0</v>
+      <v>1 1 0 1 0 0</v>
+      <v>1 1 0 0 1 0</v>
+      <v>1 1 0 0 0 1</v>
+      <v>1 0 1 1 0 0</v>
+      <v>1 0 1 0 1 0</v>
+      <v>1 0 1 0 0 1</v>
+      <v>1 0 0 1 1 0</v>
+      <v>1 0 0 1 0 1</v>
+      <v>1 0 0 0 1 1</v>
+    </m>
+  </property>
+  <property name="LINEALITY_SPACE">
+    <m />
+  </property>
+  <property name="FEASIBLE" value="true" />
+</object>

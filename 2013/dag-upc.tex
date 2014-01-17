@@ -1,0 +1,188 @@
+\documentclass[11pt]{amsbook}
+
+\makeatletter
+\def\@thm#1#2#3{%
+  \ifhmode\unskip\unskip\par\fi
+  \normalfont
+  \trivlist
+  \let\thmheadnl\relax
+  \let\thm@swap\@gobble
+  \let\thm@indent\indent % indent
+  \thm@headfont{\bfseries}% heading font boldface // changed
+  \thm@notefont{\fontseries\mddefault\upshape}%
+  \thm@headpunct{.}% add period after heading
+  \thm@headsep 5\p@ plus\p@ minus\p@\relax
+  \thm@space@setup
+  #1% style overrides
+  \@topsep \thm@preskip               % used by thm head
+  \@topsepadd \thm@postskip           % used by \@endparenv
+  \def\@tempa{#2}\ifx\@empty\@tempa
+    \def\@tempa{\@oparg{\@begintheorem{#3}{}}[]}%
+  \else
+    \refstepcounter{#2}%
+    \def\@tempa{\@oparg{\@begintheorem{#3}{\csname the#2\endcsname}}[]}%
+  \fi
+  \@tempa
+}
+\makeatother
+
+\renewcommand{\chaptername}{Lecture}
+
+
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{amssymb}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{bbm}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage[pagebackref]{hyperref}
+\hypersetup{pdftitle={\title}, pdfauthor={\author}}
+\usepackage{xypic}
+
+\usepackage[sectionbib,numbers]{natbib}
+\usepackage[sectionbib]{chapterbib}
+
+\usepackage{amsmath}
+%\usepackage{tikz}
+%\usetikzlibrary{matrix,arrows,decorations.pathmorphing}
+
+\newcommand{\ba}{{\boldsymbol{a}}}
+\newcommand{\balpha}{{\boldsymbol{\alpha}}}
+\newcommand{\bb}{{\boldsymbol{b}}}
+%\newcommand{\bc}{{\boldsymbol{c}}}
+\newcommand{\be}{{\boldsymbol{e}}}
+\newcommand{\bff}{{\boldsymbol{f}}}
+\newcommand{\bnu}{{\boldsymbol{\nu}}}
+\newcommand{\bm}{{\boldsymbol{m}}}
+\newcommand{\bo}{{\boldsymbol{0}}}
+\newcommand{\bp}{{\boldsymbol{p}}}
+\newcommand{\bq}{{\boldsymbol{q}}}
+\newcommand{\br}{{\boldsymbol{r}}}
+\newcommand{\bsigma}{{\boldsymbol{\sigma}}}
+\newcommand{\bt}{{\boldsymbol{t}}}
+\newcommand{\bv}{{\boldsymbol{v}}}
+\newcommand{\bw}{{\boldsymbol{w}}}
+\newcommand{\bx}{{\boldsymbol{x}}}
+\newcommand{\by}{{\boldsymbol{y}}}
+\newcommand{\bz}{{\boldsymbol{z}}}
+\newcommand{\bone}{{\boldsymbol{1}}}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\Rgeo}{{\mathbb{R}_{\ge0}}}
+\newcommand{\Zgeo}{{\mathbb{Z}_{\ge0}}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\CC}{\mathbb{C}}
+
+\newcommand{\cA}{{\mathcal{A}}}
+\newcommand{\cC}{{\mathcal{C}}}
+\renewcommand{\cD}{{\mathcal{D}}}
+\renewcommand{\cH}{{\mathcal{H}}}
+\renewcommand{\cL}{{\mathcal{L}}}
+\newcommand{\cO}{{\mathcal{O}}}
+\newcommand{\cP}{{\mathcal{P}}}
+
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\tU}{\tilde{\mathcal{U}}}
+\newcommand{\tV}{\tilde{\mathcal{V}}}
+
+\newcommand{\scp}[2]{\langle #1,#2\rangle}
+\newcommand{\fl}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ce}[1]{\left\lceil #1\right\rceil}
+\newcommand{\rcone}[1]{{{}_\Rgeo\!\left\langle #1\right\rangle}}
+\newcommand{\zcone}[1]{{{}_\Zgeo\!\left\langle #1\right\rangle}}
+
+\newcommand{\bn}{{\color{blue}\texttt{\bfseries n}}}
+\newcommand{\bc}{{\color{blue}$\boldsymbol{\circ}$}}
+\newcommand{\rn}{{\color{red}\texttt{\bfseries n}}}
+\newcommand{\rs}{{\color{red}\texttt{\bfseries *}}}
+\newcommand{\rt}{{\color{red}$\boldsymbol{\times}$}}
+\newcommand{\bB}{{\color{blue}\texttt{\bfseries B}}}
+\newcommand{\rR}{{\color{red}\texttt{\bfseries R}}}
+
+\newcommand{\crb}[1]{{\color{red}\texttt{\bfseries{#1}}}}
+\newcommand{\cbb}[1]{{\color{blue}\texttt{\bfseries{#1}}}}
+
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\relint}{relint}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\vertices}{vert}
+\DeclareMathOperator{\rang}{rang}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\pyr}{pyr}
+\DeclareMathOperator{\bipyr}{bipyr}
+\DeclareMathOperator{\Sl}{Sl}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\colspan}{colspan}
+\DeclareMathOperator{\rank}{rank}
+
+%% Albert
+\DeclareMathOperator{\Ehr}{Ehr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Ferran%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Proj}{\mathbb{P}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Vor}{Vor}
+\newcommand{\HH}{\mathbb{H}}
+
+\DeclareMathOperator{\sgn}{sgn} %signum
+\DeclareMathOperator{\ggT}{ggT}
+
+\newcommand{\ojo}[1]{\textsf{\bfseries\boldmath #1}}
+\newcommand{\scribe}[1]{\begin{center}\emph{Scribe: #1}\end{center}\bigskip}
+
+\graphicspath{{graphics/}}
+
+\numberwithin{equation}{chapter}
+
+\newtheorem{theorem}{\textbf{Theorem}}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conj}[theorem]{Conjecture}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{claim}[theorem]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{obs}[theorem]{Observation}
+
+% \includeonly{lecture3}
+
+\begin{document}
+
+\include{title}
+\tableofcontents
+
+\include{lecture1}
+\include{lecture2}
+\include{lecture5}
+\include{lecture_20131213}
+\include{scribes}
+
+\bibliographystyle{plainnat}
+\bibliography{dag}
+
+\include{papers-to-referee}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
