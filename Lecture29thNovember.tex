@@ -1,0 +1,69 @@
+
+\chapter{Lattice Geometry}
+
+\scribe{Borja Elizale}
+
+A $\mathbb{Z}$-module is an abelian group of rank $r$, and we don't care about the torsion part, so it is isomorphic to $\mathbb{Z}^r$ for some $r$.
+\begin{defn}
+A lattice polytope is a convex polytope all whose vertices have integral coordinates.
+\end{defn}
+A natural question that can arise is how can we know if the two lattice polytopes are equivalent. The answer to this question is that they are equivalent when they are related by an invertible mapping that leaves the lattice invariant. These mappings belong to the set of mappings:
+\begin{center}
+Isom$(\mathbb{Z}^d)$=$Sl_d(\mathbb{Z})\times$ Translations$(\mathbb{Z})$
+\end{center}
+And $Sl_d(\mathbb{Z})$ are the $d\times d$ matrices over the integer numbers that have determinant equal to 1 or -1.
+Let's consider, as an example, the lattice polytopes in the plane:
+\begin{equation}
+P_1=conv(\{0,e_1,e_2\})
+\end{equation}
+\begin{equation}
+P_2=conv(\{0,e_1,7e_1+e_2\})
+\end{equation}
+\begin{equation}
+P_3=conv(\{0,e_1,7e_1+2e_2\})
+\end{equation}
+We want to know if they are equivalent or not, and based on what we have said before, this happens if there exists a transformation in $Sl_d(\mathbb{Z})$ (in this case the dimension is 2) plus a translation that brings one to the other. Since the two first points are the same for the three polytopes, there is no translation and so we only have to find a transformation in $SL_d(\mathbb{Z})$ between them.
+Now for the first one this is equivalent to find a matrix $\mathbf{A}$ such that:
+\begin{equation}
+\mathbf{A}\left[\begin{matrix}1&0\\0&1\end{matrix}\right]=\left[\begin{matrix}1&7\\0&1\end{matrix}\right]
+\end{equation}
+And clearly $\mathbf{A}$ must be the matrix from the right side of the equation, which is in the set $SL_d(\mathbb{Z})$.
+For the second case this does not happen, the right side of the equation will be the matrix $\left[\begin{matrix}1&7\\0&2\end{matrix}\right]$, which is not in $SL_d(\mathbb{Z})$. So such a transformation does not exist and they are not equivalent.
+Computing the volume of a lattice polytope is computing the determinant of the square matrix built from the homogeneous coordinates of the points. This doesn't give properly the volume, but the volume of the smallest parallelepiped that contains the whole polytope.
+We say that a lattice simplex, $\Delta$ is:
+
+\begin{defn}
+\emph{Unimodular} if $\det\Delta=\pm 1$
+\end{defn}
+\begin{defn}
+\emph{Empty} if conv$\Delta\cap\mathbb{Z}^d=$vertices of $\Delta$.
+\end{defn}
+\begin{defn}
+\emph{Standart} if $\Delta$ is equivalent to conv$\{0,e_1,...,e_d\}$
+\end{defn}
+The relation between these concepts goes as follows:
+\begin{center}
+\textbf{Standart}$\Leftrightarrow$\textbf{Unimodular}$\Rightarrow$ \textbf{Empty}
+\end{center}
+And if the dimension is equal to 2 we also have
+\begin{center}
+\textbf{Empty}$\Rightarrow$\textbf{Unimodular}
+\end{center}
+But the other implication is not true in general (there is a counter example for dimension 3, and then for every dimension larger than 3).
+Let's proof the first relationship
+\begin{proof}
+$\Delta$ Standart $\Rightarrow$ Unimodular. If $\Delta$ is such that $\mathbf{A}\Delta=\mathbf{A}_0$, for some $\mathbf{A}$ in $SL_d(\mathbb{Z})$, then it happens that $\det(\mathbf{A}\Delta)=\det(\mathbf{A}_0)$, and then $\pm 1\det(\Delta)=\pm1$ and this only happens if $\det(\Delta)=\pm1$, which is the condition for it to be unimodular.
+
+For the reciprocal, if $\Delta$ is unimodular, then $\det(\Delta)=\pm 1$, and if we want some $\mathbf{A}$ in $SL_d(\mathbb{Z})$ that satisfies $\mathbf{A}\Delta=\mathbf{A}_0=Id(d)$, then $\mathbf{A}=\Delta^{-1}$ and $\Delta^{-1}$ belongs to $SL_d(\mathbb{Z})$ because it's determinant is $\pm 1$.
+\end{proof}
+\begin{proof}
+\textbf{Unimodular} $\Rightarrow$ \textbf{Empty}. By contradiction, if it was not empty, then we could divide the polytope into two subdivisions by taking the cones to the interior point that makes it non empty, so that each subdivision has area, at least, $\pm 1$ and then whole area (which is the sum of the parts) would be greater than $1$ contradicting the unimodularity.
+\end{proof}
+\begin{thm}
+Pick's theorem: if $P\subset\mathbb{R}^2$ is a reticular polygon, then area($P)=I+\frac{B}{2}-1$. Where $I=$ Int$P\cap\mathbb{Z}^2$ and $B=\partial P\cap\mathbb{Z}^2$.
+\end{thm}
+
+This theorem allows us to prove that for $d=2$, \textbf{Empty}$\Rightarrow$\textbf{Unimodular}, because if it is empty, then $I=0$ and then $\frac{A}{2}=0+\frac{3}{2}-1$ and $A=1$ so the polygon it is unimodular as well.
+
+
+\end{document}
