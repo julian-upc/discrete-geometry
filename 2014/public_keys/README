@@ -1,0 +1,3 @@
+Place your public keys into this directory, using the naming scheme
+
+  firstname.lastname.id_rsa.pub
