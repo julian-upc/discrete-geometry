@@ -1,46 +1,12 @@
-\documentclass[a4paper,12pt]{article} %Tamaño de la letra, papel, y tipo de documento (report, article, book...)
-\usepackage[applemac]{inputenc} %pner utf8 para no tener con la ñ, acentos, ç y cosas raras.
-\usepackage[english]{babel} %Definimos el idioma
+\documentclass[11pt]{amsart}
 
+\usepackage{a4wide}
+\usepackage{paralist}
+\usepackage{url}
+\usepackage{nopageno}
 
-\usepackage[pdftex]{graphicx} %paquete para poder incrustar imagenes
-\graphicspath{{./}} %definimos el directorio donde estan las imagenes
-
-
- % mi archivo de traducción de los algoritmos:) por si se hace en catalan
-\usepackage{listings}
-\usepackage{hyperref} %para poner hiperenlaces. Tambien creará enlaces en el indice, notas a pie de pagina, etc.
-\usepackage{amsfonts}
-\usepackage{amsmath}
-\usepackage{enumerate}
-\usepackage{array}
-\usepackage{theorem}
-\usepackage{tikz}
-
-\newtheorem{theorem}{Theorem}[section] %para poner teoremas, definciones, corolarios...
-\newtheorem{corol}{Corollary}[theorem]
-\newtheorem{lema}{Lemma}[section]
-\newtheorem{prop}{Proposition}[section]
-\newtheorem{conjec}{Conjecture}[section]
-\newtheorem{hypot}{Hypothesis}[section]
-
-
-\theorembodyfont{\normalfont}
-\newtheorem{defi}{\sc Definici\'o}[section]
-\newtheorem{exem}{Exemple}[section]
-\newenvironment{proof} %demostración... con cuadradito final!
-	{\textit{Proof.}}
-	{\quad \hfill $\Box$}
-
-\newcommand{\ra}{\rightarrow}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\K}{\mathcal{K}}
-\newcommand{\F}{\mathcal{F}}
-\newcommand{\s}{\mathcal{S}}
-\newcommand{\LL}{\mathcal{L}}
-
-
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
 
 \title{Participants}
 
