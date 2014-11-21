@@ -1,0 +1,45 @@
+Quentin Pergeline
+
+Project done in C++
+
+If the executable "./sheet2" does not exist, execute "make".
+
+To generate all the tests, execute "./test_chi.pl"
+The results will be in test/output/
+
+To generate one particular test execute "./sheet2 ./test/input/matrix_PX.txt ./test/input/matrix_PY.txt ./test/output/result_PX_PY.txt"
+where X and Y are integers [1-7].
+
+To clean everything execute "make clean" but you will have to do "make" to regenerate "./sheet2"
+
+
+
+============================================================
+
+The project relies on two classes:
+Rational which implements a basic class of Rational as a normalised pair of numerator and denominator (both long long int).
+Matrix3dh which implements the 4x4 matrices whith homogeneous coordinates of Rationals.
+
+The main reads two txt files of the exact format:
+1 x x x
+1 x x x
+1 x x x
+1 x x x
+where x stands for an integer between -2**64 and 2**64-1
+
+An error is raised if the format is different. (by the way the three examples ./test/overflow ./test/too_much_data and too_much_line are not tested automatically but they do raise an error if tested)
+
+The determinant is hardcoded since the matrix size does not change.
+For each of the 24 permutations P' of the 4 columns of the first matrix P, we compute inv(P') if it exists.
+For each P' we compute Q * inv (P') , check if it is integer-valued, and of determinant +/-1. If so, we add it to an unordered set so as not to have doubles.
+The list of solutions of the unordered set is written into the output file.
+
+=============================================================
+
+Tests:
+
+P1 and P2 are given in the sheet
+
+P3, P4 and P5 are lattice equivalent
+
+P6 P7 are lattice equivalent and share the maximum number of different affine map (24).
