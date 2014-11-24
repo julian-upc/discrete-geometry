@@ -1,0 +1,27 @@
+To use this program you must be sure that you are following the next steps:
+
+-You must create at least 3 files for the data: two containing 
+the matrices representig the tetrahedron and the other one with 
+your candidate to be a transformation between this two tetrahedrons.
+
+-You must create another file called "input.txt" with the name of the 
+previous files. For instance, you can write:
+
+matrix_P1.txt matrix_P2.txt result_P1_P2.txt
+
+-If you want to check more than one time (with different data) if a matrix
+is the transformation between two tetrahedrons. You must create the appropiate
+files and write the names at the "input.txt". For instance:
+
+matrix_P1.txt matrix_P2.txt result_P1_P2.txt
+matrix_P3.txt matrix_P4.txt result_P3_P4.txt
+
+
+The program will answer your question with a note in the console. In addition
+the program will create a file with all the matrices transforming the tetrahedrons.
+The files attached may conform an appropiate example.
+
+WARNING: Your inputs must be matrices 4x4 with the rows as the vertices
+of the tetrahedrons, that have to be linearly independents. If your coordenates
+are too much big (Graham number is not valid) the program is not going 
+to work properly.
