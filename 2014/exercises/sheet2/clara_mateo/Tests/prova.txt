@@ -1,0 +1,3 @@
+matrix_P1.txt matrix_P2.txt result_P1_P2.txt
+matrix_P3.txt matrix_P4.txt result_P3_P4.txt
+matrix_P5.txt matrix_P6.txt result_P5_P6.txt
