@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# == 0 ]
+then
+  echo "Test numbers missing"
+  echo "---Usage: test_chi [testnumber]+ (Example: test_chi 1 2 3 4)"
+fi
+
+while [ $# -gt 0 ]
+do
+    echo "Test case number $1"
+    ./chi $1
+    shift
+done

@@ -1,0 +1,29 @@
+### Installation:
+In order to execute the chi function, the source has to be compiled. There is a makefile in this directory for this purpose. Just run:
+> make
+
+This will create an executable named chi, whose usage is the following:
+> chi n
+
+where n is the number of the test case to be executed.
+The matrices for test case n should be in the test folder, named test/P[n], test/Q[n] and test/A[n] for the matrices corresponding to the tetrahedron P, Q and the expected solution A, respectively. The chi process will create a file test/solution[n] containing all the solution matrices considering all the relabelings of the vertices, and will also check if the expected solution matrix A is in the file.
+
+However, to make the testing easier, a shell script is provided. After placing all matrices as explained in the test folder, it can be executed as follows:
+> test [n]*
+
+For instance, to run tests 1 to 5, this would be:
+> test 1 2 3 4 5
+
+
+### Considerations
+Input matrices are read as 16 numbers. If there are more, the program will ignore the rest. If there are less, the program will output an error.
+If input numbers are larger than 2^63 - 1 = 9223372036854775807, the program cannot handle them and thus will output an error.
+
+
+### Summary of the provided test cases:
+1: Example seen in class. Same tetrahedron with a vertex transposition.
+2: Tetrahedra with big numbers not supported by the compiler.
+3: 5x5 matrices. P and Q are the same 5-cell with the same vertex ordering, so the first 16 numbers define the same tetrahedron.
+4: A pseudo-random tetrahedron and the result of a 90º rotation and a translation. Therefore, it has a transformation.
+5: 3x3 matrices.
+6: Two tetrahedra with opposite determinant but for which it does not exist any matrix A transforming one into the other.
