@@ -1,0 +1,7 @@
+We'll write a function that, given
+
+ - a polytope
+ - a set I of vertex indices,
+
+calculates a vector v that selects the smallest face of P containing the vertices indexed by I.
+
