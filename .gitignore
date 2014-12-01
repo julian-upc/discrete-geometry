@@ -27,6 +27,13 @@ TestChi.sage
 sheet2_claramateo.pdf
 JanFiserSheet2.pdf
 
+# code
+Makefile
+build.x86_64
+configure.pl.template
+include
+polymake.ext
+
 # c++ ignores
 
 # Compiled Object files

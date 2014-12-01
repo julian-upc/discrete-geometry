@@ -5,3 +5,6 @@ We'll write a function that, given
 
 calculates a vector v that selects the smallest face of P containing the vertices indexed by I.
 
+We needed to call the commands 
+found_application("code");
+extend_application("/full/path/to/code" [, "polytope"]);
