@@ -8,8 +8,12 @@ Q = np.transpose(np.loadtxt('matrix_P6.txt'))
 solution_file = 'result_P5_P6.txt'
 
 
-S4 = np.loadtxt('s4.txt')
+S4 = np.loadtxt('s4.txt') 
+# s4.txt contains on its first 12 lines even permutations of S4 and on the remaining 12 lines odd permutations of S4
+# this fact we use in computing the determinant of 4x4 matrix
 S3 = np.loadtxt('s3.txt')
+# s3.txt contains on its first 3 lines even permutations of S3 and on the remaining 3 lines odd permutations of S3
+# this fact we use in computing the determinant of 3x3 matrix
 
 def first_checking(M): 
 
@@ -32,7 +36,7 @@ def first_checking(M):
 
 def determinant4(M): 
 
-	# M 4x4 matrix
+	# M 4x4 integer matrix
 	# return determinant of M
 	
 	d = 0
@@ -44,7 +48,7 @@ def determinant4(M):
 
 def determinant3(M): 
 
-	# M 4x4 matrix
+	# M 4x4 integer matrix
 	# return determinant of M
 
 	d = 0
@@ -93,7 +97,7 @@ def adj_matrix(M):
 
 def divisibility(M,q): 
 
-	# M 4x4 matrix, q integer
+	# M 4x4 integer matrix, q integer
 	# return 1 if every entry of M is divisible by q
 	# return 0 otherwise
 
@@ -168,7 +172,7 @@ if ((first_checking(P) == 1) and (first_checking(Q) == 1)):
 	adj_P = adj_matrix(P)
 	det_Q = determinant4(Q)
 
-	if ((det_P == det_Q) or (det_P == -det_Q)):
+	if ((det_P == det_Q) or (det_P == -det_Q)):	#otherwise P and Q cannot be lattice equivalent
 		for perm in range(24):
 			A = np.dot(permute(Q,perm),adj_P)
 			if (divisibility(A,det_P)):
