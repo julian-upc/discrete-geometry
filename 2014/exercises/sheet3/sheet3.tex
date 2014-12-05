@@ -1,0 +1,162 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{a4wide}
+\usepackage{paralist}
+\usepackage{url}
+\usepackage{nopageno}
+\usepackage{bbm}
+\usepackage[normalem]{ulem}
+\usepackage{multicol}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\R}{\mathbbm{R}}
+\newcommand{\Z}{\mathbbm{Z}}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cols}{cols}
+\DeclareMathOperator{\Sl}{Sl}
+
+\newcommand{\ojo}[1]{\textbf{\sffamily\boldmath{[#1]}}}
+
+\begin{document}
+\begin{center}
+\textbf{\sffamily
+   Discrete and Algorithmic Geometry }
+
+\medskip
+   Julian Pfeifle,
+   UPC, 2014 \mbox{}
+\end{center}
+
+\bigskip
+
+\begin{center}
+  \textbf{\sffamily Sheet 3}
+
+\bigskip
+ due on Monday, December 1, 2014
+
+\end{center}
+
+\bigskip
+\bigskip
+\bigskip
+
+\section*{Writing}
+
+\begin{enumerate}
+\setlength{\itemsep}{2ex}
+\item Continue Exercise 2 from last week and classify lattice polygons with 0 or 1 strictly interior lattice points up to lattice isomorphism.
+\end{enumerate}
+
+\bigskip
+\bigskip
+\section*{Software}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\setlength{\itemsep}{2ex}
+
+\item Mutually sign your public keys (and your instructor's) in the repository and export them to a public key server. Install a PGP-enabled mail program (e.g., Thunderbird+Enigmail) and send an encrypted email to your instructor.
+
+\item Study the definition of a discrete reflection group on \url{https://en.wikipedia.org/wiki/Reflection_group} and \url{https://en.wikipedia.org/wiki/Coxeter_group}. 
+
+Since the Internet is remarkably silent on good sets of generators, you can take the rows of the following matrices, interpreted as normal vectors (in homogeneous coordinates) to reflecting hyperplanes (note that each matrix for~$X_n$ has $n$~rows):
+
+\begin{multicols}{2}
+  \begin{tabular}[c]{rl}
+    $A_{n}:$ 
+    &\small 
+    $\begin{bmatrix}
+     0 & 1 & -1 & 0 & 0 & \dots & 0 & 0 \\
+     0 & 0 & 1 & -1 & 0 & \dots & 0 & 0 \\
+     &&&&\dots&\dots \\
+     0 & 0 & 0 & 0 & 0 & \dots & 1 & -1 
+    \end{bmatrix}$
+    \\[6ex]
+    $D_n:$      
+    &\small
+    $\begin{bmatrix}
+     0 & 1 & -1 & 0 & 0 & \dots & 0 & 0 \\
+     0 & 0 & 1 & -1 & 0 & \dots & 0 & 0 \\
+     &&&&\dots&\dots\\
+     0 & 0 & 0 & 0 & 0 & \dots & 1 & -1 \\
+     0 & 0 & 0 & 0 & 0 & \dots & 1 & 1   
+    \end{bmatrix}$
+    \\[8ex]
+    $E_8:$
+    &\small 
+    $\begin{bmatrix}
+     0 & 1 & -1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+     0 & 0 & 1 & -1 & 0 & 0 & 0 & 0 & 0 \\
+     &&&&\dots&\dots\\
+     0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 \\
+     0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+     0 & \frac12 & \frac12 & \frac12 & \frac12 & \frac12 & \frac12 & \frac12 & \frac12  
+    \end{bmatrix}$
+  \end{tabular}
+
+  \qquad\begin{tabular}[c]{rl}
+  $F_4:$      
+    &\small
+    $\begin{bmatrix}
+     0 & 1 & -1 & 0 & 0 \\
+     0 & 0 & 1 & -1 & 0 \\
+     0 & 0 & 0 & 1 & 0 \\
+     0 & -\frac12 & -\frac12 & -\frac12 & -\frac12      
+    \end{bmatrix}$
+    \\[6ex]
+    $H_3:$      
+    &\small
+    $\begin{bmatrix}
+      0 & 2 & 0 & 0 \\
+      0 & -\tau & 1/\tau & -1 \\
+      0 & 0 & 0 & 2      
+    \end{bmatrix}$
+    \\[6ex]
+    $H_4:$      
+    &\small
+    $\begin{bmatrix}
+      0 & -\tau & 1/\tau & 1/\tau & 1/\tau \\
+      0 & -1 & 1 & 0 & 0 \\
+      0 & 0 & -1 & 1 & 0 \\
+      0 & 0 & 0 & -1 & 1      
+    \end{bmatrix}$
+  \end{tabular}
+\end{multicols}
+
+\noindent where $\tau = \frac12 + \frac12\sqrt{5}$. (Can you figure out how these rows correspond to the nodes of the respective Dynkin diagrams?)
+
+  Write a function \texttt{orbit(X,n[,v])} that takes as required input an uppercase letter~$X\in\{A,D,E,F,H\}$ and a positive integer~$n$, and as optional input a vector~$v$. The function should calculate the complete set of reflecting hyperplanes of the reflection group~$X_n$ and produce as output the cardinality of the orbit of $v$ under~$X_n$. If $v$ is not specified, the function should choose a vector not on any reflecting hyperplane.
+
+Use your function to fill out a table similar to
+\begin{center}
+  \begin{tabular}[c]{r|r|l||r|r|l}
+    $G$ & $|G|$ & time & $G$ & $|G|$ & time\\\hline
+    $A_3$ & 24 & 1s & $H_3$ & 120 & 1s\\
+    $A_5$ & 720 & \sout{1.2s} 1.18s & $H_4$ & 14400 & \sout{1m 10s} 8.1s\\
+    $A_6$ & 5040 & \sout{3.8s} 2.5s & $E_8$ & 696729600 & ?? \\
+    $A_7$ & 40320 & \sout{3m 16s} 1m 25s
+  \end{tabular}
+\end{center}
+(The updated times are the result of updating the code according to your suggestions.)
+
+\bigskip Create a directory of the form
+\texttt{2014/exercises/sheet3/your\_name\_here/code} and put all
+relevant source code in there. Don't forget a README so that other
+people (i.e., you in the future) can figure out how your function
+works! And, as always, don't forget the pull request.
+
+\bigskip
+\textbf{Important.} Since this exercise is about learning to code and the pitfalls that arise in coding mathematics, please keep a diary of your work. This could be a simple text file \texttt{diary.your\_name\_here.txt} in which you outline what occurred on each day that you dedicated to this exercise.
+
+\begin{quote}
+  \textbf{I do not actually expect you to succeed in reproducing this     table until next Monday. Please don't get frustrated if you fail, this is a hard problem.}
+\end{quote}
+
+Nevertheless, I think it is very important that you try to complete as many rows of the table as you can, and that you write down everything that went wrong in your diary so that we can talk about it in class. So please also upload your diary to \texttt{github}; if you wish, you can encrypt it with my public key.
+
+\end{enumerate}
+
+
+\end{document}

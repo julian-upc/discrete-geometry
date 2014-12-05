@@ -1,0 +1,10 @@
+We'll write a function that, given
+
+ - a polytope
+ - a set I of vertex indices,
+
+calculates a vector v that selects the smallest face of P containing the vertices indexed by I.
+
+We needed to call the commands 
+found_application("code");
+extend_application("/full/path/to/code" [, "polytope"]);
