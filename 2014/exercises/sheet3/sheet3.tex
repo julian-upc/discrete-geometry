@@ -16,6 +16,8 @@
 \DeclareMathOperator{\cols}{cols}
 \DeclareMathOperator{\Sl}{Sl}
 
+\newcommand{\ojo}[1]{\textbf{\sffamily\boldmath{[#1]}}}
+
 \begin{document}
 \begin{center}
 \textbf{\sffamily
@@ -59,11 +61,11 @@
 
 \item Study the definition of a discrete reflection group on \url{https://en.wikipedia.org/wiki/Reflection_group} and \url{https://en.wikipedia.org/wiki/Coxeter_group}. 
 
-Since the Internet is remarkably silent on good sets of generators, you can take the rows of the following matrices, interpreted as normal vectors (in homogeneous coordinates) to reflecting hyperplanes:
+Since the Internet is remarkably silent on good sets of generators, you can take the rows of the following matrices, interpreted as normal vectors (in homogeneous coordinates) to reflecting hyperplanes (note that each matrix for~$X_n$ has $n$~rows):
 
 \begin{multicols}{2}
   \begin{tabular}[c]{rl}
-    $A_n:$ 
+    $A_{n}:$ 
     &\small 
     $\begin{bmatrix}
      0 & 1 & -1 & 0 & 0 & \dots & 0 & 0 \\
@@ -132,11 +134,12 @@ Use your function to fill out a table similar to
   \begin{tabular}[c]{r|r|l||r|r|l}
     $G$ & $|G|$ & time & $G$ & $|G|$ & time\\\hline
     $A_3$ & 24 & 1s & $H_3$ & 120 & 1s\\
-    $A_5$ & 720 & 1.2s & $H_4$ & 14400 & 1m 10s\\
-    $A_6$ & 5040 & 3.8s & $E_8$ & 696729600 & ?? \\
-    $A_7$ & 40320 & 3m 16s
+    $A_5$ & 720 & \sout{1.2s} 1.18s & $H_4$ & 14400 & \sout{1m 10s} 8.1s\\
+    $A_6$ & 5040 & \sout{3.8s} 2.5s & $E_8$ & 696729600 & ?? \\
+    $A_7$ & 40320 & \sout{3m 16s} 1m 25s
   \end{tabular}
 \end{center}
+(The updated times are the result of updating the code according to your suggestions.)
 
 \bigskip Create a directory of the form
 \texttt{2014/exercises/sheet3/your\_name\_here/code} and put all
