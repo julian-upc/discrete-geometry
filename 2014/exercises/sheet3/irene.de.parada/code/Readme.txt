@@ -29,7 +29,7 @@ Function Orbit(X,n,[v_inicial]), where X is the letter lowercase or uppercase, i
 
 
 ** Instructions
-Run the .script from the command line using 'sage Orbit.sage'. 
+Run the .script from the command line using 'sudo sage Orbit.sage'. 
 
 Upon start, the program will read the required tests from a file called 'OrbitTests.txt' 
 which must be located on the same folder.
