@@ -87,12 +87,13 @@ def Orbit(X,n,v=[]):
             NextSet = set([])
             for point in CurrentList:
                 for matr in ListRefl:
-                	#reflPnt = expand(matr*point.transpose()).simplify()  #use this instead of the following
+               	    #reflPnt = expand(matr*point.transpose()).simplify()  #use this instead of the following
                               # line when working with tau as symbolic (H3 and H4)
                               # commented because this code does not work with H3 nor H4
-                	#reflPnt = matrix(SR, [ [reflPnt[i,0].simplify_full()] for i in range(reflPnt.nrows())]) 
+                    #reflPnt = matrix(SR, [ [reflPnt[i,0].simplify_full()] for i in range(reflPnt.nrows())]) 
                               # uncomment the previous line  when working with tau as symbolic  
-                              # commented because this code does not work with H3 nor H4         
+                              # commented because this code does not work with H3 nor H4     
+                    reflPnt = matr*point.transpose()    
                     reflPnt = reflPnt.transpose()
                     reflPnt.set_immutable()
     
