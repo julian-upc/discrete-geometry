@@ -1,17 +1,5 @@
 #reset()
 
-def stringOutOfIntRange(input):
-    sysMaxint = 9223372036854775807
-    if input[0]=='-':
-        input=input[1:]
-    if len(input) > len(str(sysMaxint)):
-        return True
-    if len(input) == len(str(sysMaxint)):
-        for i in range(len(input)):
-            if input[i] > str(sysMaxint)[i]:
-                return True
-    return False
-
 def stringRepresentsInteger(input):
     charNumbers = [str(i) for i in range (10)]
     if input[0]=='-':
@@ -35,8 +23,8 @@ def transfHomogeneous(matriz):
             colu = vector(matriz[:,col].list())
             for row in range(matriz.nrows()):
                 if ((colu[row] % matriz[0,col]) != 0):
-                    return 'Error reading matrix: it must define a lattice polytope '              
-                mat[row,col] = int(colu[row]/matriz[0,col])          
+                    raise Exception('Error reading matrix: it must define a lattice polytope')             
+                mat[row,col] = round(colu[row]/matriz[0,col])          
     return mat
 
 def readCheck(filename): #reads matrix checking if it is valid
@@ -46,18 +34,16 @@ def readCheck(filename): #reads matrix checking if it is valid
             currentRow = []
             for element in line.split():
                 if not stringRepresentsInteger(element):
-                    return 'Error reading matrix: elements must be integers ' 
-                if stringOutOfIntRange(element):
-                    return 'Error reading matrix: integer out of range '     
-                currentRow.append(int(element))
+                    raise Exception('Error reading matrix: elements must be integers')    
+                currentRow.append(Integer(element))
             if len(currentRow) != 4 or len(mat) == 4:
-               return 'Error reading matrix: matrix must be 4x4 '
+                raise Exception('Error reading matrix: matrix must be 4x4') 
             mat.append(currentRow) 
         if len(mat) != 4:
-             return 'Error reading matrix: matrix must be 4x4 '
+             raise Exception('Error reading matrix: matrix must be 4x4') 
     matr = matrix(mat).transpose()         
     if columnIsZero(matr):
-        return 'Error reading matrix: column is zero vector '                       
+        raise Exception('Error reading matrix: column is zero vector')                        
     return matr
 
 def matrixOfIntegers(mat):
@@ -68,25 +54,22 @@ def matrixOfIntegers(mat):
     return True
 
 def permuMatrix(mat): #list with all possible matrices with the columns permuted
-    matT = copy(mat).transpose()
-    listOfPerm = Permutations([0,1,2,3]).list()
+    matT = copy(mat).transpose() 
     listOfMatrices = []
-    for perm in listOfPerm:
-        listI=[]
-        for i in range(4):
-            listI.append(matT[perm[i]])
+    for perm in Permutations([0,1,2,3]):
+        listI = [matT[perm[i]] for i in range(4)]
         listOfMatrices.append(matrix(listI).transpose())
     return listOfMatrices
 
 def writeMatrixValues4(m, filename):
-    for row in m.rows():
-        #print("%d %d %d %d" % (row[0], row[1], row[2], row[3]))
-        rowString = `row[0]`
-        for i in range(1, len(row)):
+     for row in m.rows():
+         #print("%d %d %d %d" % (row[0], row[1], row[2], row[3]))
+         rowString = `row[0]`
+         for i in range(1, len(row)):
             rowString += ' ' 
             rowString += `row[i]`
-        rowString += '\n'
-        filename.write(rowString)
+         rowString += '\n'
+         filename.write(rowString)
 
 def test_chi(filename):
     tests = [] 
@@ -102,53 +85,32 @@ def test_chi(filename):
     for currentTest in tests:
         resultFile = file(currentTest[2],'w')
         counter += 1
-        resultFile.write('\n \n \n' + str(counter) + ''.join('-' * 20 ) + '\n')
+        #resultFile.write('\n \n \n' + str(counter) + ''.join('-' * 20 ) + '\n')
         P = readCheck(currentTest[0])
-        if type(P)==type('s'):
-            resultFile.write(P)
-            solutionList.append(P)
-            continue
         Q = readCheck(currentTest[1])
-        if type(Q)==type('s'):
-            resultFile.write(Q)
-            solutionList.append(Q)
-            continue
         P = transfHomogeneous(P)
-        if type(P)==type('s'):
-            resultFile.write(P)
-            solutionList.append(P)
-            continue
         Q = transfHomogeneous(Q)
-        if type(Q)==type('s'):
-            resultFile.write(Q)
-            solutionList.append(Q)
-            continue
         if (rank(P)<4 or rank(Q)<4):
-            errMsg = 'Error reading matrix: matrix must define a 3-dimensional tetrahedron but points lie in same plane'
-            resultFile.write(errMsg)
-            solutionList.append(errMsg)
-            continue
-        possibleMatrices=[]    
+            raise Exception('Error reading matrix: matrix must define a 3-dimensional tetrahedron but points lie in same plane') 
+        possibleMatrices=set([])    
         for mP in permuMatrix(P):
             AA = Q*(mP.inverse()) 
             A = AA.delete_columns([0]).delete_rows([0])
             if (matrixOfIntegers(AA) and ([1,0,0,0] == AA[0,:].list()) and (abs(A.determinant())==1)):
-                if AA not in possibleMatrices:
-                    possibleMatrices.append(AA)
-        if possibleMatrices == []: #no lattice equivalent
-            resultFile.write('No lattice equiv. ')
-            solutionList.append('No lattice equiv. ')
-            continue
-        for mat in possibleMatrices:
-            writeMatrixValues4(mat, resultFile)
-            resultFile.write('\n')
-        solutionList.append(possibleMatrices)
+                AA.set_immutable()
+                possibleMatrices.add(AA)
+                reset('AA')
+        possibleMatrices = Set(possibleMatrices)        
+        for mat in possibleMatrices.list():
+             writeMatrixValues4(mat, resultFile)
+             resultFile.write('\n')
+        solutionList.append(possibleMatrices.list())
+        reset('possibleMatrices')
         resultFile.close()
         #print('-----------------------')
         #print(possibleMatrices)
         #print('-----------------------')
-        
-    expectedResult = readCheck(currentTest[2])
+    
     return solutionList
 
 tests = test_chi("test_chi_input.txt")
