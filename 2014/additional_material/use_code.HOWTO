@@ -1,0 +1,24 @@
+To compile the example code in code/, the following should work:
+
+cd ...2014/additional_material
+git fetch
+git merge origin/master
+mv code code.old
+mkdir code
+
+Then, *inside* the polymake shell (i.e., not from the command line), say
+found_extension("code");
+extend_application("/your/full/path/to/code");
+
+Finally, say
+cp code.old/apps/polytope/src/face_selector.cc code/apps/polytope/src
+cd code
+make
+
+The explanation is that when you say found_extension, several
+architecture-dependent files and directories get generated that are
+not portable across operating systems, and so I didn't include them in
+the repository.
+
+Thus, you have to generate the files appropriate for your
+architecture, and then copy the existing code over.
