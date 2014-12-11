@@ -46,4 +46,5 @@ The string is made as follows:
 	1. round all float values in the array to a given number of decimal places,
 	2. consider all these decimal values as strings and concatenate them.
 
-4/ There are no controls of the input in the code. The program expects a polite user.
+4/ There are no controls of the input in the code. The program expects a correct input
+(e. g. as an input vector a vector of length n+1 (or n+2 for the group An) with int or float values). 
