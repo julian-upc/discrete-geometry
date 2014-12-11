@@ -10,6 +10,6 @@ Orientation in Python - sets, number types (floats, decimals), rounding etc.
 Writing the program.
 Testing, writing documentation.
 
-Summing up: about 25 hours.
+Summing up: about 25 hours spent on the programming problem.
 
 	
