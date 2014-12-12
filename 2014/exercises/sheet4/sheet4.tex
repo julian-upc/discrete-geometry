@@ -122,12 +122,18 @@ At \url{https://github.com/julian-upc/discrete-geometry/wiki/2014-Sheet-4} there
 
 \section*{... and beyond}
 
-This could turn into a research project, or even a paper! Can you construct a family of rational polytopes with $e$ fixed, but with unbounded integral Gale complexity? Or is 
+This could turn into a research project, or even a paper! 
+
+\begin{enumerate}
+\item Can you construct a family of rational polytopes with $e$ fixed, but unbounded integral Gale complexity? Or is 
 \[ 
-   \igc(e)
+   \igc_e(n)
    \ := \
-   \max\big\{\igc(P) : P \text{ rational, }\dim\Gale(P)=e\big\}
+   \max\big\{\igc(P) : P \text{ rational, $n$ vertices,}\dim\Gale(P)=e\big\}
 \]
-always bounded? If so, how does the bound depend on $e$?
+always bounded? 
+\item If $\igc_e(n)$ is bounded, how does the bound depend on $e$ and $n$? 
+\item More specifically, prove, disprove or improve: $\igc_e(n)\in\Omega\big(\sqrt[e]{n}\big)$.
+\end{enumerate}
 
 \end{document}
