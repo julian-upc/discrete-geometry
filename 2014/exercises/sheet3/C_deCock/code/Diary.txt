@@ -1,0 +1,18 @@
+1/12 : Analyse of the problem and reading the wikipidea pages
+2/12 : Start of implementation, where the matrix and the vector are given
+			Code very slow for 'big' matrix like A6 but works for small ones even H3
+3/12 : Implementation of the matrix, start of the case where the vector is not give
+			Try to generate all the hyperplanes to check that the random vector is not 
+			on them, which makes the code even slower
+4/12 : End of the case where the vector is not given
+5/12 : Cleaning code and adding the mesure of time.
+9/12 : Change list by tuple, and adapting the code, makes the code faster but I can not calculate if two vector are 	equal up to a tolerance anymore
+10-11/12 : Trying to find a solution for case like H3, H4 where there are irrational number
+
+
+Test made : 
+The code works for A with n<7, but starts to get slow for n = 7, and so I didn't test n>7
+				   D with n<6, but starts to get slow, again for question of time I didn't test n>6
+				   H3 but not for H4 due to the rounding errors and long numbers
+				   F4
+I didn't test E8 for a question of time.
