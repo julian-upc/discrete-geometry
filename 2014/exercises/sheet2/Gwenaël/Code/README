@@ -1,0 +1,36 @@
+Copyleftc (^^) Gwenaël Laurent
+Made as an exercice for the lecture on Algorithmic geometry, given by
+Julian Pfeifle at FME, UPC, Barcelona.
+
+The folowing programs are free softwares; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+ect, ect...
+
+********************************************************************************
+EASY TO HANDLE
+Download the full folder in you depository and chose a suitable compilator for
+Python.
+
+	- The function chi solve the problem of determining if two tetrahedron are lattice 
+      equivalent. Before calling this function, you must create some file containing the 
+      coordinates of the vertices of your tetrahedron. The pathname of these files has 
+      to be passed as arguments.
+	- The files matrix_P1, matrix_Q1, matrix_P2, matrix_Q2 are selected examples for 
+	  this function.
+	- The files result_1 and resultat_2 are the file obtained by runing test_chi.
+
+ADDITIONAL REMARKS
+The function chi call several secondary usefull method, as Determinant or comatrix. 
+These routines have been written in separate files, for suitable further usage. 
