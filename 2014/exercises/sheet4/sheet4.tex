@@ -1,0 +1,133 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{a4wide}
+\usepackage{paralist}
+\usepackage[colorlinks,pdftex]{hyperref}
+\hypersetup{
+	    urlcolor=blue,           % color of external links
+}
+\usepackage{nopageno}
+\usepackage{bbm}
+\usepackage[normalem]{ulem}
+\usepackage{multicol}
+\usepackage{color}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\R}{\mathbbm{R}}
+\newcommand{\Z}{\mathbbm{Z}}
+\newcommand{\VV}{\mathcal{V}}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cols}{cols}
+\DeclareMathOperator{\Sl}{Sl}
+\DeclareMathOperator{\igc}{igc}
+\DeclareMathOperator{\Gale}{Gale}
+
+\newcommand{\ojo}[1]{\textbf{\sffamily\boldmath{[#1]}}}
+\newcommand{\defn}[1]{\textbf{\color{blue}#1}} %for highlighting defined terms in text
+        
+\newtheorem*{problemG}{Problem G}
+\newtheorem*{problemG*}{Problem G$^\star$}
+
+\begin{document}
+\begin{center}
+\textbf{\sffamily
+   Discrete and Algorithmic Geometry }
+
+\medskip
+   Julian Pfeifle,
+   UPC, 2014 \mbox{}
+\end{center}
+
+\bigskip
+
+\begin{center}
+  \textbf{\sffamily Sheet 4}
+
+\bigskip
+ due on Monday, December 22, 2014
+
+\end{center}
+
+\bigskip
+\bigskip
+
+The \defn{integral Gale complexity} of a polytope $P\subset\R^d$ with $n$~vertices is
+\[
+   \igc(P)
+   \ = \
+   \min\{\|G\|_\infty : G \subset\Z^e \text{ is a Gale diagram of } P\}, 
+\]
+where $e=n-d-1$, $\|\mathcal A\|_\infty = \max\{\|v\|_\infty : v\in\mathcal A\}$ and $\|v\|_\infty = \max\{|v_i|\}$ for $v=(v_1,\dots,v_e)$.
+
+While the existence of nonrational polytopes shows that $\igc(P)=\infty$ is possible (since $\min\emptyset=\infty$), here we are concerned with the following problem:
+
+\begin{problemG}
+  For $e\in\Z_{\ge0}$ and $n, m\in\Z_{>0}$, determine 
+  \[
+     q(e,n,m)
+     \ = \
+     \#\left\{
+     \begin{matrix}
+       G\subset\Z^e : G \text{ is a Gale diagram of a polytope } \\
+       \phantom{G\subset\Z^e}\!\!\text{with          $n$ vertices and } \igc(G)=m
+     \end{matrix}
+     \right\} \bigg/ \text{combinatorial equivalence}.
+  \]
+\end{problemG}
+
+\noindent For example, $q(0,n,0) = 1$ and $q(1,n,m)=q(1,n,1)$ for all $m,n\ge1$. In more down-to-earth terms, we want to solve the following problem:
+
+\begin{problemG*}
+  Enumerate, up to combinatorial equivalence, all balanced   configurations~$\VV$ of $n$~vectors in~$\Z^e$ whose coordinates are   all at most~$m$ in absolute value, such that
+\begin{enumerate}[\qquad\upshape(1)]
+\item the maximum $m$ is achieved by some $v\in\VV$, 
+\item and such that no hyperplane spanned by $e-1$~of the vectors   strictly separates exactly one vector from the others.
+\end{enumerate}
+\end{problemG*}
+
+For this, recall 
+that a vector configuration $\VV = (v_1,\dots,v_n)$ is \defn{balanced} if $\sum_i v_i=0$;
+that no hyperplane defined by $e-1$~elements of~$\VV$ separates   exactly one vector from the others iff the Gale dual of~$\VV$ is in   convex position;
+and that two vector configurations are \defn{combinatorially equivalent} if they define the same oriented matroid.
+
+\bigskip
+Your job is to write a function in the \texttt{polymake} framework that calculates $q(e,n,m)$. Some considerations to keep in mind:
+\begin{itemize}
+\item Correctness is more important than efficiency, but efficiency is supremely important.
+\item Your code should be correct in all dimensions: no cutting corners by assuming $e=2$!
+\item Your code should be able to calculate at least $q(2,5,2)$ and $q(2,6,2)$.
+\end{itemize}
+
+You will need to think carefully about several independent aspects:
+\begin{enumerate}
+\item How do you iterate over all vector configurations?
+\item Once you have generated a new configuration, how do you test whether you have already seen a combinatorially isomorphic copy?
+\end{enumerate}
+
+My recommendation is to first implement quick-and-dirty solutions to these to test your code for correctness, then iteratively optimize. The choice of data structures will be very important, as well as the decision whether to call \texttt{polymake} methods on objects or not. Some methods make your work almost trivial (\texttt{P.callPolymakeMethod("LATTICE\_POINTS")}, \texttt{P.give("VERTICES\_IN\_FACETS")}, \texttt{graph::isomorphic(VIF1, VIF2)}), but some of these are quite time-consuming if you call them often as they have to pass through the perl interface.
+
+\section*{Logistics}
+
+Please put your code into a directory \texttt{exercises/sheet4/code/your\_name\_here} in the repository; further instructions are in the README file there.
+
+\medskip
+You will find a directory \texttt{reports/} with three subdirectories corresponding to Tuesday, December 16; Friday, December 19; and Monday, December 22. Please put a short text file detailing your progress into each of these directories at the appropriate date.
+
+\medskip
+The more often you commit and pull your code, the more often I will be able to give you feedback!
+
+\medskip
+At \url{https://github.com/julian-upc/discrete-geometry/wiki/2014-Sheet-4} there is a wiki where we can discuss any arising questions. 
+
+\section*{... and beyond}
+
+This could turn into a research project, or even a paper! Can you construct a family of rational polytopes with $e$ fixed, but with unbounded integral Gale complexity? Or is 
+\[ 
+   \igc(e)
+   \ := \
+   \max\big\{\igc(P) : P \text{ rational, }\dim\Gale(P)=e\big\}
+\]
+always bounded? If so, how does the bound depend on $e$?
+
+\end{document}
