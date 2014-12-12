@@ -2,7 +2,10 @@
 
 \usepackage{a4wide}
 \usepackage{paralist}
-\usepackage{url}
+\usepackage[colorlinks,pdftex]{hyperref}
+\hypersetup{
+	    urlcolor=blue,           % color of external links
+}
 \usepackage{nopageno}
 \usepackage{bbm}
 \usepackage[normalem]{ulem}
@@ -18,6 +21,7 @@
 \DeclareMathOperator{\cols}{cols}
 \DeclareMathOperator{\Sl}{Sl}
 \DeclareMathOperator{\igc}{igc}
+\DeclareMathOperator{\Gale}{Gale}
 
 \newcommand{\ojo}[1]{\textbf{\sffamily\boldmath{[#1]}}}
 \newcommand{\defn}[1]{\textbf{\color{blue}#1}} %for highlighting defined terms in text
@@ -47,9 +51,6 @@
 
 \bigskip
 \bigskip
-\bigskip
-
-\section*{Software}
 
 The \defn{integral Gale complexity} of a polytope $P\subset\R^d$ with $n$~vertices is
 \[
@@ -75,10 +76,7 @@ While the existence of nonrational polytopes shows that $\igc(P)=\infty$ is poss
   \]
 \end{problemG}
 
-\noindent For example, $q(0,n,0) = 1$ and $q(1,n,m)=q(1,n,1)$ for all $m,n\ge1$. 
-
-\bigskip
-In more down-to-earth terms, we want to solve the following problem:
+\noindent For example, $q(0,n,0) = 1$ and $q(1,n,m)=q(1,n,1)$ for all $m,n\ge1$. In more down-to-earth terms, we want to solve the following problem:
 
 \begin{problemG*}
   Enumerate, up to combinatorial equivalence, all balanced   configurations~$\VV$ of $n$~vectors in~$\Z^e$ whose coordinates are   all at most~$m$ in absolute value, such that
@@ -89,17 +87,47 @@ In more down-to-earth terms, we want to solve the following problem:
 \end{problemG*}
 
 For this, recall 
-\begin{itemize}
-\item that a vector configuration $\VV = (v_1,\dots,v_n)$ is \defn{balanced} if $\sum_i v_i=0$;
-\item that no hyperplane defined by $e-1$~elements of~$\VV$ separates   exactly one vector from the others iff the Gale dual of~$\VV$ is in   convex position;
-\item and that two vector configurations are \defn{combinatorially equivalent} if they define the same oriented matroid.
-\end{itemize}
+that a vector configuration $\VV = (v_1,\dots,v_n)$ is \defn{balanced} if $\sum_i v_i=0$;
+that no hyperplane defined by $e-1$~elements of~$\VV$ separates   exactly one vector from the others iff the Gale dual of~$\VV$ is in   convex position;
+and that two vector configurations are \defn{combinatorially equivalent} if they define the same oriented matroid.
 
 \bigskip
 Your job is to write a function in the \texttt{polymake} framework that calculates $q(e,n,m)$. Some considerations to keep in mind:
 \begin{itemize}
 \item Correctness is more important than efficiency, but efficiency is supremely important.
-\item 
+\item Your code should be correct in all dimensions: no cutting corners by assuming $e=2$!
+\item Your code should be able to calculate at least $q(2,5,2)$ and $q(2,6,2)$.
 \end{itemize}
+
+You will need to think carefully about several independent aspects:
+\begin{enumerate}
+\item How do you iterate over all vector configurations?
+\item Once you have generated a new configuration, how do you test whether you have already seen a combinatorially isomorphic copy?
+\end{enumerate}
+
+My recommendation is to first implement quick-and-dirty solutions to these to test your code for correctness, then iteratively optimize. The choice of data structures will be very important, as well as the decision whether to call \texttt{polymake} methods on objects or not. Some methods make your work almost trivial (\texttt{P.callPolymakeMethod("LATTICE\_POINTS")}, \texttt{P.give("VERTICES\_IN\_FACETS")}, \texttt{graph::isomorphic(VIF1, VIF2)}), but some of these are quite time-consuming if you call them often as they have to pass through the perl interface.
+
+\section*{Logistics}
+
+Please put your code into a directory \texttt{exercises/sheet4/code/your\_name\_here} in the repository; further instructions are in the README file there.
+
+\medskip
+You will find a directory \texttt{reports/} with three subdirectories corresponding to Tuesday, December 16; Friday, December 19; and Monday, December 22. Please put a short text file detailing your progress into each of these directories at the appropriate date.
+
+\medskip
+The more often you commit and pull your code, the more often I will be able to give you feedback!
+
+\medskip
+At \url{https://github.com/julian-upc/discrete-geometry/wiki/2014-Sheet-4} there is a wiki where we can discuss any arising questions. 
+
+\section*{... and beyond}
+
+This could turn into a research project, or even a paper! Can you construct a family of rational polytopes with $e$ fixed, but with unbounded integral Gale complexity? Or is 
+\[ 
+   \igc(e)
+   \ := \
+   \max\big\{\igc(P) : P \text{ rational, }\dim\Gale(P)=e\big\}
+\]
+always bounded? If so, how does the bound depend on $e$?
 
 \end{document}
