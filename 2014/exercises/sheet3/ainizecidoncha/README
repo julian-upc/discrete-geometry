@@ -1,0 +1,12 @@
+The function orbitsize(X,n,v) takes as inputs:
+X='A' 'D' 'H' 'E' or 'F'
+n=dimension of the group
+v=vector for which you want to know the orbit size (optional)
+
+It first computes the generating matrix of the required dimension n
+
+Then if the input v is not given it computes a vector out of any hyperplane of the group.
+
+Lastly it computes all the different images of v under the selected group and returns the size of the orbit.
+
+*It has problems in decimal numbers when comparing vectors,in particular with the group H4 and E8
