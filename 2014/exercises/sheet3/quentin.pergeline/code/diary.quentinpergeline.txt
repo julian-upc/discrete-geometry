@@ -1,0 +1,49 @@
+28/11 : First attempt at implementing from scratch a class of irrational. I quickly give up.
+29/11 : Including a symbolic C++ library called SymbolicC++. First basic tests challenging the operations.
+30/11 : First algorithm looping infinitely for all cases.
+03/12 : Debugging. The so called symbolic library does not seem to handle very well large iterations of operations.
+06/12 : I am stuck because I do not know how to handle precision computing in theory, and in practice because of the lack of information
+        regarding the SymbolicC++ library.
+
+08/12 : I am reduced to using doubles to handle precision. SymbolicC++ was definitely more of a burden than a help in this project...
+
+I realize my indices on An are shifted.
+
+	Computation		Execution time
+A3 	6		0.052s
+A4	24		0.075s
+A5	120		0.941s
+A6	720		33.892s
+A7	*		>10m
+A8	*		*
+
+D2  4		0.063s
+D3  24		0.094s		
+D4	192		1.672s
+D5	1920	216.513s
+D6	23040	>10m
+		
+E4	384		3.962s
+E5	error at	1688.089s
+		
+F4	1152	24.446s
+		
+H3	120	0.792s		
+H4	x	x
+
+/************/ INSTRUCTIONS /************/
+
+To recompile main.cpp: "make"
+It creates an executable called "./orbit"
+Syntax:
+	./orbit
+		executes by deefault the test for H3.
+	./orbit X n
+		where X = A|D|E|F|G and n is a right integer.
+
+To clean the project: "make clean"
+
+/***************************************/
+
+So eventually the library Symbolicc++ was of no use to help compute with more accuracy the orbits.
+I'm not particularly proud of what I did but at least it taught me not to be too confident in a library I have never used.
