@@ -1,0 +1,3 @@
+Please create a directory with your name here, and call found_extension() on it from polymake. 
+Then place all your code in your_name_here/apps/polytope/src and your_name_here/apps/polytope/include,
+and _only_ call git add on those files (and not on your build directory, for example). 

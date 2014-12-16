@@ -1,0 +1,18 @@
+### Installation:
+In order to execute the orbit function, the source has to be compiled. There is a makefile in this directory for this purpose. Just run:
+> make
+
+This will create an executable named orbit, whose usage is the following:
+> orbit
+
+During its execution, it will eventually wait for the user to input a letter [A|D|E|F|H] and a number n, and optionally n+1 more values as the initial vector. When the input is finished, it is necessary to input the end-of-file character (usually CTRL+D).
+An alternative way of doing this is to use the files in the input directory. There is one for each group, and can be modified appending the values of the initial vector. To run orbit like this, just type:
+> orbit < input/[A|D|E|F|H]n
+
+For instance,
+> orbit < input/A4
+
+### Considerations
+A diary is included with all the information about the progress of this assignment. All the problems, solutions, achievements and even thoughts can be found there. Feel free to read it in order to understand the course of the assignment.
+[IMPORTANT] This program works with doubles because the modifications required to use rationals and/or quadratic extensions are out of the scope of this assignment. Therefore, the program works fine for A, D and F. For E8, the execution is way too long and has not been tested properly (see the diary for further reference). For H, the golden ratio conceptually forbids the usage of doubles for a proper implementation (again check the diary for more information).
+

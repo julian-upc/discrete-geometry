@@ -1,0 +1,8 @@
+28/11/2014	Reading theory
+29/11/2014 	Implementing the firsts functions (A_n, D_n, vector_not_in_hyperplanes...)
+30/11/2014 	Implemented the "ref" (vector_reflection) function. Tested with A_n and D_n. Problems with the order of A_n.
+01/12/2014	Implemented "vector_not_in_hyperplanes"
+02/12/2014 	Fixed "vector_not_in_hyperplanes" (it didn't check all the reflecting hyperplanes). 
+	  	Function "v_orbit_cardinality" written. Also, F_4 and E_8 functions defined.
+03/12/2013	Splited cases in "v_orbit_cadinality". Problems with A_n fixed. Intent to implement $H$. 
+04/12/2013	Intent to implement $H$. We should consider \sqrt(5) in an exact way and also implement its orbit...
