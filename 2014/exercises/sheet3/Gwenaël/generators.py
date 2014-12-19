@@ -1,3 +1,11 @@
+'''
+The following routines return the generators of some given Coxeter group (A,D,E,F,H). The pre and post-conditions
+are generically defined as :
+@input: A number n which represent the dimension of space in which the reflections are considered. If such a group
+        does not exists in dimension n, then the routine return a error message.
+@output: A list of array which generate the Coxeter group of dimension n.
+'''
+
 from numpy import zeros, sqrt, array
 
 def generators_A(n):
