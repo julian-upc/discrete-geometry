@@ -1,0 +1,3 @@
+Polymake returns just one error on this code and it is on the last iterator, 
+but we don't know how to fix it since we used the iterator as we saw it is
+used in other programs included in polymake.
