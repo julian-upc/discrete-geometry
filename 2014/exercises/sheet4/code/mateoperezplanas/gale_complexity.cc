@@ -20,6 +20,7 @@
 #include "polymake/Rational.h"
 #include "polymake/Matrix.h"
 #include "polymake/Array.h"
+#include "polymake/Map.h"
 #include "polymake/linalg.h"
 #include "polymake/PowerSet.h"
 
@@ -35,6 +36,7 @@ class Configuration {
     Matrix<Rational> m_dual;
     Matrix<Rational> cocircuits; // Cocircuits of G are circuits of P
     Matrix<Rational> circuits; // Circuits of G are cocircuits of P
+    int n_facets;
     
     Configuration(int _e, int _n, const Vector<Rational>& _v) {
       e = _e;
@@ -54,10 +56,10 @@ class Configuration {
       m_dual = ones_matrix<Rational>(1, n); // We add ones to use homogeneous coordinates
       m_dual /= null_space(m);
       
-      m = m.minor(sequence(1, e), sequence(0, n)); 
+      m = m.minor(sequence(1, e), sequence(0, n));
       
       gen_cocircuits();
-      gen_circuits();
+      //gen_circuits();
     }
     
     void gen_cocircuits() {
@@ -90,7 +92,6 @@ class Configuration {
             cocircuits[l][j] = 0;
           } else {
             orientation[k] = Tm[j];
-            cerr << orientation << endl;
             Rational d = det(orientation);
             if (d < 0) {
               cocircuits[l][j] = -1;
@@ -151,6 +152,65 @@ class Configuration {
         ++l;
       }
     }
+};
+
+class Polytope {
+  public:
+    Set<Set<int> > facets;
+    int n_facets;
+    int max_vertices_on_facet;
+   
+    Polytope(const Matrix<Rational>& cocircuits) {
+      max_vertices_on_facet = 0;
+      for (int i=0; i<cocircuits.rows(); ++i) {
+        Rational val = 0;
+        bool is_facet = true;
+        Set<int> facet;
+        
+        for (int j=0; j<cocircuits.cols(); ++j) {
+          if (cocircuits[i][j] == 0) {
+            facet.insert(j);
+          }
+        
+          if (val == 0) {
+            val = cocircuits[i][j];
+          } else if (cocircuits[i][j] != 0 && val != cocircuits[i][j]) {
+            is_facet = false;
+          }
+        }
+        
+        if (is_facet) {
+          int vertices_on_facet = facet.size();
+          if (vertices_on_facet > max_vertices_on_facet) {
+            max_vertices_on_facet = vertices_on_facet;
+          }
+          facets.insert(facet);
+        }
+      }
+      
+      n_facets = facets.size();
+    }
+    
+    bool operator<(Polytope other) const {
+        if (n_facets < other.n_facets) {
+          return true;
+        }
+        
+        if (n_facets > other.n_facets) {
+          return false;
+        }
+        
+        if (max_vertices_on_facet < other.max_vertices_on_facet) {
+          return true;
+        }
+        
+        if (max_vertices_on_facet > other.max_vertices_on_facet) {
+          return false;
+        }
+        
+        return false;
+    }
+
 };
 
 Matrix<Rational> enumerate_configurations(int e, int n, int m) {
@@ -243,27 +303,29 @@ bool check_internal_points(const Matrix<Rational>& m) {
 Array<Matrix<Rational> > gale_complexity(int e, int n, int m) {
   Matrix<Rational> configs = enumerate_configurations(e,n,m);
   
+  Map<int, Polytope> polytopes;
+  
   for (int k=0; k<configs.rows(); ++k) {
     if (check_lexicographically_sorted(e, configs[k])) {
       Configuration conf(e, n, configs[k]);
       
       // Internal points filter
       if (!check_internal_points(conf.cocircuits)) {
-        cerr << "*** Vector ***" << endl;
-        cerr << conf.v << endl;
-        cerr << "*** Matrix ***" << endl;
-        cerr << conf.m << endl;
-        cerr << "*** Dual Matrix ***" << endl;
-        cerr << conf.m_dual << endl;
-        cerr << "*** Cocircuits of G (circuits of P (interior points))" << endl;
-        cerr << conf.cocircuits << endl;
-        cerr << "*** Circuits of G (cocircuits of P (facets))" << endl;
-        cerr << conf.circuits << endl;
+        conf.gen_circuits();        
+        Polytope p(conf.circuits);
+        
+        cerr << p.facets << endl;
+        cerr << p.n_facets << endl;
+        cerr << p.max_vertices_on_facet << endl;
+        
+        polytopes[3] = p;
+        cerr << polytopes[3].facets << endl;
         
         break;
       }
     }
   }
+  
   
   return Array<Matrix<Rational> > (0);
 }
