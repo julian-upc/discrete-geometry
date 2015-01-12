@@ -23,6 +23,7 @@
 #include "polymake/Map.h"
 #include "polymake/linalg.h"
 #include "polymake/PowerSet.h"
+#include "polymake/permutations.h"
 
 namespace polymake { namespace polytope {
 
@@ -36,7 +37,6 @@ class Configuration {
     Matrix<Rational> m_dual;
     Matrix<Rational> cocircuits; // Cocircuits of G are circuits of P
     Matrix<Rational> circuits; // Circuits of G are cocircuits of P
-    int n_facets;
     
     Configuration(int _e, int _n, const Vector<Rational>& _v) {
       e = _e;
@@ -59,7 +59,6 @@ class Configuration {
       m = m.minor(sequence(1, e), sequence(0, n));
       
       gen_cocircuits();
-      //gen_circuits();
     }
     
     void gen_cocircuits() {
@@ -156,11 +155,17 @@ class Configuration {
 
 class Polytope {
   public:
+    int d;
+    int n;
     Set<Set<int> > facets;
     int n_facets;
     int max_vertices_on_facet;
+    
+    Polytope() {}
    
-    Polytope(const Matrix<Rational>& cocircuits) {
+    Polytope(int _d, int _n, const Matrix<Rational>& cocircuits) {
+      d = _d;
+      n = _n;
       max_vertices_on_facet = 0;
       for (int i=0; i<cocircuits.rows(); ++i) {
         Rational val = 0;
@@ -191,6 +196,22 @@ class Polytope {
       n_facets = facets.size();
     }
     
+    Polytope(const Polytope& p, const std::vector<int> v) {
+      d = p.d;
+      n = p.n;
+      n_facets = p.n_facets;
+      max_vertices_on_facet = p.max_vertices_on_facet;
+      
+      for (Entire<Set<Set<int> > >::const_iterator fit = entire(p.facets); !fit.at_end(); ++fit) {
+        Set<int> p_facet = *fit;
+        Set<int> facet;
+        for (Entire<Set<int> >::const_iterator vit = entire(p_facet); !vit.at_end(); ++vit) {
+          facet.insert(v[*vit]);
+        }
+        facets.insert(facet);
+      }
+    }
+    
     bool operator<(Polytope other) const {
         if (n_facets < other.n_facets) {
           return true;
@@ -209,6 +230,11 @@ class Polytope {
         }
         
         return false;
+    }
+    
+    bool operator==(Polytope other) const {
+      //if (n_facets == other.n_facets && max_vertices_on_facet == other.)
+      return false;
     }
 
 };
@@ -256,7 +282,7 @@ Matrix<Rational> enumerate_configurations(int e, int n, int m) {
   P.take("INEQUALITIES") << inequalities;
   
   const Matrix<Rational> C = P.CallPolymakeMethod("LATTICE_POINTS"); // S'ha de fer així
-
+  
   return C;
 }
 
@@ -300,10 +326,33 @@ bool check_internal_points(const Matrix<Rational>& m) {
   return false;
 }
 
+bool check_equivalent(const Polytope& p, const Polytope& q) {
+  if (p.facets == q.facets) {
+    return true;
+  }
+  
+  if (p.d != q.d || p.n != q.n) {
+    return false;
+  }
+  
+  AllPermutations<> all_perm = all_permutations(p.n);
+  for (Entire<AllPermutations<> >::const_iterator it = entire(all_perm); !it.at_end(); ++it) {
+    std::vector<int> v = *it;
+    
+    Polytope r = Polytope(q, v);
+    
+    if (p.facets == r.facets) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
 Array<Matrix<Rational> > gale_complexity(int e, int n, int m) {
   Matrix<Rational> configs = enumerate_configurations(e,n,m);
   
-  Map<int, Polytope> polytopes;
+  Map<int, Map<int, Set<Polytope> > > polytopes;
   
   for (int k=0; k<configs.rows(); ++k) {
     if (check_lexicographically_sorted(e, configs[k])) {
@@ -311,21 +360,36 @@ Array<Matrix<Rational> > gale_complexity(int e, int n, int m) {
       
       // Internal points filter
       if (!check_internal_points(conf.cocircuits)) {
-        conf.gen_circuits();        
-        Polytope p(conf.circuits);
+        conf.gen_circuits();
+         
+        Polytope p(conf.d, n, conf.circuits);
         
-        cerr << p.facets << endl;
-        cerr << p.n_facets << endl;
-        cerr << p.max_vertices_on_facet << endl;
+        bool is_new = true;
+        for (Entire<Set<Polytope> >::const_iterator it = entire(polytopes[p.n_facets][p.max_vertices_on_facet]); !it.at_end() && is_new; ++it) {
+          Polytope current = *it;
+          if (check_equivalent(p, current)) {
+            is_new = false;
+          }
+        }
         
-        polytopes[3] = p;
-        cerr << polytopes[3].facets << endl;
-        
-        break;
+        if (is_new) {
+          polytopes[p.n_facets][p.max_vertices_on_facet].insert(p);
+        }
       }
     }
   }
   
+  int total = 0;
+  for (Entire<Map<int, Map<int, Set<Polytope> > > >::const_iterator mitf = entire(polytopes); !mitf.at_end(); ++mitf) {
+    for (Entire<Map<int, Set<Polytope> > >::const_iterator mitv = entire(mitf->second); !mitv.at_end(); ++mitv) {
+      cout << mitf->first << " facets, " <<  mitv->first << " max vertices on facet:" <<  endl;
+      for (Entire<Set<Polytope> >::const_iterator sit = entire(mitv->second); !sit.at_end(); ++sit) {
+        cout << (*sit).facets << endl;
+        total++;
+      }
+    }
+  }
+  cout << "Total: " << total << endl;
   
   return Array<Matrix<Rational> > (0);
 }
