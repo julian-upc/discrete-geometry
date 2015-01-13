@@ -339,7 +339,12 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 	for (unsigned int i=0; i<Gale_conf.size(); ++i){
 		//meterlo en una galeconf
 		gale_conf G;
-		G.vectors=MR(Gale_conf[i]);//Fix this manually to transform ok!!!
+		G.vectors=MR(n,e);//Fix this manually to transform ok!!!
+		for (int j=0; j<n; ++j){
+			for (int k=0; k<e; ++k){
+				G.vectors[j][k]=Rational(Gale_conf[i][j][k]);
+			}
+		}
 		//generar cocircuitos
 		set <vector<int> > cocir=generate_cocircuits (G.vectors, n, e);
 		bool interior_point=false;
