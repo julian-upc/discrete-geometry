@@ -83,14 +83,13 @@ Matrix<Rational> enumerate_configurations(int e,int n,int m)
     
     
     
-    bool lexicoordered(Vector<Integer> V ,int n, int e){
+    bool lexicoordered(const Vector<Integer>& V ,int n, int e){
         for (int i=0; i<n; i += e+1) {
-            if (std::lexicographical_compare((V)[0]+i,
-                                         (V)[0]+e+i,
-                                         (V)[0]+e+1+i,
-                                         (V)[0]+2*e+1+i)==0){
-                return false;}}
-        
+           if (V.slice(i,e) >= V.slice(e+1+i, e)) {
+              return false;
+           }
+        }
+        return true;
     }
 
     bool cocircuits_or_fail(const Matrix<Rational>& G,
@@ -118,91 +117,106 @@ Matrix<Rational> enumerate_configurations(int e,int n,int m)
             negative_parts.push_back(minus);
         }
         return 
-        positive_parts.size() > 0 || 
-        negative_parts.size() > 0;
+           positive_parts.size() > 0 || 
+           negative_parts.size() > 0;
     }
     
-    bool compare_matrices(const Matrix<Rational>& M1,const Matrix<Rational>& M2)
+    template<typename E>
+    bool compare_matrices(const Matrix<E>& M1,const Matrix<E>& M2)
     {
         int nequal=0;
         for (int i=0;i<M1.rows();++i){
             for (int j=0; j<M2.rows();++j){
-                if(M1[i]==M2[j]){nequal=nequal+1;}
-                
+                if (M1[i]==M2[j]) {
+                   nequal++;
+                }
             }
         }
-        if (nequal==M1.rows()){return true;}
-        return false;
-        
+        return nequal == M1.rows();
     }
     
-    bool compare_polytopes(const Galepolytope P1, const Galepolytope P2)
-    {if (P1.n_facets<P2.n_facets){return false;}
-    else if(P1.n_facets==P2.n_facets){
-        if(P1.maxn_vertex<P2.maxn_vertex){return false;}
-    }
+    bool compare_polytopes(const Galepolytope& P1, const Galepolytope& P2)
+    {
+       if (P1.n_facets<P2.n_facets) {
+          return false;
+       } else if (P1.n_facets == P2.n_facets) {
+          if (P1.maxn_vertex < P2.maxn_vertex) {
+             return false;
+          }
+       }
+       return true;
     }
 
     //empty list of polytopes
-    std::list<Galepolytope> polylist;
+std::list<Galepolytope> polylist;
     
-Matrix <Rational> gale_compl(int e,int n,int m)
+int gale_compl(int e,int n,int m)
 {
+   throw std::runtime_error("Please adjust the return type of gale_compl()");
     const Matrix<Rational> configs=enumerate_configurations(e,n,m);
     //for each configuration:
-    for(Entire <Rows< Matrix<Integer> > >::const_iterator rit = entire(rows(configs)); !rit.at_end(); ++rit){
+    for(Entire <Rows< Matrix<Rational> > >::const_iterator rit = entire(rows(configs)); !rit.at_end(); ++rit){
         
-        const Vector<Integer> v=(*rit);
-        //first chech if it is ordered
-        if (!lexicoordered(v,n,e)){continue;}
+        const Vector<Integer> v(*rit);
+        // first check if it is ordered
+        if (!lexicoordered(v,n,e)) {
+           continue;
+        }
                         
-        Matrix<Rational> G;
-            for (int i=0; i<n; i += e+1){
-                for (int j=0; j<e; ++j){
-                    G[i][j]=v[i+j];}
-            }
+        throw std::runtime_error("Please check that the calculation on line __LINE__ is correct and does what you want!");
+        // (n-1)(e+1) + e-1 = ne - e + n + e - 1 = n(e-1) - 1
+        Matrix<Rational> G(n, n*(e-1) - 1); // you need to initialize the matrix with its dimensions
+        for (int i=0; i<n; i += e+1) {
+           for (int j=0; j<e; ++j) {
+              G[i][j] = v[i+j];
+           }
+        }
         
         std::vector<Set<int> > positive_parts, negative_parts;
-        if (!cocircuits_or_fail(G, positive_parts, negative_parts)){continue;}
-        
+        if (!cocircuits_or_fail(G, positive_parts, negative_parts)) {
+           continue;
+        }
 
         //circuits
         Set<int>  negative_index;
         const Matrix<Rational> ker=null_space(G);
         Matrix<Rational> circuits=ker;
-        for (int i=0; i<ker.rows();++i){
-            for (int j=0; j<ker.cols();++j){
-                if (ker[i][j]>0) {circuits[i][j]=1;}
-                else if (ker[i][j]<0) {circuits[i][j]=-1;
-                    negative_index.push_back(i);}
-            }}
+        for (int i=0; i<ker.rows();++i) {
+            for (int j=0; j<ker.cols();++j) {
+                if (ker[i][j]>0) {
+                   circuits[i][j]=1;
+                } else if (ker[i][j]<0) {
+                   circuits[i][j]=-1;
+                   negative_index.push_back(i);
+                }
+            }
+        }
         circuits=circuits.minor(~negative_index,All);
         
-        
-        
-        
         Rational max=0;
-        for (int i=0;i<circuits.rows();++i){
+        for (int i=0; i<circuits.rows(); ++i) {
             Rational sum=0;
-            for (int j=0; j<circuits[i].size();++j){
-                sum=sum+circuits[i][j];
+            for (int j=0; j<circuits[i].size(); ++j) {
+                sum += circuits[i][j];
             }
-            if (sum>max){max=sum;}
-            
+            if (sum>max){
+               max=sum;
+            }
         }
+
         //P.maxn_vertex=max;
         //Galepolytope Po(v,G,circuits,circuits.rows(),max);
         Galepolytope Po;
-         Po.vec=v;
-         Po.G=G;
-         Po.C=circuits;
-         Po.n_facets=circuits.rows();
-         Po.maxn_vertex=max;
+        Po.vec=v;
+        Po.G=G;
+        Po.C=circuits;
+        Po.n_facets=circuits.rows();
+        Po.maxn_vertex=max;
         
         //add to list
         
         polylist.push_back(Po);
-        }
+    }
     
     //analyze the list we got:
     //order the list by number of facets:
@@ -212,33 +226,20 @@ Matrix <Rational> gale_compl(int e,int n,int m)
     
         
     for (std::list<Galepolytope>::const_iterator iterator = polylist.begin(), end = polylist.end(); iterator != end; ++iterator)
-    {   Galepolytope P1=*iterator;
-        Galepolytope P2=*++iterator;
-        if( P1.n_facets==P2.n_facets){
-            if( P1.maxn_vertex==P2.maxn_vertex){
-                if( compare_matrices(P1.C,P2.C)){polylist.remove(P2);}
-            }
-        }
+    {   
+       throw std::runtime_error("The loop on line __LINE__ has a signpost error. In the last iteration, *++iterator will be invalid");
+       Galepolytope P1=*iterator;
+       Galepolytope P2=*++iterator;
+       if (P1.n_facets != P2.n_facets) continue;
+       if (P1.maxn_vertex != P2.maxn_vertex) continue;
+       throw std::runtime_error("You cannot modify a list while you are iterating through it, this invalidates your iterators.");
+       if( compare_matrices(P1.C,P2.C)) {
+          //          polylist.remove(*iterator);
+       }
     }
-   
+    
     return polylist.size();
-    
-        
-        
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+}    
     
     
     
