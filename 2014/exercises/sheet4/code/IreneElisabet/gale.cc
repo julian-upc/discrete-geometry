@@ -97,6 +97,10 @@ set < vector<int> > generate_cocircuits ( const Matrix <Rational> & M, const  in
 			} 
 		}
 		cocircuits.insert(z);
+		for (int j=0; j<n; ++j){
+			if (z[j]!=0) z[j]=-z[j];
+		}
+		cocircuits.insert(z);//inserting the positive and the negative helps avoiding problems when comparing two of them
 	}
 	return cocircuits;
 }
@@ -134,6 +138,10 @@ set<vector< int> > generate_cocircuits_trans ( const Matrix <Rational> & M, cons
 			} 
 		}
 		cocircuits.insert(z);
+		for (int j=0; j<n; ++j){
+			if (z[j]!=0) z[j]=-z[j];
+		}
+		cocircuits.insert(z);//inserting the positive and the negative helps avoiding problems when comparing two of them
 	}
 	return cocircuits;
 }
@@ -454,5 +462,4 @@ UserFunctionTemplate4perl("# @category Computations"
 
 
 }}
-
 
