@@ -1,26 +1,21 @@
-//Darrera edició: 12 de gener de 2015
+//Darrera edició: 13 de gener de 2015
 
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <set>
-#include "polymake/Vector.h"
-#include "polymake/SparseVector.h"
 #include "polymake/Rational.h"
 #include "polymake/Matrix.h"
 #include "polymake/Integer.h"
-#include "polymake/Array.h"
 #include "polymake/linalg.h"
-#include <math.h>
-#include <set> 
+#include <math.h> 
 #include <algorithm> 
 
 using namespace std;
 
-namespace polymake{ namespace std{
+namespace polymake{ namespace polytope{
 
 typedef Matrix <Rational> MR;
-// typedef ListMatrix <SparseVector<Rational> > LMR;
 typedef vector< vector< vector<int> > > Tri_vector;
 typedef vector< vector<int> >  Matriz;
 
@@ -213,35 +208,35 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
   	else {
     		coor_actual.clear();
     		coor_actual.resize(1);
-    	C	oor1D.insert(coor_actual);
+		Coor1D.insert(coor_actual);
   	}
   	//write_mat(Coor1D);
 
 
   
-  	for (int k = 1; k < kmax + 1; ++k) {
-    		for (int g = 0; g < n-1; ++g) { // el nuemro de puntos en la config
-      			for (unsigned int i = 0; i < Sk_1[g].size(); ++i) { // el numero de opciones 
+	for (int k = 1; k < kmax + 1; ++k) {
+		for (int g = 0; g < n-1; ++g) { // el nuemro de puntos en la config
+			for (unsigned int i = 0; i < Sk_1[g].size(); ++i) { // el numero de opciones 
 				val_0 = Sk_1[g][i][0];	
 				for (int j = 0; j < g + 1; ++j) { // las coordenadas, la que aumentar
-	  				val_actual = Sk_1[g][i][j];
-	  				if ( (j == 0) && (val_actual < m) ) {
-	    				coor_actual = Sk_1[g][i];
-	    				coor_actual[0] += 1;
-	    				Sk[g].push_back(coor_actual);
-          			}
-	  				else if ( ((val_0 - val_actual) == 1) && (val_actual < m) && ((Sk_1[g][i][j-1] - val_actual) == 1) ){
-	    				coor_actual = Sk_1[g][i];
-	    				coor_actual[j] += 1;
-	    				Sk[g].push_back(coor_actual);
-          			}
+					val_actual = Sk_1[g][i][j];
+					if ( (j == 0) && (val_actual < m) ) {
+						coor_actual = Sk_1[g][i];
+						coor_actual[0] += 1;
+						Sk[g].push_back(coor_actual);
+					}
+					else if ( ((val_0 - val_actual) == 1) && (val_actual < m) && ((Sk_1[g][i][j-1] - val_actual) == 1) ){
+						coor_actual = Sk_1[g][i];
+						coor_actual[j] += 1;
+						Sk[g].push_back(coor_actual);
+					}
 				}
-      			}
-    		}
-   		// emparejado 
-    		for (int g = 0; g < ceil((n-1)/2); ++g) {
-      			gcompl = n - 2 - g;
-      			for (unsigned int i = 0; i < Sk[g].size(); ++i) {
+			}
+		}
+		// emparejado 
+		for (int g = 0; g < ceil((n-1)/2); ++g) {
+			gcompl = n - 2 - g;
+			for (unsigned int i = 0; i < Sk[g].size(); ++i) {
         			for (unsigned int j = 0; j < Sk[gcompl].size(); ++j) {
   	  				coor_actual = Sk[g][i];
 	  				for (unsigned int l = 0; l < coor_actual.size(); ++l) {
