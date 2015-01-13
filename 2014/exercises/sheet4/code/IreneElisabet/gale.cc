@@ -97,10 +97,12 @@ set < vector<int> > generate_cocircuits ( const Matrix <Rational> & M, const  in
 			} 
 		}
 		cocircuits.insert(z);
+		/*
 		for (int j=0; j<n; ++j){
 			if (z[j]!=0) z[j]=-z[j];
 		}
 		cocircuits.insert(z);//inserting the positive and the negative helps avoiding problems when comparing two of them
+		*/
 	}
 	return cocircuits;
 }
@@ -138,19 +140,14 @@ set<vector< int> > generate_cocircuits_trans ( const Matrix <Rational> & M, cons
 			} 
 		}
 		cocircuits.insert(z);
+		/* //not necessary since we only compare the facets
 		for (int j=0; j<n; ++j){
 			if (z[j]!=0) z[j]=-z[j];
 		}
 		cocircuits.insert(z);//inserting the positive and the negative helps avoiding problems when comparing two of them
+		*/
 	}
 	return cocircuits;
-}
-
-
-
-bool compare_cocircuits ( set<vector< int> > & cocircuits1, set<vector< int> > & cocircuits2){
-	if (cocircuits1!=cocircuits2) return false;
-	return true;
 }
 
 
@@ -393,29 +390,18 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 			}
 			//find the cocircuits and compare with the other
 			G.cocircuits=generate_cocircuits_trans (G.transform, n, n-e-1);
-			bool already_found=false;
-			for (unsigned int j=0; j<politopes.size() and !already_found; ++j){
-				if (compare_cocircuits(G.cocircuits,politopes[j].cocircuits)){
-					already_found=true;
+			//find the facet lattice and compare with the other
+			//alternative for facets
+			
+			G.facets=facet_lattice(G.cocircuits);
+			bool already_found_facets=false;
+			for (unsigned int j=0; j<politopes.size() and !already_found_facets; ++j){
+				if (G.facets==politopes[j].facets){
+					already_found_facets=true;
 				} 
 			}
-			if (not already_found) politopes.push_back(G);
-			//find the facet lattice and compare with the other
-			/*
-			else{
-				//generate the facet lattice for this gale conf
-				G.facets=facet_lattice(G.cocircuits);
-				if (coincident_cocircuits.size()==1){
-					//generate the facet lattice for the other gale conf
-					G.facets=facet_lattice(politopes[coincident_cocircuits[0]].cocircuits); 
-					//if there are more than one they have already been generated
-				}
-				//compare the facet lattices
-				for (int j=0; j<coincident_cocircuits.size(); ++j){
-					//como esta ordenado puedes comparar directamente
-				}
-			}
-			*/
+			if (not already_found_facets) politopes.push_back(G);
+			
 		}
 	}
 	return politopes;
@@ -430,11 +416,15 @@ vector <gale_conf> diference (const  int e, const   int n, const  int m){
 	//compare cocircuits and facets (if necessary);
 	//provisional solo compara cocircuitos
 	for (unsigned int j=0; j<M.size(); ++j){
-	  	bool found=false;
-	  	for (unsigned int i=0; i<previous.size() and !found; ++i){
-	    	if (previous[i].cocircuits==M[j].cocircuits) found=true;
+
+		//alternative for facets
+		
+		bool found_facets=false;
+	  	for (unsigned int i=0; i<previous.size() and !found_facets; ++i){
+		      if (previous[i].facets==M[j].facets) found_facets=true;
 	  	}
-	  	if (not found) diference.push_back(M[j]);
+	  	if (not found_facets) diference.push_back(M[j]);
+	  	
 	} 
 	return diference;
 	
