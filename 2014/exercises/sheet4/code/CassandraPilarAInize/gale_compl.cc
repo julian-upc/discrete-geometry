@@ -246,12 +246,12 @@ int gale_compl(int e,int n,int m)
 
 
 UserFunctionTemplate4perl("# @category Computations"
-                          "# Compute a vector that selects the inclusion-minimal face "
-			  "# that contains the vertices indexed by I."
-                          "# @param Polytope P the input polytope"
-                          "# @param Set I the indices of some vertices of P"
-                          "# @return Vector",
-			  "face_selector(Polytope, Set)" );
+                          "# FIXME"
+                          "# @param FIXME"
+                          "# @param FIXME"
+                          "# @param FIXME"
+                          "# @return FIXME",
+			  "gale_compl($$$)" );
 
 } }
 
