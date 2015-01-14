@@ -23,6 +23,8 @@
 #include "polymake/Array.h"
 #include "polymake/linalg.h"
 #include "polymake/Integer.h"
+#include "polymake/Map.h"
+#include "polymake/client.h"
 #include <string>
 #include <iostream>
 #include <set>
@@ -51,6 +53,7 @@ namespace polymake { namespace polytope {
         SparseVector<Rational>ineq(e*n+1);
         ineq[e]=1;
         inequalities/=ineq;
+        
         for(int i=0;i<n-1;++i) {
             for(int j=0;j<e;++j) {
                 SparseVector<Rational>ineq(n*e+1);
@@ -59,12 +62,28 @@ namespace polymake { namespace polytope {
                 inequalities /= ineq;
             }
         }
+         
+        
+        for (int i=1;i<e*n+1;++i){
+            SparseVector<Rational>ineq(n*e+1);
+            ineq[0]=m;
+            ineq[i]=1;
+            inequalities/=ineq;
+        }
+        for (int i=1;i<e*n+1;++i){
+            SparseVector<Rational>ineq(n*e+1);
+            ineq[0]=m;
+            ineq[i]=-1;
+            inequalities/=ineq;
+        }
         
         perl::Object P("Polytope");
         P.take("EQUATIONS") << equations;
         P.take("INEQUALITIES")<< inequalities;
         const Matrix<Rational> C = P.CallPolymakeMethod("LATTICE_POINTS");
         
+        std::cout<< inequalities.rows() << endl;
+        std::cout<< C.cols() << endl;
         return C;
 
     }
