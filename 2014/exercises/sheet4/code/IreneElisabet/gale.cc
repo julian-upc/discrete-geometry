@@ -31,7 +31,7 @@ struct gale_conf{
 
 	set<vector<int> > cocircuits; //cocircuits of the transform
 
-	set<vector<int> > facets; //stores the facet lattice cocircuits of the transform
+	set< set<int> > facets; //stores the facet lattice cocircuits of the transform
 };
 
 
@@ -167,8 +167,8 @@ set<vector< int > > generate_cocircuits_trans ( const Matrix <Rational> & M, con
 
 
 
-set <vector <int> > facet_lattice (const set<vector< int> > & cocircuits){
-	set <vector <int> > facets;
+set <set <int> > facet_lattice (const set<vector< int> > & cocircuits){
+	set <set <int> > facets;
 	for (set<vector< int > >::iterator it= cocircuits.begin(); it !=cocircuits.end(); ++it){
 		int sign_facet=0;
 		bool is_facet=true;
@@ -185,35 +185,17 @@ set <vector <int> > facet_lattice (const set<vector< int> > & cocircuits){
 			}
 		}
 		if (is_facet){
-			for (unsigned int i=0; i<v.size() and is_facet; ++i){//with this all the facets are positive
-				v[i]=sign_facet*v[i];
+			set<int> facet;
+			for (unsigned int i=0; i<v.size(); ++i){//with this all the facets are positive
+				if (v[i]==0) facet.insert(i);
 			}
-			facets.insert(v);
+			facets.insert(facet);
 		}
 	}
 	return facets;
 }
 
- 
-Matriz permuta_columns (const Matriz & facet_trans2,const  vector<int> & perm , const int & n){
-	Matriz permutada (facet_trans2.size(), vector<int> (n));
-	for (unsigned int i=0; i< facet_trans2.size(); ++i){
-		for (int j=0; j<n; ++j){
-			permutada[i][j]=facet_trans2[i][perm[j]];
-		}
-	}
-	return permutada;
-}
 
-Matriz permuta_rows (const Matriz & facet_trans2,const  vector<int> & perm , const int & n){
-	Matriz permutada (facet_trans2.size(), vector<int> (n));
-	for (unsigned int i=0; i< facet_trans2.size(); ++i){
-		for (int j=0; j<n; ++j){
-			permutada[i][j]=facet_trans2[perm[i]][j];
-		}
-	}
-	return permutada;
-}
 
 Matriz permuta (int n){
 	vector <int> v (n);
@@ -227,36 +209,29 @@ Matriz permuta (int n){
 	return p;
 }
 
+set <set <int> > perm (const  set< set< int> > & f, const vector< int> & p){
+	set <set< int> > f2;
+	for (set < set< int> >::iterator it= f.begin(); it!= f.end(); ++it){
+		set <int> facet=*it;
+		set <int> new_facet;
+		for (set <int>:: iterator fit=facet.begin(); fit!= facet.end(); ++fit){
+			int a=*fit;
+			new_facet.insert(p[a]);
+		}
+		f2.insert(new_facet);
+	}
+	return f2;
+}
 
 
-bool compare_facets (const set<vector <int> > & facet_1, const set< vector <int> > & facet_2){
-	Matriz facet_trans1, facet_trans2;
-	int n;
-	for (set<vector< int > >::iterator it= facet_1.begin(); it !=facet_1.end(); ++it){
-		vector <int> v=*it;
-		facet_trans1.push_back(v);
+
+bool compare_facets (const set< set <int> > & f1, const set< set <int> > & f2, const int & n){
+	if (f1==f2) return true;
+	Matriz p=permuta (n);
+	for (unsigned int i=1; i<p.size(); ++i){//the first element of p is the non permutated one
+		set< set< int> > changed= perm (f2, p[i]);
+		if (f1==changed) return true;
 	}
-	for (set<vector< int > >::iterator it= facet_2.begin(); it !=facet_2.end(); ++it){
-		vector <int> v=*it;
-		facet_trans2.push_back(v);
-	}
-	if (facet_trans1.size()==0 or facet_trans2.size()==0) return false;
-	n=facet_trans2[0].size();
-	if (facet_trans1.size()!=facet_trans2.size() or facet_trans1[0].size()!=facet_trans2[0].size()) return false;
-	Matriz permutations=permuta (n);
-	for (unsigned int i=0; i<permutations.size(); ++i){
-		Matriz facet_trans_permutada=permuta_columns (facet_trans2, permutations[i], n);
-		bool equals=true;
-		for (unsigned int j=0; j<facet_trans1.size() and equals; ++j){
-			for (int k=0; k<n and equals; ++k){
-				if (facet_trans1[j][k]!=facet_trans_permutada[j][k]) equals=false;
-			}
-		}
-		if (equals){
-			return true;
-		}
-	}
-	
 	return false;
 }
 
@@ -413,6 +388,8 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
   	}
 	//Gale_conf son todas las configuraciones halladas hasta ahora por revisar
 	vector <gale_conf> politopes;
+	int full_dim=0;
+	int intpoint=0;
 	for (unsigned int i=0; i<Gale_conf.size(); ++i){
 		//meterlo en una galeconf
 		gale_conf G;
@@ -423,6 +400,7 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 			}
 		}
 		if (rank(G.vectors)==e){
+			++full_dim;
 			//generar cocircuitos
 			set <vector<int > > cocir=generate_cocircuits (G.vectors, n, e);
 			bool interior_point=false;
@@ -440,7 +418,8 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 				
 			}
 			//from here find if ther are interior points, if there are no need to store the configuration, go to the next one
-			if (not interior_point){;
+			if (not interior_point){
+				++intpoint;
 				//perform the galetransform
 				//add 1's row to T(G.vectors);
 				MR M (e+1, n);
@@ -476,59 +455,57 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 				G.facets=facet_lattice(G.cocircuits);
 				bool already_found_facets=false;
 				for (unsigned int j=0; j<politopes.size() and !already_found_facets; ++j){
-					if (compare_facets(G.facets,politopes[j].facets)){
+					if (compare_facets(G.facets,politopes[j].facets, n)){
 						already_found_facets=true;
 					} 
 				}
 				if (not already_found_facets){
 					politopes.push_back(G);
+					/*
 					write_matrix (G.transform);
-					for (set<vector<int> >::iterator it=G.facets.begin(); it!=G.facets.end(); ++it){
-						vector<int> v=*it;
-						for (unsigned int j=0; j<v.size(); ++j){
-							cout<<v[j]<<" ";
+					for (set<set<int> >::iterator it=G.facets.begin(); it!=G.facets.end(); ++it){
+						set<int> v=*it;
+						for (set<int>::iterator fit=v.begin(); fit!=v.end(); ++fit){
+							int punt=*fit;
+							cout<<punt<<" ";
 						}
 						cout<<endl;
 					}
 					cout<<endl;
+					*/
 				}
 			}
+			
 		}
+		
 	}
+	/*
+	cout<<"tengo "<<Gale_conf.size()<<"posibles configuraciones"<<endl;
+	cout<<" de ellas "<<full_dim<<" son full dimensional"<<endl;
+	cout<<" de ellas "<<intpoint<<" no tienen puntos interiores"<<endl;
+	cout<<" en total "<<politopes.size()<<" configuraciones son validas"<<endl;
+	*/
 	return politopes;
 
 }
 
-Vector<Matrix<Integer> > convert (const  vector<gale_conf> & M ){
-	Vector<Matrix<Integer> > v;
+Vector<Matrix<Rational > > convert (const  vector<gale_conf> & M ){
+	Vector<Matrix<Rational> > v;
 	v.clear();
 	for (unsigned int i=0; i<M.size(); ++i){
-		Matriz f;
-		for (set<vector< int > >::iterator it= M[i].facets.begin(); it !=M[i].facets.end(); ++it){
-			vector <int> v=*it;
-			f.push_back(v);
-		}
-		int rows=f.size();
-		int cols=f[0].size();
-		Matrix<Integer> A (rows, cols);
-		for (int k=0; k<rows; ++k){
-			for (int j=0; j<cols; ++j){
-				A[k][j]=Integer(f[k][j]);
-			}
-		}
-		v|=A;//appends A to the vector
+		v|=M[i].vectors;//appends A to the vector
 	}
 	return v;
 }
 
-Vector<Matrix<Integer> > gale_complexity (const  int e, const   int n, const  int m){
+Vector<Matrix<Rational> > gale_complexity (const  int e, const   int n, const  int m){
 	vector<gale_conf> M =galecomplexity (e,n,m);
-	Vector< Matrix <Integer> > politopes=convert (M);
+	Vector< Matrix <Rational> > politopes=convert (M);
 	return politopes;
 }
 
 
-Vector<Matrix< Integer> > diference (const  int e, const   int n, const  int m){
+Vector<Matrix< Rational > > diference (const  int e, const   int n, const  int m){
 
 	vector <gale_conf> M =galecomplexity (e,n,m);
 	vector <gale_conf> previous=galecomplexity(e,n,m-1);
@@ -541,7 +518,7 @@ Vector<Matrix< Integer> > diference (const  int e, const   int n, const  int m){
 		
 		bool found_facets=false;
 	  	for (unsigned int i=0; i<previous.size() and !found_facets; ++i){
-		      if (compare_facets( previous[i].facets, M[j].facets)) found_facets=true;
+		      if (compare_facets( previous[i].facets, M[j].facets, n)) found_facets=true;
 	  	}
 	  	if (not found_facets) diference.push_back(M[j]);
 	  	
@@ -558,7 +535,7 @@ UserFunctionTemplate4perl("# @category Computations"
 			  "# @param e dimension of the gale diagram "
 			  "# @param n number of vectors on the gale diagram"
 			  "# @param m maximum value of the coordinates"
-			  "# @return Vector<Matrix<Integer> >",
+			  "# @return Vector<Matrix<Rational> >",
 			  "gale_complexity ($ $ $)" );
 
 UserFunctionTemplate4perl("# @category Computations"
@@ -567,7 +544,7 @@ UserFunctionTemplate4perl("# @category Computations"
 			  "# @param e dimension of the gale diagram "
 			  "# @param n number of vectors on the gale diagram"
 			  "# @param m maximum value of the coordinates"
-			  "# @return Vector<Matrix<Integer> >",
+			  "# @return Vector<Matrix<Rational> >",
 			  "diference ($ $ $)" );
 
 
