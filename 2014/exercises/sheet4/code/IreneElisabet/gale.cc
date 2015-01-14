@@ -1,15 +1,18 @@
-//Darrera edició: 13 de gener de 2015
+//Darrera edició: 14 de gener de 2015
 
 #include <iostream>
 #include <vector>
-#include <cmath>
 #include <set>
+#include <cmath>
+#include <math.h> 
+#include <algorithm> 
 #include "polymake/Rational.h"
+#include "polymake/Vector.h"
+#include "polymake/Set.h"
 #include "polymake/Matrix.h"
 #include "polymake/Integer.h"
 #include "polymake/linalg.h"
-#include <math.h> 
-#include <algorithm> 
+
 
 using namespace std;
 
@@ -28,7 +31,7 @@ struct gale_conf{
 
 	set<vector<int> > cocircuits; //cocircuits of the transform
 
-	set<vector<int> > facets; //stores the facet lattice cocircuits of the transform
+	set< set<int> > facets; //stores the facet lattice cocircuits of the transform
 };
 
 
@@ -53,111 +56,120 @@ int compare( int a, int b, int c ) {
 // devuelve matriz con k columnas con el indice en cada
 vector< vector<int> > combinations(int n, int k) {
   
-   vector<int> combi_actual;
-    vector<  vector<int> > combis;
-    vector<bool> v(n);
-    fill(v.begin() + k, v.end(), true);
+	vector<int> combi_actual;
+	vector<  vector<int> > combis;
+	vector<bool> v(n);
+	fill(v.begin() + k, v.end(), true);
  
-   do {
+   	do {
        for (int i = 0; i < n; ++i) {
            if (!v[i]) {
                combi_actual.push_back(i);
-           }
-       }
-       combis.push_back(combi_actual);
-       combi_actual.clear();
-   } while ( next_permutation(v.begin(), v.end()));
-   return combis;
+           	}
+       	}
+       	combis.push_back(combi_actual);
+       	combi_actual.clear();
+   	} while ( next_permutation(v.begin(), v.end()));
+	return combis;
+}
+
+void write_matrix (const MR & A) {
+  for (int i = 0; i < A.rows (); ++i) {
+    for (int j = 0; j < A.cols(); ++j) {
+      cout << A[i][j] << " ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+}
+
+void write_vector ( const vector <int>& z) {
+  for (unsigned int i = 0; i < z.size(); ++i) {
+    cout << z[i] << " ";
+  }
+  cout << endl;
+}
+
+void write_stdintmatrix (const Matriz & M){
+    for (unsigned int i = 0; i < M.size(); ++i) {
+    write_vector(M[i]);
+  }
+  cout<<endl;
+}
+
+vector <Rational> hiperplane ( const MR & M){
+	MR x=null_space (M);
+	vector<Rational> x2 (x.cols());
+	for (int i=0; i<x.cols(); ++i){
+		x2[i]=x[0][i];
+	}
+	return x2;
 }
 
 
-set < vector<int> > generate_cocircuits ( const Matrix <Rational> & M, const  int n, const  int e){
-	Matriz c = combinations (n, e);
+
+set < vector<int > > generate_cocircuits ( const Matrix <Rational> & M, const  int n, const  int e){
+	Matriz c = combinations (n, e-1);//han de passar pel zero
 	set<vector<int> > cocircuits;
 	for (unsigned int i=0; i<c.size(); ++i){
-		Vector <Rational>  x (e);
-		Vector <Rational>  b (e,0);
-		MR A (e,e);
-		for (int j=0; j<n; ++j){
-			A[j]=M[c[i][j]];
-		}
-		x=lin_solve (A,b);
-		//find the cocircuit defined by this hiperplane
-		Vector <Rational> y =x*M;
-		vector < int> z (n);
-		for (int j=0; j<n; ++j){
-			if (y[j]>0) {
-				z[j]=+1;
+		MR A (e-1,e);
+		for (int j=0; j<e-1; ++j){
+			for(int k=0; k<e; ++k){
+				A[j][k]=M[c[i][j]][k];
 			}
-			else if (y[j]==0){
-				z[j]=0;
-			} 
-			else if (y[j]<0){
-				z[j]=-1;
-			} 
 		}
-		cocircuits.insert(z);
-		for (int j=0; j<n; ++j){
-			if (z[j]!=0) z[j]=-z[j];
+		if (rank(A)==e-1){//make sure we can build a hiperplane
+			vector< Rational> x= hiperplane(A);//hiperplane
+			vector<int> y(n);
+			for (int j=0; j<n; ++j){
+				Rational a=0;
+				for (int k=0; k<e; ++k){
+					a=a+x[k]*M[j][k];
+				}
+				if (a>0) y[j]=1;
+				else if (a==0) y[j]=0;
+				else y[j]=-1;
+			}
+			cocircuits.insert(y);
 		}
-		cocircuits.insert(z);//inserting the positive and the negative helps avoiding problems when comparing two of them
 	}
 	return cocircuits;
 }
 
 
-set<vector< int> > generate_cocircuits_trans ( const Matrix <Rational> & M, const  int n, const  int d){//d=n-e-1
+set<vector< int > > generate_cocircuits_trans ( const Matrix <Rational> & M, const  int n, const  int d){
 	Matriz c = combinations (n, d);
-	set<vector < int> > cocircuits;
+	set<vector < int > > cocircuits;
 	for (unsigned int i=0; i<c.size(); ++i){
-		Vector <Rational>  x (d);
-		Vector <Rational>  b (d,0);
-		MR A (d,d);
-		for (int j=0; j<n; ++j){
-			for(int k=0; k<d; ++k){
-				A[j][k]=M[c[i][j]][k+1];
-			}
-		}
-		x=lin_solve (A,b);
-		//find the cocircuit defined by this hiperplane
-		Vector <Rational> x2 (d+1,1);
+		MR A (d,d+1);
 		for (int j=0; j<d; ++j){
-			x2[j+1]=x[j];
-		}
-		Vector <Rational> y =x2*M;
-		vector < int> z (n);
-		for (int j=0; j<n; ++j){
-			if (y[j]>0) {
-				z[j]=+1;
+			for(int k=0; k<d+1; ++k){
+				A[j][k]=M[c[i][j]][k];
 			}
-			else if (y[j]==0){
-				z[j]=0;
-			} 
-			else if (y[j]<0){
-				z[j]=-1;
-			} 
 		}
-		cocircuits.insert(z);
-		for (int j=0; j<n; ++j){
-			if (z[j]!=0) z[j]=-z[j];
+		if (rank(A)==d){
+			vector< Rational> x= hiperplane(A);
+			vector<int> y(n);
+			for (int j=0; j<n; ++j){
+				Rational a=0;
+				for (int k=0; k<d+1; ++k){
+					a=a+x[k]*M[j][k];
+				}
+				if (a>0) y[j]=1;
+				else if (a==0) y[j]=0;
+				else y[j]=-1;
+			}
+			cocircuits.insert(y);
 		}
-		cocircuits.insert(z);//inserting the positive and the negative helps avoiding problems when comparing two of them
 	}
 	return cocircuits;
 }
 
 
 
-bool compare_cocircuits ( set<vector< int> > & cocircuits1, set<vector< int> > & cocircuits2){
-	if (cocircuits1!=cocircuits2) return false;
-	return true;
-}
-
-
-
-set <vector <int> > facet_lattice (const set<vector< int> > & cocircuits){
-	set <vector <int> > facets;
-	for (set<vector< int> >::iterator it= cocircuits.begin(); it !=cocircuits.end(); ++it){
+set <set <int> > facet_lattice (const set<vector< int> > & cocircuits){
+	set <set <int> > facets;
+	for (set<vector< int > >::iterator it= cocircuits.begin(); it !=cocircuits.end(); ++it){
 		int sign_facet=0;
 		bool is_facet=true;
 		vector<int> v=*it;
@@ -173,10 +185,11 @@ set <vector <int> > facet_lattice (const set<vector< int> > & cocircuits){
 			}
 		}
 		if (is_facet){
-			for (unsigned int i=0; i<v.size() and is_facet; ++i){//with this all the facets are positive
-				v[i]=sign_facet*v[i];
+			set<int> facet;
+			for (unsigned int i=0; i<v.size(); ++i){//with this all the facets are positive
+				if (v[i]==0) facet.insert(i);
 			}
-			facets.insert(v);
+			facets.insert(facet);
 		}
 	}
 	return facets;
@@ -184,10 +197,47 @@ set <vector <int> > facet_lattice (const set<vector< int> > & cocircuits){
 
 
 
+Matriz permuta (int n){
+	vector <int> v (n);
+	Matriz p;
+	for (int i=0; i<n; ++i){
+		v[i]=i;
+	}
+	do {
+		p.push_back(v);
+	} while ( next_permutation(v.begin(),v.end()) );
+	return p;
+}
+
+set <set <int> > perm (const  set< set< int> > & f, const vector< int> & p){
+	set <set< int> > f2;
+	for (set < set< int> >::iterator it= f.begin(); it!= f.end(); ++it){
+		set <int> facet=*it;
+		set <int> new_facet;
+		for (set <int>:: iterator fit=facet.begin(); fit!= facet.end(); ++fit){
+			int a=*fit;
+			new_facet.insert(p[a]);
+		}
+		f2.insert(new_facet);
+	}
+	return f2;
+}
+
+
+
+bool compare_facets (const set< set <int> > & f1, const set< set <int> > & f2, const int & n){
+	if (f1==f2) return true;
+	Matriz p=permuta (n);
+	for (unsigned int i=1; i<p.size(); ++i){//the first element of p is the non permutated one
+		set< set< int> > changed= perm (f2, p[i]);
+		if (f1==changed) return true;
+	}
+	return false;
+}
 
 vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
  	int kmax, gcompl, val_actual, val_0;// no la usas! Gsize;
-    	set<  vector<int> > Coor1D;
+    set<  vector<int> > Coor1D;
 	vector<int> coor_actual;
 	vector<bool> lexi_actual;
 	vector<  vector<int> > conf_actual, conf_0;
@@ -338,91 +388,124 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
   	}
 	//Gale_conf son todas las configuraciones halladas hasta ahora por revisar
 	vector <gale_conf> politopes;
-
+	int full_dim=0;
+	int intpoint=0;
 	for (unsigned int i=0; i<Gale_conf.size(); ++i){
 		//meterlo en una galeconf
 		gale_conf G;
 		G.vectors=MR(n,e);//Fix this manually to transform ok!!!
-		for (int j=0; j<n; ++j){
-			for (int k=0; k<e; ++k){
+		for (int k=0; k<e; ++k){
+			for (int j=0; j<n; ++j){
 				G.vectors[j][k]=Rational(Gale_conf[i][j][k]);
 			}
 		}
-		//generar cocircuitos
-		set <vector<int> > cocir=generate_cocircuits (G.vectors, n, e);
-		bool interior_point=false;
-		for (set< vector< int > >::iterator j=cocir.begin(); j!=cocir.end() and !interior_point; ++j){
-			int positive=0;
-			int negative=0;
-			vector<int> v=*j;
-			for (int k=0; k<n; ++k){
-				if (v[k]>0) ++positive;
-				if (v[k]<0) ++negative;
+		if (rank(G.vectors)==e){
+			++full_dim;
+			//generar cocircuitos
+			set <vector<int > > cocir=generate_cocircuits (G.vectors, n, e);
+			bool interior_point=false;
+			for (set< vector< int > >::iterator j=cocir.begin(); j!=cocir.end() and !interior_point; ++j){
+				int positive=0;
+				int negative=0;
+				vector<int> v=*j;
+				for (int k=0; k<n; ++k){
+					if (v[k]>0) ++positive;
+					if (v[k]<0) ++negative;
+				}
+				if ((positive==1 and negative>0) or (positive>0 and negative==1)){//check for interior points
+					interior_point=true;
+				}
+				
 			}
-			if ((positive==1 and negative>0) or (positive>0 and negative==1)){//check for interior points
-				interior_point=true;
-			}
-		}
-		//from here find if ther are interior points, if there are no need to store the configuration, go to the next one
-		if (not interior_point){
-			//perform the galetransform
-			G.transform=null_space(T(G.vectors));//points of the conf as rows
-			//if there is an all 1 column substitute for the first one if not put the first column all ones
-			int column=-1;
-			for (int j=0; j<n-e and column==-1; ++j){
-				bool still_equal=true;
-				for(int k=0; k<n-1 and still_equal; ++k){
-					if (G.transform[k][j]!= G.transform[k+1][j]){
-						still_equal=false;
+			//from here find if ther are interior points, if there are no need to store the configuration, go to the next one
+			if (not interior_point){
+				++intpoint;
+				//perform the galetransform
+				//add 1's row to T(G.vectors);
+				MR M (e+1, n);
+				for (int j=0; j<n; ++j){//1st row
+					M[0][j]=1;
+				}
+				for (int j=0; j<n; ++j){//copy the transposed matrix
+					for (int k=0; k<e; ++k){
+						M[k+1][j]=G.vectors[j][k];
 					}
 				}
-				if (still_equal){
-					column=j;
-				}
-			}
-			if (column==-1){
+				//write_matrix(M);
+				MR A=T(null_space(M));
+				//cout << "transformed,  not interior point" << endl;
+				//add a 1's column
+				int d=n-e-1;
+				MR A2 (n, d+1);
 				for (int j=0; j<n; ++j){
-					G.transform[j][0]=1;
+					A2[j][0]=1;
 				}
-			}
-			else{
 				for (int j=0; j<n; ++j){
-					G.transform[j][column]=G.transform[j][0];
-					G.transform[j][0]=1;
+					for (int k=0; k<d; ++k){
+						A2[j][k+1]=A[j][k];
+					}
 				}
-			}
-			//find the cocircuits and compare with the other
-			G.cocircuits=generate_cocircuits_trans (G.transform, n, n-e-1);
-			bool already_found=false;
-			for (unsigned int j=0; j<politopes.size() and !already_found; ++j){
-				if (compare_cocircuits(G.cocircuits,politopes[j].cocircuits)){
-					already_found=true;
-				} 
-			}
-			if (not already_found) politopes.push_back(G);
-			//find the facet lattice and compare with the other
-			/*
-			else{
-				//generate the facet lattice for this gale conf
+				G.transform=A2;
+				
+				//find the cocircuits and compare with the other
+				G.cocircuits=generate_cocircuits_trans (G.transform, n, d);
+				//find the facet lattice and compare with the other
+				//alternative for facets
+			
 				G.facets=facet_lattice(G.cocircuits);
-				if (coincident_cocircuits.size()==1){
-					//generate the facet lattice for the other gale conf
-					G.facets=facet_lattice(politopes[coincident_cocircuits[0]].cocircuits); 
-					//if there are more than one they have already been generated
+				bool already_found_facets=false;
+				for (unsigned int j=0; j<politopes.size() and !already_found_facets; ++j){
+					if (compare_facets(G.facets,politopes[j].facets, n)){
+						already_found_facets=true;
+					} 
 				}
-				//compare the facet lattices
-				for (int j=0; j<coincident_cocircuits.size(); ++j){
-					//como esta ordenado puedes comparar directamente
+				if (not already_found_facets){
+					politopes.push_back(G);
+					/*
+					write_matrix (G.transform);
+					for (set<set<int> >::iterator it=G.facets.begin(); it!=G.facets.end(); ++it){
+						set<int> v=*it;
+						for (set<int>::iterator fit=v.begin(); fit!=v.end(); ++fit){
+							int punt=*fit;
+							cout<<punt<<" ";
+						}
+						cout<<endl;
+					}
+					cout<<endl;
+					*/
 				}
 			}
-			*/
+			
 		}
+		
 	}
+	/*
+	cout<<"tengo "<<Gale_conf.size()<<"posibles configuraciones"<<endl;
+	cout<<" de ellas "<<full_dim<<" son full dimensional"<<endl;
+	cout<<" de ellas "<<intpoint<<" no tienen puntos interiores"<<endl;
+	cout<<" en total "<<politopes.size()<<" configuraciones son validas"<<endl;
+	*/
 	return politopes;
 
 }
 
-vector <gale_conf> diference (const  int e, const   int n, const  int m){
+Vector<Matrix<Rational > > convert (const  vector<gale_conf> & M ){
+	Vector<Matrix<Rational> > v;
+	v.clear();
+	for (unsigned int i=0; i<M.size(); ++i){
+		v|=M[i].vectors;//appends A to the vector
+	}
+	return v;
+}
+
+Vector<Matrix<Rational> > gale_complexity (const  int e, const   int n, const  int m){
+	vector<gale_conf> M =galecomplexity (e,n,m);
+	Vector< Matrix <Rational> > politopes=convert (M);
+	return politopes;
+}
+
+
+Vector<Matrix< Rational > > diference (const  int e, const   int n, const  int m){
 
 	vector <gale_conf> M =galecomplexity (e,n,m);
 	vector <gale_conf> previous=galecomplexity(e,n,m-1);
@@ -430,14 +513,18 @@ vector <gale_conf> diference (const  int e, const   int n, const  int m){
 	//compare cocircuits and facets (if necessary);
 	//provisional solo compara cocircuitos
 	for (unsigned int j=0; j<M.size(); ++j){
-	  	bool found=false;
-	  	for (unsigned int i=0; i<previous.size() and !found; ++i){
-	    	if (previous[i].cocircuits==M[j].cocircuits) found=true;
+
+		//alternative for facets
+		
+		bool found_facets=false;
+	  	for (unsigned int i=0; i<previous.size() and !found_facets; ++i){
+		      if (compare_facets( previous[i].facets, M[j].facets, n)) found_facets=true;
 	  	}
-	  	if (not found) diference.push_back(M[j]);
+	  	if (not found_facets) diference.push_back(M[j]);
+	  	
 	} 
-	return diference;
 	
+	return convert(diference);
 
 }
 
@@ -448,8 +535,8 @@ UserFunctionTemplate4perl("# @category Computations"
 			  "# @param e dimension of the gale diagram "
 			  "# @param n number of vectors on the gale diagram"
 			  "# @param m maximum value of the coordinates"
-			  "# @return Array<gale_conf>",
-			  "galecomplexity ( int,  int,  int)" );
+			  "# @return Vector<Matrix<Rational> >",
+			  "gale_complexity ($ $ $)" );
 
 UserFunctionTemplate4perl("# @category Computations"
 			  "# Computes all the possible gale configurations with gale complexity m and m-1 "
@@ -457,8 +544,8 @@ UserFunctionTemplate4perl("# @category Computations"
 			  "# @param e dimension of the gale diagram "
 			  "# @param n number of vectors on the gale diagram"
 			  "# @param m maximum value of the coordinates"
-			  "# @return Array<gale_conf>",
-			  "diference ( int ,  int,  int)" );
+			  "# @return Vector<Matrix<Rational> >",
+			  "diference ($ $ $)" );
 
 
 }}
