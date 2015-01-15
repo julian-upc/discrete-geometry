@@ -1,4 +1,16 @@
-//Darrera edició: 14 de gener de 2015
+/* Copyright (c) 2015
+Irene de Parada and Elistabet Burjons FME/UPC 2015
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2, or (at your option) any
+later version: http://www.gnu.org/licenses/gpl.txt
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+--------------------------------------------------------------------------------
+*/
 
 #include <iostream>
 #include <vector>
@@ -44,16 +56,17 @@ bool are_different(  vector<int> v1,  vector<int> v2) {
 	return false;
 }
 
-
+// e must be > 1 
+// n must be > 0
+// m must be >= 0
 int compare( int a, int b, int c ) {
-    if ( a <= 0 || b <= 0 || c < 0 ) {
-        throw invalid_argument( "Received invalid values" );
+    if ( a <= 1 || b <= 0 || c < 0 ) {
+        throw invalid_argument( "Received invalid input values" );
     }
     return false;
 }
 
 
-// devuelve matriz con k columnas con el indice en cada
 vector< vector<int> > combinations(int n, int k) {
   
 	vector<int> combi_actual;
@@ -109,7 +122,7 @@ vector <Rational> hiperplane ( const MR & M){
 
 
 set < vector<int > > generate_cocircuits ( const Matrix <Rational> & M, const  int n, const  int e){
-	Matriz c = combinations (n, e-1);//han de passar pel zero
+	Matriz c = combinations (n, e-1);
 	set<vector<int> > cocircuits;
 	for (unsigned int i=0; i<c.size(); ++i){
 		MR A (e-1,e);
@@ -236,7 +249,7 @@ bool compare_facets (const set< set <int> > & f1, const set< set <int> > & f2, c
 }
 
 vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
- 	int kmax, gcompl, val_actual, val_0;// no la usas! Gsize;
+ 	int kmax, gcompl, val_actual, val_0;
     set<  vector<int> > Coor1D;
 	vector<int> coor_actual;
 	vector<bool> lexi_actual;
@@ -246,8 +259,8 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 	bool is_lexi;
     	compare(e, n, m);
     	kmax = floor(n/2)*m;
-    	// Generación de configuraciones unidimensionales
-    	// inicializacion
+    	// Generation of unidimensional configurations
+    	// Step 0 : Initialization
     	if (n > 1) {
     		Sk_1.resize(n-1);
     		Sk.resize(n-1);
@@ -255,7 +268,6 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
       			Sk_1[g].resize(1);
       			Sk_1[g][0].resize(g+1);
     		}
-    	// emparejado primero
     		for (int g = 0; g < 1; ++g) {
       			gcompl = n - 2 - g;
       			coor_actual = Sk_1[g][0];
@@ -268,15 +280,13 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
     		coor_actual.resize(1);
 		Coor1D.insert(coor_actual);
   	}
-  	//write_mat(Coor1D);
 
-
-  
+        // Step 1: Generate all possible groups of at most n-1 points adding up to k
 	for (int k = 1; k < kmax + 1; ++k) {
-		for (int g = 0; g < n-1; ++g) { // el nuemro de puntos en la config
-			for (unsigned int i = 0; i < Sk_1[g].size(); ++i) { // el numero de opciones 
+		for (int g = 0; g < n-1; ++g) { 
+			for (unsigned int i = 0; i < Sk_1[g].size(); ++i) { 
 				val_0 = Sk_1[g][i][0];	
-				for (int j = 0; j < g + 1; ++j) { // las coordenadas, la que aumentar
+				for (int j = 0; j < g + 1; ++j) { 
 					val_actual = Sk_1[g][i][j];
 					if ( (j == 0) && (val_actual < m) ) {
 						coor_actual = Sk_1[g][i];
@@ -291,7 +301,7 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 				}
 			}
 		}
-		// emparejado 
+		// Step 2: Pairing
 		for (int g = 0; g < ceil((n-1)/2); ++g) {
 			gcompl = n - 2 - g;
 			for (unsigned int i = 0; i < Sk[g].size(); ++i) {
@@ -302,7 +312,6 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 	  				}
 	  				coor_actual.insert(coor_actual.end(),Sk[gcompl][j].begin(),Sk[gcompl][j].end());
 	   				sort(coor_actual.rbegin(), coor_actual.rend()); // reverse iterators
-	  				//Coor1D.push_back(coor_actual);
 					Coor1D.insert(coor_actual);	  
 	  				coor_actual = Sk[gcompl][j];
 	  				if (are_different(coor_actual, Sk[g][i])) {
@@ -321,7 +330,7 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
     		Sk.resize(n-1);
   	}
   
-  	// Primera dimension
+  	// First dimension
   	conf_actual.resize(n);
   	lexi_actual.resize(n);
   	for (int i = 0; i < n; ++i) {
@@ -347,7 +356,8 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
     		}   
     	//conf_actual.clear();
   	}
-  	// Ampliación hasta e dimensiones
+
+  	// Add the dimensions one by one until e
   	for (int d = 1; d < e; ++d) {
     		Gale_0 = Gale_conf;
     		Gale_lexi0 = Gale_lexi;
@@ -386,14 +396,14 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
       			}
     		}
   	}
-	//Gale_conf son todas las configuraciones halladas hasta ahora por revisar
+
+	//Gale_conf are all possible configurations without posterior discards
 	vector <gale_conf> politopes;
 	int full_dim=0;
 	int intpoint=0;
 	for (unsigned int i=0; i<Gale_conf.size(); ++i){
-		//meterlo en una galeconf
 		gale_conf G;
-		G.vectors=MR(n,e);//Fix this manually to transform ok!!!
+		G.vectors=MR(n,e);
 		for (int k=0; k<e; ++k){
 			for (int j=0; j<n; ++j){
 				G.vectors[j][k]=Rational(Gale_conf[i][j][k]);
@@ -401,8 +411,9 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 		}
 		if (rank(G.vectors)==e){
 			++full_dim;
-			//generar cocircuitos
+			// We are assuming e>1
 			set <vector<int > > cocir=generate_cocircuits (G.vectors, n, e);
+			cout << "cp0" << endl;
 			bool interior_point=false;
 			for (set< vector< int > >::iterator j=cocir.begin(); j!=cocir.end() and !interior_point; ++j){
 				int positive=0;
@@ -417,7 +428,8 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 				}
 				
 			}
-			//from here find if ther are interior points, if there are no need to store the configuration, go to the next one
+			cout << "cp1" << endl;
+			//from here find if there are interior points, if there is no need to store the configuration, go to the next one
 			if (not interior_point){
 				++intpoint;
 				//perform the galetransform
@@ -480,10 +492,10 @@ vector <gale_conf> galecomplexity (const  int e, const   int n, const  int m) {
 		
 	}
 	/*
-	cout<<"tengo "<<Gale_conf.size()<<"posibles configuraciones"<<endl;
-	cout<<" de ellas "<<full_dim<<" son full dimensional"<<endl;
-	cout<<" de ellas "<<intpoint<<" no tienen puntos interiores"<<endl;
-	cout<<" en total "<<politopes.size()<<" configuraciones son validas"<<endl;
+	cout<<"I obtain "<<Gale_conf.size()<<" possible configurations"<<endl;
+	cout<<" of which "<<full_dim<<" are full dimensional"<<endl;
+	cout<<" of which "<<intpoint<<" no tienen puntos interiores"<<endl;
+	cout<<" To sum up, "<<politopes.size()<<"valid configurations lead to distinct polytopes"<<endl;
 	*/
 	return politopes;
 
@@ -505,11 +517,11 @@ Vector<Matrix<Rational> > gale_complexity (const  int e, const   int n, const  i
 }
 
 
-Vector<Matrix< Rational > > diference (const  int e, const   int n, const  int m){
+Vector<Matrix< Rational > > difference (const  int e, const   int n, const  int m){
 
 	vector <gale_conf> M =galecomplexity (e,n,m);
 	vector <gale_conf> previous=galecomplexity(e,n,m-1);
-	vector <gale_conf> diference;
+	vector <gale_conf> difference;
 	//compare cocircuits and facets (if necessary);
 	//provisional solo compara cocircuitos
 	for (unsigned int j=0; j<M.size(); ++j){
@@ -520,32 +532,32 @@ Vector<Matrix< Rational > > diference (const  int e, const   int n, const  int m
 	  	for (unsigned int i=0; i<previous.size() and !found_facets; ++i){
 		      if (compare_facets( previous[i].facets, M[j].facets, n)) found_facets=true;
 	  	}
-	  	if (not found_facets) diference.push_back(M[j]);
+	  	if (not found_facets) difference.push_back(M[j]);
 	  	
 	} 
 	
-	return convert(diference);
+	return convert(difference);
 
 }
 
 
 UserFunctionTemplate4perl("# @category Computations"
-			  "# Computes all the possible gale configurations with gale complexity m "
+			  "# Computes all the possible Gale configurations with Gale complexity m "
 			  "# such that they are not combinatorially equivalent."
-			  "# @param e dimension of the gale diagram "
-			  "# @param n number of vectors on the gale diagram"
+			  "# @param e dimension of the Gale diagram "
+			  "# @param n number of vectors on the Gale diagram"
 			  "# @param m maximum value of the coordinates"
 			  "# @return Vector<Matrix<Rational> >",
 			  "gale_complexity ($ $ $)" );
 
 UserFunctionTemplate4perl("# @category Computations"
-			  "# Computes all the possible gale configurations with gale complexity m and m-1 "
+			  "# Computes all the possible Gale configurations with Gale complexity m and m-1 "
 			  "# returns only the ones that exist exclusively with complexity m."
-			  "# @param e dimension of the gale diagram "
-			  "# @param n number of vectors on the gale diagram"
+			  "# @param e dimension of the Gale diagram "
+			  "# @param n number of vectors on the Gale diagram"
 			  "# @param m maximum value of the coordinates"
 			  "# @return Vector<Matrix<Rational> >",
-			  "diference ($ $ $)" );
+			  "difference ($ $ $)" );
 
 
 }}
