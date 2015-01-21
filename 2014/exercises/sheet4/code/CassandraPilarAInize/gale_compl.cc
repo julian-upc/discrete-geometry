@@ -36,62 +36,57 @@
 namespace polymake { namespace polytope {
     
     Matrix<Rational> enumerate_configurations(int e,int n,int m)
-    { Matrix<Rational> equations(e+1,e*n+1);//we needd to add the equatin v00=m at the end
+    {
+        Matrix<Rational> equations(e+1,e*n+1);//we needd to add the equatin v00=m at the end
         for (int j=0;j<e;++j){
             for (int i=0;i<n;++i){
                 equations(j,i*e+j+1)=1;}}
         equations(e,0)=-m;
         equations(e,1)=1;
         
-        ListMatrix<SparseVector<Rational > > inequalities(0,e*n+1);
+        int lign_counter = 0;
+        Matrix<Rational> ineq(e+2*e*n+(n*(n-1))/2,e*n+1);
         for(int i=0;i<e-1;++i){ //leave out last vector
-            SparseVector<Rational>ineq(e*n+1);
-            ineq[i+1]=1;
-            ineq[i+2]=-1;
-            inequalities/=ineq;
+            ineq[lign_counter][i+1]=1;
+            ineq[lign_counter][i+2]=-1;
+            ++lign_counter;
         }
-        SparseVector<Rational>ineq(e*n+1);
-        ineq[e]=1;
-        inequalities/=ineq;
+        ineq[lign_counter][e]=1;
+        ++lign_counter;
         
         for(int i=0;i<n-1;++i) {
-            for(int j=0;j<e;++j) {
-                SparseVector<Rational>ineq(n*e+1);
-                ineq[e*i+j+1]=1;
-                ineq[(e+1)*i*j+1]=-1;
-                inequalities /= ineq;
+            for(int j=i+1;j<n;++j) {
+                ineq[lign_counter][e*i+1]=1;
+                ineq[lign_counter][e*j+1]=-1;
+                ++lign_counter;
             }
         }
-         
+        
         
         for (int i=1;i<e*n+1;++i){
-            SparseVector<Rational>ineq(n*e+1);
-            ineq[0]=m;
-            ineq[i]=1;
-            inequalities/=ineq;
+            ineq[lign_counter][0]=m;
+            ineq[lign_counter][i]=1;
+            ++lign_counter;
         }
         for (int i=1;i<e*n+1;++i){
-            SparseVector<Rational>ineq(n*e+1);
-            ineq[0]=m;
-            ineq[i]=-1;
-            inequalities/=ineq;
+            ineq[lign_counter][0]=m;
+            ineq[lign_counter][i]=-1;
+            ++lign_counter;
         }
         
         perl::Object P("Polytope");
         P.take("EQUATIONS") << equations;
-        P.take("INEQUALITIES")<< inequalities;
+        P.take("INEQUALITIES")<< ineq;
         const Matrix<Rational> C = P.CallPolymakeMethod("LATTICE_POINTS");
         
-        std::cout<< inequalities.rows() << endl;
-        std::cout<< C.cols() << endl;
         return C;
-
+        
+        
     }
     
     
     class Galepolytope{
     public:
-        Galepolytope();
         Vector<Integer> vec;
         Matrix<Rational> G;
         Matrix<Integer> C;//circuits
@@ -102,8 +97,8 @@ namespace polymake { namespace polytope {
     
     
     bool lexicoordered(const Vector<Integer>& V ,int n, int e){
-        for (int i=0; i<n; i += e+1) {
-            if (V.slice(i,e) >= V.slice(e+1+i, e)) {
+        for (int i=1; i<n*e-1; i += e) {
+            if (V.slice(i,e) < V.slice(e+i, e)) {
                 return false;
             }
         }
@@ -115,11 +110,13 @@ namespace polymake { namespace polytope {
                             std::vector<Set<int> >& negative_parts,
                             bool allow_fail=true)
     {
+        //Enumerate all the cocircuits of G
         const int n = G.rows(), e = G.cols();
         for (Entire<Subsets_of_k<const sequence&> >::const_iterator sit = entire(all_subsets_of_k(sequence(0, n), e-1)); !sit.at_end(); ++sit) {
             const Matrix<Rational> ker = null_space(G.minor(*sit, All));
-            if (ker.rows() >= 2) continue;
-            
+            if (ker.rows() >= 2){
+                continue;}
+            //Evaluate all the points in the ker to see if they are positive or negative (0 if they are in the defining subset)
             Set<int> plus, minus;
             for (int i=0; i<n; ++i) {
                 const Rational val(ker[0] * G[i]);
@@ -173,31 +170,43 @@ namespace polymake { namespace polytope {
     {
         const Matrix<Rational> configs=enumerate_configurations(e,n,m);
         //for each configuration:
+        
         for(Entire <Rows< Matrix<Rational> > >::const_iterator rit = entire(rows(configs)); !rit.at_end(); ++rit){
-            
             const Vector<Integer> v(*rit);
             // first check if it is ordered
             if (!lexicoordered(v,n,e)) {
                 continue;
             }
             
-            //throw std::runtime_error("Please check that the calculation on line __LINE__ is correct and does what you want!");
-            // (n-1)(e+1) + e-1 = ne - e + n + e - 1 = n(e-1) - 1
-            Matrix<Rational> G(n, n*(e-1) - 1); // you need to initialize the matrix with its dimensions
-            for (int i=0; i<n; ++i) {
+            
+            Matrix<Rational> G(n, e);// you need to initialize the matrix with its dimensions
+            for (int j=1;j<e+1;++j){
+                G[0][j-1]=v[j];}
+            for (int i=1; i<n; ++i) {
                 for (int j=0; j<e; ++j) {
                     G[i][j] = v[i*e+j];
                 }
             }
             
-            std::vector<Set<int> > positive_parts, negative_parts;
+            //check if convex with cocitcuits_or_fail
+            std::vector<Set<int> > positive_parts;
+            std::vector<Set<int> > negative_parts;
             if (!cocircuits_or_fail(G, positive_parts, negative_parts)) {
                 continue;
+                
             }
+    
             
             //circuits
-            Set<int>  negative_index;
-            const Matrix<Rational> ker=null_space(G);
+            //Matrix<Rational>  ker = ones_matrix<Rational>(1, n);
+            Matrix<Rational>  ker=null_space(T(G));
+            
+            std::cout << "rows of the kernel  "<< ker.rows() <<endl;
+            
+            
+            Set<int>  positive_index;
+            for (int i=0; i<ker.rows(); i++) positive_index.insert(i);
+            //Take the sign
             Matrix<Rational> circuits=ker;
             for (int i=0; i<ker.rows();++i) {
                 for (int j=0; j<ker.cols();++j) {
@@ -205,11 +214,12 @@ namespace polymake { namespace polytope {
                         circuits[i][j]=1;
                     } else if (ker[i][j]<0) {
                         circuits[i][j]=-1;
-                        negative_index.push_back(i);
+                        positive_index.erase(i);
                     }
                 }
             }
-            circuits=circuits.minor(~negative_index,All);
+            std::cout<< "pos index size  "<< positive_index.size()<<endl;
+            circuits=circuits.minor(positive_index,All);
             
             Rational max=0;
             for (int i=0; i<circuits.rows(); ++i) {
@@ -222,6 +232,7 @@ namespace polymake { namespace polytope {
                 }
             }
             
+            
             //P.maxn_vertex=max;
             //Galepolytope Po(v,G,circuits,circuits.rows(),max);
             Galepolytope Po;
@@ -231,6 +242,7 @@ namespace polymake { namespace polytope {
             Po.n_facets=circuits.rows();
             Po.maxn_vertex=max;
             
+            
             //add to list
             
             polylist.push_back(Po);
@@ -239,7 +251,7 @@ namespace polymake { namespace polytope {
         
         //analyze the list we got:
         //order the list by number of facets:
-        
+        std::cout<< "size of list"<< polylist.size()<<endl;
         
         polylist.sort(compare_polytopes);
         
@@ -249,14 +261,14 @@ namespace polymake { namespace polytope {
             Galepolytope P1=*iterator;
             Galepolytope P2=*++iterator;
             if (P1.n_facets != P2.n_facets)
-                {galelist.push_back(P1.G);
+            {galelist.push_back(P1.G);
                 galelist.push_back(P2.G);
-                    t=t+2;
+                t=t+2;
                 continue;}
             if (P1.maxn_vertex != P2.maxn_vertex)
-                {galelist.push_back(P1.G);
+            {galelist.push_back(P1.G);
                 galelist.push_back(P2.G);
-                    t=t+2;
+                t=t+2;
                 continue;}
             if( compare_matrices(P1.C,P2.C)) {
                 galelist.push_back(P1.G);
@@ -267,16 +279,15 @@ namespace polymake { namespace polytope {
             Galepolytope P1=*iterator;
             Galepolytope P2=*++iterator;
             if (P1.n_facets != P2.n_facets)
-                {galelist.push_back(P1.G);
-                    t=t+1;
+            {galelist.push_back(P1.G);
+                t=t+1;
                 continue;}
             if (P1.maxn_vertex != P2.maxn_vertex)
-                {galelist.push_back(P1.G);
-                    t=t+1;
+            {galelist.push_back(P1.G);
+                t=t+1;
                 continue;}
             if( compare_matrices(P1.C,P2.C)) {continue;}
         }}
-
         return galelist;
         
     }
