@@ -1,0 +1,107 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{a4wide}
+\usepackage{paralist}
+\usepackage{url}
+\usepackage{bbm}
+\usepackage{nopageno}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cS}{\mathcal{S}}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\New}{New}
+\DeclareMathOperator{\area}{area}
+\newcommand{\RR}{\mathbbm{R}}
+\newcommand{\CC}{\mathbbm{C}}
+
+\begin{document}
+\begin{center}
+\textbf{\sffamily
+   Discrete and Algorithmic Geometry }
+
+\medskip
+   Julian Pfeifle,
+   UPC, 2016
+\end{center}
+
+\bigskip
+
+\begin{center}
+  \textbf{\sffamily Sheet 1}
+
+\bigskip
+ due on Monday, November 13, 2016
+
+\end{center}
+
+\bigskip
+\bigskip
+\bigskip
+
+\section*{Reading}
+
+\begin{enumerate}
+\setlength{\itemsep}{2ex}
+\item Read Lectures 0,1,2 from Ziegler's \emph{Lectures on Polytopes}.
+
+\item Read Sections 5.1, 5.2, 5.3 from Matou\v sek's \emph{Lectures on
+    Discrete Geometry}.
+
+\end{enumerate}
+
+\bigskip
+\bigskip
+\section*{Writing}
+
+The \emph{Minkowski sum} of two polytopes $P,Q\subset\RR^d$ is the set
+\[
+   P + Q
+   \ = \
+   \big\{p+q : p\in P,\,q\in Q\}.
+\]
+% As our running example, we consider the polygons
+% \[
+%    P
+%    \ = \
+%    \conv\big\{
+%      (0,0),\;(1,0),\;(1,1),\;(0,1)
+%    \big\},
+%    \qquad
+%    Q
+%    \ = \
+%    \conv\big\{
+%      (0,0),\;(2,1),\;(1,2)
+%    \big\}.
+% \]
+The \emph{Newton polytope} of a polynomial $f(x)=\sum_{i=1}^m c_i \, x_1^{a_{i1}}x_2^{a_{i2}}\cdots x_d^{a_{id}} \in \RR[x_1,x_2,\dots,x_d]$ is 
+\[
+   \New(f)
+   \ = \
+   \conv\big\{(a_{11},a_{12},\dots,a_{1d}),\dots,(a_{m1},a_{m2},\dots,a_{md})\big\}
+   \ \subset \
+   \RR^d.
+\]
+\begin{enumerate}[(a)]
+\item Prove that $P+Q\subset\RR^d$ is a convex polytope. How does $P+Q$ change when we translate $P$~and~$Q$ in~$\RR^d$?
+
+\item How does the Minkowski sum $\New(f)+\New(g)$ (a geometric object) relate to the algebraic objects $f$~and~$g$?  
+
+\item Let $f(x,y)=c_0 + c_1 x + c_2 xy + c_3 y$ and $g(x,y) = d_0 + d_1 x^2y + d_2 xy^2$ be two polynomials with $c_i\in\RR$ and $d_i\in\RR$ for all~$i$, and let $P=\New(f)$ and $Q=\New(g)$ be their Newton polygons. Calculate the \emph{mixed area}
+\[
+  M(P,Q)
+  \ = \
+  \area(P+Q) - \area(P) - \area(Q).
+\]
+
+\item Subdivide $P+Q$ into five pieces: a translate of $P$, a translate of $Q$, and three parallelograms, and relate $M(P,Q)$ to this subdivision.
+
+\medskip
+\emph{Bernstein's Theorem} asserts that for any generic polynomials $f$ and $g$ in two variables, the number of solutions in $(\CC^\times)^2$ of the system $f(x,y)=0$, $g(x,y)=0$ equals the mixed area $M\big(\New(f),\New(g)\big)$. Here $\CC^\times = \CC\setminus\{0\}$. In fact, this theorem applies to \emph{Laurent polynomials}, which means that the exponents can be arbitrary integers, possibly negative. 
+
+\medskip
+\item Use Bernstein's Theorem to conclude the geometric fact that for any \emph{lattice polygons} $P,Q$ (i.e., all vertices have integer coordinates), the mixed area $M(P,Q)$ is an integer.
+
+\item Use Bernstein's Theorem to conclude \emph{Bezout's Theorem}: Two general plane algebraic curves of degree $d$ respectively~$e$ meet in $d\cdot e$~points. (\emph{Hint:} Consider the Newton polytopes of two general bivariate polynomials of degree $d$ and $e$, respectively.) How does this relate to the polynomials $f$ and $g$ in parts (c) and (d)? (Be sure you understand ---or look up--- the difference between a \emph{generic} and a \emph{general} polynomial.)
+\end{enumerate}
+\end{document}
+ 
