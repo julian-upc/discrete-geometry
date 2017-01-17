@@ -4,7 +4,7 @@ LIBRARY=nope
 INCPATHS=. /opt/igraph/include/igraph
 LIBPATHS=/opt/igraph/lib /usr/local/lib
 LDFLAGS=-lgmp -lgmpxx -ligraph -lstdc++
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -Wextra
 CC=gcc
 
 # ------------ MAGIC BEGINS HERE -------------
