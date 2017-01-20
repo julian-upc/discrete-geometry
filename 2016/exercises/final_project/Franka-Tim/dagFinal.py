@@ -1,10 +1,10 @@
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Dear Julian,
 #
 # We had a hard time with this assignment. Even though Simon was kind enough to help us a little bit out with Python,
-# we unfortunately did not succeed to complete the assignment, although we put much effort and time in trying to do so. 
+# we unfortunately did not succeed to complete the assignment, although we put much effort and time in trying to do so.
 # We feel sorry for handing in such an incomplete assignment. Hopefully we were at least working in the right direction.
-# Please let us know if there is anything else we could do... 
+# Please let us know if there is anything else we could do...
 #
 # Mit freundlichem gruss,
 #
@@ -94,9 +94,9 @@ def checkTekens(): #For all possible combinations, check if they are neighbourly
 
 checkTekens()
 
-# # # # # # # 
+# # # # # # #
 # What we wanted to do after this:
-# Delete two more points from every list with +'s and -'s. Check if the intersection of the positive and negative convex hull 
-# empty is or not. Now you know which lists are neighborly. Get the corresponding pointconfiguration. 
-# This is possible by calculating the kernels and consider the different signs. You can check which points form a face. 
+# Delete two more points from every list with +'s and -'s. Check if the intersection of the positive and negative convex hull
+# empty is or not. Now you know which lists are neighborly. Get the corresponding pointconfiguration.
+# This is possible by calculating the kernels and consider the different signs. You can check which points form a face.
 # Use the Altshuler determinant to determine which polytopes are equivalent up to isomorphy.
